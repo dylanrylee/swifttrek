@@ -1,13 +1,17 @@
 import React from 'react';
-import './App.css';
-import SelectAccountType from './guestUI/SelectAccountType'; 
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import SelectAccountType from './guestUI/SelectAccountType';
+import GuestLogin from './guestUI/GuestLogin';
 
-function App() {
+const App = () => {
     return (
-        <div className="App">
-            <SelectAccountType />
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<SelectAccountType />} />
+                <Route path="/guest-login" element={<GuestLogin />} />
+            </Routes>
+        </Router>
     );
-}
+};
 
 export default App;

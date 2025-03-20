@@ -1,0 +1,62 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.login-container label {
+    margin-top: 10px;
+}
+
+.login-container input {
+    padding: 10px;
+    margin: 5px 0;
+    width: 200px; /* Adjust width to match design */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.register {
+    margin-top: 20px;
+}
+
+.register a {
+    text-decoration: none;
+    color: #E8AA9B; /* Adjust color if needed */
+}
+
+.register a:hover {
+    text-decoration: underline;
+}
+
+.back-button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #E8AA9B; 
+    color: #2c2c2c;
+    border: none;
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-size: 16px; 
+    transition: background-color 0.3s; 
+}
+
+.back-button:hover {
+    background-color: #DCD5DC; 
+}
