@@ -4,7 +4,7 @@
     min-height: 100vh;
 }
 
-.main-content {
+.mainContent {
     flex: 1; 
     display: flex;
     align-items: center;
@@ -13,18 +13,18 @@
     padding: 20px;
 }
 
-.login-container {
+.loginContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
 }
 
-.login-container label {
+.loginContainer label {
     margin-top: 10px;
 }
 
-.login-container input {
+.loginContainer input {
     padding: 10px;
     margin: 5px 0;
     width: 200px; 
@@ -45,7 +45,7 @@
     text-decoration: underline;
 }
 
-.back-button {
+.backButton {
     padding: 10px 20px;
     margin-top: 20px;
     background-color: #E8AA9B; 
@@ -57,6 +57,6 @@
     transition: background-color 0.3s; 
 }
 
-.back-button:hover {
+.backButton:hover {
     background-color: #DCD5DC; 
 }

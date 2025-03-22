@@ -9,7 +9,8 @@ const SelectAccountType = () => {
 
     return (
         <div className={styles.container}>
-            <Header />
+            {/* hideTabs={true} to mske navigation tabs invisble*/}
+            <Header hideTabs={true} />
             <main className={styles.mainContent}>
                 <div className={styles.contentBox}> 
                     <h2>Select Account Type</h2>

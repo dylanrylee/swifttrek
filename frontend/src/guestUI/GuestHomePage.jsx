@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './GuestHomePage.css';
+import styles from './GuestHomePage.module.css';
 import Header from './Header';
 import Footer from './Footer';
 import frontpageImage from '../images/guest-frontpage.png';
@@ -9,14 +9,14 @@ const GuestHomePage = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="container">
+        <div className={styles.container}>
             <Header />
-            <main className="main-content">
-                <img src={frontpageImage} alt="Welcome" className="welcome-photo" />
-                <div className="button-container">
-                    <button className="action-button">Book Flight</button>
-                    <button className="action-button">Book Hotel</button>
-                    <button className="action-button">Rent Car</button>
+            <main className={styles.mainContent}>
+                <img src={frontpageImage} alt="Welcome" className={styles.welcomePhoto} />
+                <div className={styles.buttonContainer}>
+                    <button className={styles.actionButton}>Book Flight</button>
+                    <button className={styles.actionButton}>Book Hotel</button>
+                    <button className={styles.actionButton}>Rent Car</button>
                 </div>
             </main>
             <Footer />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './GuestLogin.css';
+import styles from './GuestLogin.module.css'; // Import CSS Module
 import Header from './Header';
 import Footer from './Footer';
 
@@ -12,11 +12,11 @@ const GuestLogin = () => {
     };
 
     return (
-        <div className="container">
-            <Header />
-            <main className="main-content">
+        <div className={styles.container}>
+            <Header hideTabs={true} />
+            <main className={styles.mainContent}>
                 <h2>Welcome to Travel Planner</h2>
-                <div className="login-container">
+                <div className={styles.loginContainer}>
                     <label htmlFor="username">Login:</label>
                     <input 
                         type="text" 
@@ -32,11 +32,11 @@ const GuestLogin = () => {
                         onChange={handleInputChange} // trigger navigation on input change
                     />
                 </div>
-                <div className="register">
+                <div className={styles.register}>
                     <p>Don't have an account? <a href="#register">Register</a></p>
                 </div>
                 <button 
-                    className="back-button" 
+                    className={styles.backButton} 
                     onClick={() => navigate('/')} // Back to SelectAccountType
                 >
                     Back

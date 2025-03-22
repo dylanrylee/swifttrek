@@ -1,17 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Header.module.css'; 
 
-const Header = () => {
+const Header = ({ hideTabs }) => {
     return (
         <header className={styles.header}>
-            <h1 className={styles.title}>Travel Planner Website</h1>
-            <nav className={styles.nav}>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#profile">Profile</a></li>
-                    <li><a href="#settings">Settings</a></li>
-                </ul>
-            </nav>
+            <h1>Travel Planner Website</h1>
+            {!hideTabs && (
+                <nav className={styles.nav}>
+                    <ul>
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="/about">Profile</Link></li>
+                        <li><Link to="/contact">Settings</Link></li>
+                    </ul>
+                </nav>
+            )}
         </header>
     );
 };
