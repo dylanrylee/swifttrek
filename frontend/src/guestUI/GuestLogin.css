@@ -27,7 +27,7 @@
 .login-container input {
     padding: 10px;
     margin: 5px 0;
-    width: 200px; /* Adjust width to match design */
+    width: 200px; 
     border: 1px solid #ccc;
     border-radius: 4px;
 }
@@ -38,7 +38,7 @@
 
 .register a {
     text-decoration: none;
-    color: #E8AA9B; /* Adjust color if needed */
+    color: #E8AA9B; 
 }
 
 .register a:hover {

@@ -1,11 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import './SelectAccountType.css';
 import Header from './Header';
 import Footer from './Footer';
 
 const SelectAccountType = () => {
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
 
     return (
         <div className="container">
@@ -15,7 +15,7 @@ const SelectAccountType = () => {
                 <div className="button-container">
                     <button 
                         className="account-button" 
-                        onClick={() => navigate('/guest-login')} // Navigate on click
+                        onClick={() => navigate('/guest-login')}
                     >
                         Guest
                     </button>

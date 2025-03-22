@@ -7,6 +7,10 @@ import Footer from './Footer';
 const GuestLogin = () => {
     const navigate = useNavigate();
 
+    const handleInputChange = () => {
+        navigate('/guest-home'); // rn it goes to GuestHomePage even though anything is inputted lol
+    };
+
     return (
         <div className="container">
             <Header />
@@ -14,16 +18,26 @@ const GuestLogin = () => {
                 <h2>Welcome to Travel Planner</h2>
                 <div className="login-container">
                     <label htmlFor="username">Login:</label>
-                    <input type="text" id="username" placeholder="Enter your username" />
+                    <input 
+                        type="text" 
+                        id="username" 
+                        placeholder="Enter your username" 
+                        onChange={handleInputChange} // Trigger navigation on input change
+                    />
                     <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" placeholder="Enter your password" />
+                    <input 
+                        type="password" 
+                        id="password" 
+                        placeholder="Enter your password" 
+                        onChange={handleInputChange} // trigger navigation on input change
+                    />
                 </div>
                 <div className="register">
                     <p>Don't have an account? <a href="#register">Register</a></p>
                 </div>
                 <button 
                     className="back-button" 
-                    onClick={() => navigate('/')} // Navigate back to SelectAccountType
+                    onClick={() => navigate('/')} // Back to SelectAccountType
                 >
                     Back
                 </button>
