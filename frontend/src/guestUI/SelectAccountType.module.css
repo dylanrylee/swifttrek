@@ -1,0 +1,123 @@
+/* Reset default margin & padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Ensure the body and HTML take full height */
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+/* Main container should stretch fully */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    text-align: center;
+    background: url('../images/selectaccount-background.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+/* Ensure header stays at the very top */
+.header {
+    width: 100%;
+    background-color: #E8AA9B;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+/* Push main content down (since header is fixed) */
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    padding-top: 100px; /* Prevent overlap with fixed header */
+}
+
+/* White box container for text & buttons */
+.contentBox {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 320px;
+    max-width: 90%;
+}
+
+/* Buttons container */
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Adds spacing between buttons */
+    margin-top: 15px;
+}
+
+/* Button Styling */
+.accountButton {
+    width: 220px;
+    padding: 12px 0;
+    background-color: #E8AA9B; /* Pink color */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.accountButton:hover {
+    background-color: #D68582;
+}
+
+/* Footer should be fixed at the bottom */
+.footer {
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+    background-color: #f8f8f8;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+@media (max-width: 430px) {
+    .contentBox {
+        width: 140%;
+        padding: 25px;
+        margin-bottom: 40px; /* Creates a bigger gap above the footer */
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .accountButton {
+        width: 130%;
+        padding: 10px 0;
+        font-size: 16px;
+    }
+
+    .mainContent {
+        padding-top: 80px; /* Adjust spacing to avoid overlap */
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
