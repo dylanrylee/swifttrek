@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './CarRentalPage.module.css';
 import Header from './Header';
 import Footer from './Footer';
@@ -27,6 +27,10 @@ const CarRentalPage = () => {
 
     const handleRentClick = () => {
         navigate('/payment-checkout'); // Redirect to PaymentCheckout page
+    };
+
+    const handleWriteReviewClick = () => {
+        navigate('/write-review'); // Redirect to WriteReviewPage
     };
 
     return (
@@ -78,9 +82,9 @@ const CarRentalPage = () => {
                             <h3>Reviews</h3>
                             <div className={styles.reviewsSection}>
                                 <p>No reviews yet.</p>
-                                <Link to="/write-review" className={styles.writeReviewLink}>
+                                <button className={styles.writeReviewButton} onClick={handleWriteReviewClick}>
                                     Write a Review
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     </div>
