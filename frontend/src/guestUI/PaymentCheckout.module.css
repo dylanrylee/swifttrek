@@ -1,27 +1,24 @@
-/* Ensures the full viewport height is used and prevents unwanted scrolling */
 .container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensures full height */
+    min-height: 100vh; 
     width: 100%;
-    overflow-x: hidden; /* Prevents horizontal scrolling */
+    overflow-x: hidden; 
 }
 
-/* Centers content and prevents it from overflowing */
 .content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding-top: 80px; /* Ensures content starts below the header */
-    padding-bottom: 40px; /* Prevents content from touching the footer */
+    padding-top: 80px;
+    padding-bottom: 40px; 
     width: 100%;
     max-width: 1200px; /* Prevents stretching */
     margin: 0 auto;
 }
 
-/* Styles for buttons */
 .buttonContainer {
     display: flex;
     flex-direction: column;
@@ -55,7 +52,7 @@
     padding: 20px;
     border-radius: 8px;
     margin-top: 20px;
-    margin-bottom: 60px; /* Increased space at the bottom */
+    margin-bottom: 60px; 
     max-width: 400px;
     width: 100%;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -81,7 +78,6 @@
     width: 48%;
 }
 
-/* Ensures footer stays at the bottom */
 .footer {
     background-color: #E8AA9B;
     color: #2c2c2c;
@@ -90,4 +86,49 @@
     width: 100%;
     box-sizing: border-box;
     margin-top: auto; /* Pushes footer to bottom */
+}
+
+.confirmButton {
+    margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    background-color: #E8AA9B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.confirmButton:hover {
+    background-color: #d89489;
+}
+
+.confirmationScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    text-align: center;
+}
+
+.confirmationText {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #28a745;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkmark {
+    color: #28a745;
+    font-size: 2rem;
+}
+
+@media (max-width: 330px) {
+    .checkmark {
+        margin-right: 30px;
+    }
 }

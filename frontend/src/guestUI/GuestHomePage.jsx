@@ -16,7 +16,12 @@ const GuestHomePage = () => {
                 <div className={styles.buttonContainer}>
                     <button className={styles.actionButton}>Book Flight</button>
                     <button className={styles.actionButton}>Book Hotel</button>
-                    <button className={styles.actionButton}>Rent Car</button>
+                    <button 
+                        className={styles.actionButton} 
+                        onClick={() => navigate('/car-rental')}
+                    >
+                        Rent Car
+                    </button>
                 </div>
             </main>
             <Footer />
