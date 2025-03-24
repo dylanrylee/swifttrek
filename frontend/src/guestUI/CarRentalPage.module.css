@@ -1,10 +1,12 @@
-/* Container layout */
+/* Ensures content is centered */
 .container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     width: 100%;
     overflow-x: hidden;
+    background: url('../images/carrental-background.jpg') no-repeat center center;
+    background-size: cover;
 }
 
 /* Centers content */
@@ -13,47 +15,46 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    justify-content: center;
     padding: 60px 20px;
-    max-width: 800px;
-    margin: 0 auto;
 }
 
-/* Heading styles */
-.heading {
-    font-size: 28px;
-    margin-bottom: 20px;
+/* White box container */
+.whiteBox {
+    background: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+    padding: 30px;
+    border-radius: 12px; /* Rounded edges */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Soft fading effect */
+    max-width: 800px; 
+    width: 90%;
+    margin: auto;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Responsive table container */
+.tableContainer {
+    width: 100%;
+    overflow-x: auto; /* Ensures table doesn't overflow on smaller screens */
+    margin-top: 20px;
 }
 
 /* Car table styling */
 .carTable {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin: 0 auto;
 }
 
 .carTable th, .carTable td {
     padding: 12px;
     border: 1px solid #ddd;
     text-align: center;
+    white-space: nowrap; /* Prevents text wrapping inside cells */
 }
 
 .carTable th {
     background-color: #f4f4f4;
-}
-
-.detailsButton {
-    padding: 8px 16px;
-    background-color: #2196F3;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.detailsButton:hover {
-    background-color: #1e88e5;
 }
 
 /* Popup styling */
@@ -67,6 +68,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
 .popupContent {
@@ -85,13 +87,18 @@
     justify-content: center;
 }
 
-.rentButton, .cancelButton {
+.detailsButton, .rentButton, .cancelButton, .writeReviewButton {
     padding: 10px 20px;
     font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;
+}
+
+.detailsButton {
+    background-color: #2196F3;
+    color: white;
 }
 
 .rentButton {
@@ -104,12 +111,25 @@
     color: white;
 }
 
+.writeReviewButton {
+    background-color: #ffa726;
+    color: white;
+}
+
+.detailsButton:hover {
+    background-color: #1e88e5;
+}
+
 .rentButton:hover {
     background-color: #45a049;
 }
 
 .cancelButton:hover {
     background-color: #e53935;
+}
+
+.writeReviewButton:hover {
+    background-color: #fb8c00;
 }
 
 /* Reviews section */
@@ -119,4 +139,16 @@
     background-color: #f9f9f9;
     border-radius: 5px;
     border: 1px solid #ddd;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .whiteBox {
+        padding: 20px;
+    }
+    
+    .popupContent {
+        width: 90%;
+        padding: 20px;
+    }
 }

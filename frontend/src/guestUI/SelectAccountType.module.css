@@ -18,7 +18,7 @@ html, body {
     min-height: 100vh;
     align-items: center;
     text-align: center;
-    background: url('../images/selectaccount-background.jpg') no-repeat center center;
+    background: url('../images/guestlogin-background.jpg') no-repeat center center;
     background-size: cover;
 }
 

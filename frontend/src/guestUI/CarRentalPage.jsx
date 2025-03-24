@@ -13,7 +13,7 @@ const cars = [
 const CarRentalPage = () => {
     const [selectedCar, setSelectedCar] = useState(null);
     const [showDetails, setShowDetails] = useState(false);
-    const navigate = useNavigate(); // Hook for navigation
+    const navigate = useNavigate(); 
 
     const handleDetailsClick = (car) => {
         setSelectedCar(car);
@@ -26,69 +26,73 @@ const CarRentalPage = () => {
     };
 
     const handleRentClick = () => {
-        navigate('/payment-checkout'); // Redirect to PaymentCheckout page
+        navigate('/payment-checkout'); 
     };
 
     const handleWriteReviewClick = () => {
-        navigate('/write-review'); // Redirect to WriteReviewPage
+        navigate('/write-review'); 
     };
 
     return (
         <div className={styles.container}>
             <Header hideTabs={false} />
             <div className={styles.content}>
-                <h1 className={styles.heading}>Car Rental</h1>
-                <table className={styles.carTable}>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Price per Day</th>
-                            <th>Average Rating</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {cars.map((car) => (
-                            <tr key={car.id}>
-                                <td>{car.name}</td>
-                                <td>${car.price}</td>
-                                <td>{car.avgRating} / 5</td>
-                                <td>
-                                    <button className={styles.detailsButton} onClick={() => handleDetailsClick(car)}>
-                                        Details
+                <div className={styles.whiteBox}>
+                    <h1 className={styles.heading}>Car Rental</h1>
+                    <div className={styles.tableContainer}>
+                        <table className={styles.carTable}>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Price per Day</th>
+                                    <th>Average Rating</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {cars.map((car) => (
+                                    <tr key={car.id}>
+                                        <td>{car.name}</td>
+                                        <td>${car.price}</td>
+                                        <td>{car.avgRating} / 5</td>
+                                        <td>
+                                            <button className={styles.detailsButton} onClick={() => handleDetailsClick(car)}>
+                                                Details
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    {showDetails && selectedCar && (
+                        <div className={styles.popup}>
+                            <div className={styles.popupContent}>
+                                <h2>{selectedCar.name} Details</h2>
+                                <p>Type: {selectedCar.type}</p>
+                                <p>Seats: {selectedCar.seats}</p>
+                                <p>Price per Day: ${selectedCar.price}</p>
+                                <p>Condition: {selectedCar.condition}</p>
+                                <p>Average Rating: {selectedCar.avgRating} / 5</p>
+                                <div className={styles.buttonContainer}>
+                                    <button className={styles.rentButton} onClick={handleRentClick}>
+                                        Rent
                                     </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-                {showDetails && selectedCar && (
-                    <div className={styles.popup}>
-                        <div className={styles.popupContent}>
-                            <h2>{selectedCar.name} Details</h2>
-                            <p>Type: {selectedCar.type}</p>
-                            <p>Seats: {selectedCar.seats}</p>
-                            <p>Price per Day: ${selectedCar.price}</p>
-                            <p>Condition: {selectedCar.condition}</p>
-                            <p>Average Rating: {selectedCar.avgRating} / 5</p>
-                            <div className={styles.buttonContainer}>
-                                <button className={styles.rentButton} onClick={handleRentClick}>
-                                    Rent
-                                </button>
-                                <button className={styles.cancelButton} onClick={handleClosePopup}>
-                                    Cancel
-                                </button>
-                            </div>
-                            <h3>Reviews</h3>
-                            <div className={styles.reviewsSection}>
-                                <p>No reviews yet.</p>
-                                <button className={styles.writeReviewButton} onClick={handleWriteReviewClick}>
-                                    Write a Review
-                                </button>
+                                    <button className={styles.cancelButton} onClick={handleClosePopup}>
+                                        Cancel
+                                    </button>
+                                </div>
+                                <h3>Reviews</h3>
+                                <div className={styles.reviewsSection}>
+                                    <p>No reviews yet.</p>
+                                    <button className={styles.writeReviewButton} onClick={handleWriteReviewClick}>
+                                        Write a Review
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
             <Footer />
         </div>
