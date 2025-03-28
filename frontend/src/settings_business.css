@@ -4,8 +4,7 @@ html, body {
     width: 100%;
     margin: 0;
     padding: 0;
-    font-family: 'Arial', sans-serif;
-    
+    font-family: 'Arial', sans-serif; 
     background-image: url('https://img.freepik.com/free-vector/modern-white-technology-background_23-2148394403.jpg?t=st=1742521569~exp=1742525169~hmac=d6f0b88cfdfe6387d6403f9705dddc280af16d7673cb3afd520f0b2a55aa1286&w=1380');
     background-size: cover;  
     background-position: center;
