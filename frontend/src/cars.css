@@ -1,0 +1,248 @@
+
+body {
+    background-image: url(https://img.freepik.com/free-photo/powerful-headlights-particle-view-modern-luxury-cars-parked-indoors-daytime_146671-17395.jpg?t=st=1742795898~exp=1742799498~hmac=045b79aa7f4d999e3668dcac55e094ce3a335e74df8edb6b32f8be3c4fbf6a8b&w=1380);
+    background-position: center;
+    color: white;
+    overflow-x: hidden; 
+    font-weight: bold;
+    background-repeat: no-repeat; 
+}
+
+
+.container {
+    max-height: calc(100vh - 100px); 
+    overflow-y: auto; 
+}
+
+.navbar {
+    background-color: goldenrod;
+    transition: height 0.3s ease; 
+    font-weight: normal;
+}
+
+.navbar.scrolled {
+    height: 100px; 
+}
+
+.navbar .navbar-brand {
+    font-size: 23px;
+    font-weight: bold;
+    color: #f5f5f5;
+}
+
+.navbar-nav .nav-link {
+    color: #f5f5f5; 
+    font-size: 1.1rem;
+}
+
+.navbar-nav .nav-link:hover {
+    font-weight: bold;
+}
+
+.container {
+    margin-top: 30px;
+}
+
+.container h2{
+    color: white
+}
+
+.card-header {
+    background-color: #f8f9fa;
+}
+
+.btn-primary {
+    background-color: blue;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: green; 
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.table th {
+    background-color:white(0, 0, 0, 0.6);  
+    color: white;
+}
+
+.table td button {
+    margin-right: 5px; 
+}
+
+.modal-header {
+    background-color: #5143d9;
+    color: white;
+}
+
+.modal-footer button {
+    color: white;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+input[type="text"] {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: white;
+}
+
+input[type="number"] {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: white;
+}
+
+#searchVehicle {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: white;
+    width: 300px;
+}
+
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table th {
+    background-color: rgba(0, 0, 0, 0.6); 
+}
+
+.table td button {
+    display: inline-block;  
+    margin-right: 5px;      
+}
+
+
+@media (max-width: 768px) {
+    .navbar-nav .nav-link {
+        font-size: 1rem; 
+    }
+
+    .container h2 {
+        font-size: 1.5rem; 
+    }
+
+    .card-header {
+        padding: 10px; 
+    }
+
+    .table th, .table td {
+        font-size: 0.9rem; 
+    }
+
+    .table td button {
+        font-size: 0.9rem; 
+    }
+
+    #searchVehicle {
+        width: 100%; 
+    }
+
+    .navbar .navbar-brand {
+        font-size: 20px; 
+    }
+
+    .container {
+        margin-top: 20px; 
+    }
+}
+
+/* Mobile devices */
+@media (max-width: 480px) {
+    .navbar-nav .nav-link {
+        font-size: 0.9rem; 
+    }
+
+    .navbar .navbar-brand {
+        font-size: 18px; 
+    }
+
+    .container h2 {
+        font-size: 1.2rem; 
+    }
+
+    .table th, .table td {
+        font-size: 0.8rem;
+    }
+
+    .btn-primary {
+        font-size: 0.9rem; 
+    }
+
+    .modal-header {
+        font-size: 1rem; 
+    }
+
+    .form-control {
+        font-size: 0.9rem; 
+    }
+
+    #searchVehicle {
+        width: 100%; 
+    }
+
+    .card {
+        padding: 15px; 
+        margin-top: 15px; 
+    }
+
+    .table td button {
+        font-size: 0.8rem; 
+    }
+}
+
+/* For small mobile screens */
+@media (max-width: 320px) {
+    .navbar-nav .nav-link {
+        font-size: 0.8rem; 
+    }
+
+    .table th, .table td {
+        font-size: 0.7rem; 
+    }
+
+    .card h3 {
+        font-size: 1.1rem; 
+    }
+
+    .table td button {
+        font-size: 0.7rem; 
+    }
+
+    .container h2 {
+        font-size: 1rem; 
+    }
+}
+
+   
+   .table-container {
+    background-color: white; 
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+.table {
+    background-color: white; 
+}
+
+th, td {
+    vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.table th {
+    background-color: goldenrod;
+    color: white;
+}
+
+.table td {
+    text-align: center;
+}
