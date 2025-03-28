@@ -1,0 +1,201 @@
+body {
+    background-image: url(https://img.freepik.com/free-photo/business-people-shaking-hands-together_53876-20488.jpg?t=st=1742762309~exp=1742765909~hmac=4bea5f25bfbb1ce109fe11b67aea9ea7b3ef40cca938a23286f9e5dbf64e9318&w=1380);
+    background-repeat: no-repeat;
+    background-size: cover; 
+}
+
+.navbar {
+    background-color: goldenrod;
+    transition: height 0.3s ease;
+}
+
+.navbar.scrolled {
+    height: 100px;
+}
+
+.navbar .navbar-brand {
+    font-size: 23px;
+    font-weight: bold;
+    color: #f5f5f5;
+}
+
+.navbar-nav .nav-link {
+    color: #f5f5f5;
+    font-size: 1.1rem;
+}
+
+.navbar-nav .nav-link:hover {
+    font-weight: bold;
+}
+
+#calendar {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px; 
+}
+
+
+.week-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.week-day {
+    background: #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+
+.day {
+    border: 1px solid #ddd;
+    padding: 20px;
+    min-height: 80px;
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    background: #f9f9f9;
+}
+
+.day:hover {
+    background: #f0f0f0;
+}
+
+.today {
+    border: 2px solid black;
+    font-weight: bolder;
+    background-color: rgb(255, 210, 96);
+}
+
+.event {
+    background: lightblue;
+    padding: 2px;
+    margin-top: 5px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.empty {
+    visibility: hidden;
+}
+
+#monthYear {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 600px) {
+    .navbar {
+        height: auto; 
+    }
+
+    .navbar .navbar-brand {
+        font-size: 20px; 
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 1rem; 
+    }
+
+    .week-row, .days-grid {
+        grid-template-columns: repeat(4, 1fr); 
+    }
+
+    .day {
+        padding: 10px; 
+        min-height: 60px; 
+    }
+
+    #monthYear {
+        font-size: 20px; 
+    }
+}
+
+
+@media only screen and (min-width: 601px) {
+    .navbar .navbar-brand {
+        font-size: 22px; 
+    }
+
+    .week-row, .days-grid {
+        grid-template-columns: repeat(5, 1fr); 
+    }
+
+    .day {
+        padding: 15px; 
+        min-height: 70px; 
+    }
+
+    #monthYear {
+        font-size: 22px; 
+    }
+}
+
+
+@media only screen and (min-width: 768px) {
+    .navbar .navbar-brand {
+        font-size: 24px; 
+    }
+
+    .week-row, .days-grid {
+        grid-template-columns: repeat(6, 1fr); 
+    }
+
+    .day {
+        padding: 18px; 
+        min-height: 75px; 
+    }
+
+    #monthYear {
+        font-size: 24px; 
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .navbar .navbar-brand {
+        font-size: 26px; 
+    }
+
+    .week-row, .days-grid {
+        grid-template-columns: repeat(7, 1fr); 
+    }
+
+    .day {
+        padding: 20px; 
+        min-height: 80px; 
+    }
+
+    #monthYear {
+        font-size: 28px; 
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .navbar .navbar-brand {
+        font-size: 28px; 
+    }
+
+    .week-row, .days-grid {
+        grid-template-columns: repeat(7, 1fr); 
+    }
+
+    .day {
+        padding: 25px; 
+        min-height: 90px; 
+    }
+
+    #monthYear {
+        font-size: 30px; 
+    }
+}
