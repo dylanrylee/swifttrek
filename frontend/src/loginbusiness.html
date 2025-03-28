@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+  <link rel="stylesheet" href="loginbusiness.css">
+  <style>
+    body {
+      background-image: url('https://media.timeout.com/images/106150176/750/422/image.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      height: 100vh;
+      font-family: 'Numans', sans-serif;
+      padding-bottom: 80px; 
+    }
+
+    .container {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .centered-card {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background-color: rgba(0, 0, 0, 0.5); 
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .card-header h3 {
+      color: white;
+    }
+
+    .btn-guest, .btn-business, .btn-admin {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-guest {
+      background-color: #E8AA9B;
+      color: white;
+    }
+
+    .btn-guest:hover {
+      background-color: #d48f85;
+    }
+
+    .btn-business {
+      background-color: goldenrod;
+      color: white;
+    }
+
+    .btn-business:hover {
+      background-color: darkgoldenrod;
+    }
+
+    .btn-admin {
+      background-color: #008080;
+      color: white;
+    }
+
+    .btn-admin:hover {
+      background-color: #00695c;
+    }
+
+    .tagline {
+      font-size: 33px;
+      color: whitesmoke;
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+      font-style: italic;
+      position: absolute;
+      bottom: 40px;
+      width: 100%;
+    }
+
+    .navbar-brand img {
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    /* Footer styles */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: transparent; 
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      font-weight: bolder;
+    }
+
+    
+    @media (max-width: 576px) {
+      .card {
+        width: 90%;
+      }
+      .tagline {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="centered-card">
+      <div class="card">
+        <div class="card-header">
+          <h3>Sign In</h3>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Enter your username">
+            </div>
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+              </div>
+              <input type="password" class="form-control" placeholder="Enter your password">
+            </div>
+            <div class="remember">
+              <input type="checkbox"> Remember Me
+            </div>
+            <div class="form-group">
+              <input type="submit" value="Login" class="btn float-right login_btn" id="loginBtn">
+            </div>
+          </form>
+        </div>
+        <div class="card-footer">
+          <div class="links">
+            Don't have an account? <a href="#" id="signUpLink">Sign Up</a>
+          </div>
+          <div class="forgot-password">
+            <a href="#" id="forgotPasswordLink">Forgot your password?</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#">About Us</a>
+      <a href="#">Contact Us</a>
+    </div>
+    <div class="footer-logo">
+      <img src="https://static.vecteezy.com/system/resources/previews/041/041/333/non_2x/travel-app-logo-icon-brand-identity-sign-symbol-vector.jpg" alt="SwiftTrek Logo" style="height: 30px;">
+      <span>SwiftTrek</span>
+    </div>
+  </footer>
+
+  <script>
+    // Forget password
+    document.getElementById("forgotPasswordLink").addEventListener("click", function(event) {
+      event.preventDefault();
+      window.location.href = "forget_pass_business.html";
+    });
+
+    // Event listener for the Login button
+    document.getElementById("loginBtn").addEventListener("click", function(event) {
+      event.preventDefault(); // Prevent form submission
+      alert("Login button clicked!");
+      window.location.href = "businessportalscreen.html";
+    });
+
+    // Event listener for the Sign Up link
+    document.getElementById("signUpLink").addEventListener("click", function(event) {
+      event.preventDefault();
+      window.location.href = "signup_business.html";
+    });
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>
