@@ -1,24 +1,30 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import SelectAccountType from './guestUI/SelectAccountType';
-import GuestLogin from './guestUI/GuestLogin';
-import GuestHomePage from './guestUI/GuestHomePage';
-import PaymentCheckout from './guestUI/PaymentCheckout';
-import WriteReviewPage from './guestUI/WriteReviewPage';
-import CarRentalPage from './guestUI/CarRentalPage';
+import React, { Suspense, lazy } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // react router dom
+import { AuthProvider } from "./AuthContext"; // import Auth Context
+
+const SelectAccountType = lazy(() => import("./guestUI/SelectAccountType"));
+const GuestLogin = lazy(() => import("./guestUI/GuestLogin"));
+const GuestHomePage = lazy(() => import("./guestUI/GuestHomePage"));
+const PaymentCheckout = lazy(() => import("./guestUI/PaymentCheckout"));
+const WriteReviewPage = lazy(() => import("./guestUI/WriteReviewPage"));
+const CarRentalPage = lazy(() => import("./guestUI/CarRentalPage"));
 
 const App = () => {
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<SelectAccountType />} />
-                <Route path="/guest-login" element={<GuestLogin />} />
-                <Route path="/guest-home" element={<GuestHomePage />} /> 
-                <Route path="/payment-checkout" element={<PaymentCheckout />} />
-                <Route path="/write-review" element={<WriteReviewPage />} />
-                <Route path="/car-rental" element={<CarRentalPage />} />
-            </Routes>
-        </Router>
+        <AuthProvider>
+            <Router>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Routes>
+                        <Route path="/" element={<SelectAccountType />} />
+                        <Route path="/guest-login" element={<GuestLogin />} />
+                        <Route path="/guest-home" element={<GuestHomePage />} /> 
+                        <Route path="/payment-checkout" element={<PaymentCheckout />} />
+                        <Route path="/write-review" element={<WriteReviewPage />} />
+                        <Route path="/car-rental" element={<CarRentalPage />} />
+                    </Routes>
+                </Suspense>
+            </Router>
+        </AuthProvider>
     );
 };
 
