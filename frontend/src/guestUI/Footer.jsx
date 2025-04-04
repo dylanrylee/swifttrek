@@ -4,7 +4,7 @@ import styles from './Footer.module.css';
 const Footer = () => {
     return (
         <footer className={styles.footer}>
-            <p>© 2023 Travel Planner. All rights reserved.</p>
+            <p>© 2023 SwiftTrek. All rights reserved.</p>
         </footer>
     );
 };
