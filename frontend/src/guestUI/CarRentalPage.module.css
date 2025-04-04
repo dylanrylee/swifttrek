@@ -152,3 +152,17 @@
         padding: 20px;
     }
 }
+
+.thumbnail {
+    width: 100px;
+    height: auto;
+    border-radius: 6px;
+}
+
+.carImage {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}

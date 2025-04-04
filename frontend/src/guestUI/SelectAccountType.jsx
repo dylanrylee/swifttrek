@@ -1,8 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './SelectAccountType.module.css';
-import Header from './Header';
-import Footer from './Footer';
 
 const SelectAccountType = () => {
     const navigate = useNavigate();
