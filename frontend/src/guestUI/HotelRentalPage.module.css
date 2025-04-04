@@ -125,3 +125,71 @@
 .cancelButton:hover {
     background-color: #999;
 }
+
+/* General Styles for Input Fields */
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Search Bar Container */
+.searchBarContainer {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* Price Range Filter */
+.priceFilterContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 1rem 0;
+}
+
+.priceFilterContainer label {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-right: 5px;
+}
+
+.priceInput {
+    width: 120px;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.priceInput:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Styling for the input placeholder text */
+input::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+/* Add some spacing around the table */
+.tableContainer {
+    margin-top: 2rem;
+}
+
