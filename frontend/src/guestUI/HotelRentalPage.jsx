@@ -73,7 +73,7 @@ const HotelRentalPage = () => {
                                                 />
                                             )}
                                         </td>
-                                        <td>{hotel.name}</td>
+                                        <td>{hotel.hotelName}</td>
                                         <td>{hotel.location}</td>
                                         <td>${hotel.price}</td>
                                         <td>{hotel.rating ?? 'N/A'} / 5</td>
