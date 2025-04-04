@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cars.css">
+    <title>View Cars</title>
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        // Your Firebase Config (Replace with your actual Firebase config)
+        const firebaseConfig = {
+          apiKey: "AIzaSyDtVetfy-n7pPCCccj_EIArrlbHQGEZ2TQ",
+          authDomain: "seng513-project.firebaseapp.com",
+          projectId: "seng513-project",
+          storageBucket: "seng513-project.firebasestorage.app",
+          messagingSenderId: "888422866543",
+          appId: "1:888422866543:web:57f170ae027e8abfdff79a",
+          measurementId: "G-G9WNFE7KBL"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const carsCollection = collection(db, "cars");
+
+        // Function to fetch and display cars
+        window.fetchCars = async () => {
+            const querySnapshot = await getDocs(carsCollection);
+            const carTableBody = document.getElementById("carTableBody");
+            carTableBody.innerHTML = ""; // Clear existing data
+
+            querySnapshot.forEach((doc) => {
+                const car = doc.data();
+                carTableBody.innerHTML += `
+                    <tr>
+                        <td>${car['Car Name']}</td>
+                        <td>${car['Car Type']}</td>
+                        <td>${car['Price']}</td>
+                    </tr>
+                `;
+            });
+        };
+
+        // Fetch cars when page loads
+        window.onload = fetchCars;
+    </script>
+</head>
+<body>
+    <h2>Cars in the Database</h2>
+
+    <!-- Car Table -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Car Name</th>
+                <th>Car Type</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody id="carTableBody">
+            <!-- Car data will be inserted here -->
+        </tbody>
+    </table>
+
+</body>
+</html>

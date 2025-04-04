@@ -1,0 +1,202 @@
+/* Apply styles to the entire HTML and body */
+body {
+  background-image: url('https://media.timeout.com/images/106150176/750/422/image.jpg');
+  background-size: cover; 
+  background-repeat: no-repeat; /* Prevents the background image from repeating */
+  background-position: center center; /* Centers the background image */
+  height: 100vh; /* Sets the body's height to 100% of the viewport height */
+  font-family: 'Numans', sans-serif; /* Applies the 'Numans' font family */
+  color: aliceblue;
+}
+
+/* Container to center the content vertically and horizontally */
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centered-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+}
+
+/* Card styling */
+.card {
+  width: 100%; /* Default to 100% of its container */
+  max-width: 400px; /* Limit width to 400px */
+  height: auto; /* Height adjusts based on content */
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Header within the card */
+.card-header h3 { 
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Focus effect for input fields */
+input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Styling for the 'Remember Me' checkbox */
+.remember {
+  color: white;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Styling for the checkbox */
+.remember input {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+/* Styling for the login button */
+.login_btn {
+  color: black;
+  background-color: #FF7F50;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Hover effect for the login button */
+.login_btn:hover {
+  background-color: #FF6347;
+  color: white;
+}
+
+
+/* Styling for the links section */
+.links {
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Styling for links within the links section */
+.links a {
+  margin-left: 4px;
+  color: #FF7F50;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/* Hover effect for links */
+.links a:hover {
+  color: #FF6347;
+}
+
+/* Style for centering the 'Forgot your password?' link */
+.forgot-password {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; /* Optional: Adds space above the 'Forgot your password?' link */
+}
+
+.forgot-password a {
+  font-size: 15px; /* Optional: Adjust font size */
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+  color:white;
+}
+
+/* Media queries for responsiveness */
+
+/* For small screens like phones in portrait mode */
+@media (max-width: 576px) {
+  .card {
+      padding: 15px; /* Reduce padding for small screens */
+  }
+
+  .card-header h3 {
+      font-size: 1.5rem; /* Smaller font size for small screens */
+  }
+
+  .login_btn {
+      padding: 12px; /* Adjust button padding for smaller screens */
+  }
+
+  .remember input {
+      width: 18px; /* Make the checkbox smaller */
+      height: 18px;
+  }
+
+  .forgot-password a {
+      font-size: 14px; /* Adjust the font size of the link */
+  }
+}
+
+/* For medium screens (tablets and small laptops) */
+@media (min-width: 577px) and (max-width: 768px) {
+  .card {
+      width: 90%; 
+  }
+
+  .card-header h3 {
+      font-size: 1.75rem; 
+  }
+
+  .login_btn {
+      padding: 12px;
+  }
+}
+
+/* For larger screens (desktops) */
+@media (min-width: 769px) {
+  .card {
+      width: 400px; /* Use a fixed width for large screens */
+  }
+
+  .card-header h3 {
+      font-size: 2rem; /* Larger font size for larger screens */
+  }
+
+  .login_btn {
+      padding: 14px;
+  }
+}
+
+/* Footer styles */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: transparent; 
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  font-weight: bolder;
+}

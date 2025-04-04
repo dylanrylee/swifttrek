@@ -1,0 +1,197 @@
+/* Apply styles to the entire HTML and body */
+body {
+  background-image: url('https://media.timeout.com/images/106150176/750/422/image.jpg');
+  background-size: cover; /* Ensures the background image covers the entire viewport */
+  background-repeat: no-repeat; /* Prevents the background image from repeating */
+  background-position: center center; /* Centers the background image */
+  height: 100vh; /* Sets the body's height to 100% of the viewport height */
+  font-family: 'Numans', sans-serif; /* Applies the 'Numans' font family */
+}
+
+/* Container to center the content vertically and horizontally */
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Center the card container */
+.centered-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+}
+
+/* Card styling */
+.card {
+  width: 400px;
+  height: 370px;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Header within the card */
+.card-header h3 { 
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Focus effect for input fields */
+input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Styling for the 'Remember Me' checkbox */
+.remember {
+  color: white;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Styling for the checkbox */
+.remember input {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+/* Styling for the login button */
+.login_btn {
+  color: white;
+  background-color: #FF7F50
+  ;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Hover effect for the login button */
+.login_btn:hover {
+  background-color: #FF6347;
+  color: white;
+}
+
+/* Styling for the links section */
+.links {
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Styling for links within the links section */
+.links a {
+  margin-left: 4px;
+  color: #FF7F50;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/* Hover effect for links */
+.links a:hover {
+  color: #FF6347;
+  text-decoration: underline;
+}
+
+.login_btn {
+  width: 100%;
+}
+
+/* Style for centering the 'Forgot your password?' link */
+.forgot-password {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; /* Optional: Adds space above the 'Forgot your password?' link */
+
+}
+
+.forgot-password a {
+  font-size: 15px; /* Optional: Adjust font size */
+  color:skyblue;
+
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+  
+}
+
+/* Responsive Design */
+
+/* For small screens (phones in portrait mode) */
+@media (max-width: 576px) {
+  .card {
+      width: 90%; /* Make the card width responsive for smaller screens */
+      height: auto; /* Allow height to adjust dynamically */
+      padding: 15px; /* Reduce padding */
+  }
+
+  .card-header h3 {
+      font-size: 18px; /* Adjust header font size */
+  }
+
+  .login_btn {
+      padding: 12px; /* Increase padding for better touch accessibility */
+  }
+
+  .forgot-password a {
+      font-size: 14px; /* Adjust font size */
+  }
+}
+
+/* For medium screens (tablets in landscape mode) */
+@media (min-width: 577px) and (max-width: 768px) {
+  .card {
+      width: 80%; /* Adjust card width for tablet screens */
+      padding: 25px;
+  }
+
+  .card-header h3 {
+      font-size: 20px; /* Increase font size slightly */
+  }
+
+  .login_btn {
+      padding: 12px; /* Adjust padding */
+  }
+
+  .forgot-password a {
+      font-size: 14px;
+  }
+}
+
+/* For larger screens (desktops and larger devices) */
+@media (min-width: 769px) {
+  .card {
+      width: 400px; /* Set fixed width for larger screens */
+      height: 370px;
+      padding: 20px; /* Standard padding */
+  }
+
+  .card-header h3 {
+      font-size: 24px; /* Larger header font size */
+  }
+
+  .login_btn {
+      padding: 15px; /* Adjust padding for large screens */
+  }
+
+  .forgot-password a {
+      font-size: 16px;
+  }
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+}

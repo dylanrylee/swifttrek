@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up As Business</title>
+  <link rel="stylesheet" href="signup_business.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    <div class="row main">
+      <div class="main-login main-center">
+        <form class="form-horizontal" method="post" action="#">
+          <h1>Sign-Up Form</h1>
+          <div class="form-group">
+            <label for="name" class="cols-sm-2 control-label">Company Name</label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Enter your Name"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="address" class="cols-sm-2 control-label">Company Address</label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" name="address" id="address" placeholder="Enter your Address"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="cols-sm-2 control-label">Company Email</label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" name="email" id="email" placeholder="Enter your Email"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="username" class="cols-sm-2 control-label">Username</label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" name="username" id="username" placeholder="Create an Username"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="cols-sm-2 control-label">Password</label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Create a Password"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Confirm your Password"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Register Button (Now looks the same as Login) -->
+          <div class="form-group">
+            <button type="button" class="btn btn-primary btn-block login-button" id="registerBtn">Register</button>
+          </div>
+
+          <div class="form-group">
+            <button type="button" class="btn btn-primary btn-block login-button" id="registerBtn">Go Back</button>
+          </div>
+
+        
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#">About Us</a>
+      <a href="#">Contact Us</a>
+    </div>
+    <div class="footer-logo">
+      <img src="https://static.vecteezy.com/system/resources/previews/041/041/333/non_2x/travel-app-logo-icon-brand-identity-sign-symbol-vector.jpg" alt="SwiftTrek Logo" style="height: 30px;">
+      <span>SwiftTrek</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("registerBtn").addEventListener("click", function(event) {
+      event.preventDefault(); 
+      alert("Register button clicked!");
+      window.location.href = "businessportalscreen.html"; 
+    });
+
+    document.getElementById("backToLoginLink").addEventListener("click", function(event) {
+      event.preventDefault(); 
+      window.location.href = "loginbusiness.html"; 
+    });
+  </script>
+
+</body>
+</html>

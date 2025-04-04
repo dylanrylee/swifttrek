@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Rental Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="cars.css">
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDtVetfy-n7pPCCccj_EIArrlbHQGEZ2TQ",
+            authDomain: "seng513-project.firebaseapp.com",
+            projectId: "seng513-project",
+            storageBucket: "seng513-project.firebasestorage.app",
+            messagingSenderId: "888422866543",
+            appId: "1:888422866543:web:57f170ae027e8abfdff79a",
+            measurementId: "G-G9WNFE7KBL"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const carsCollection = collection(db, "cars");
+
+        // Function to fetch and display cars
+        window.fetchCars = async () => {
+            const querySnapshot = await getDocs(carsCollection);
+            const carTableBody = document.getElementById("carTableBody");
+            carTableBody.innerHTML = ""; // Clear existing data
+
+            querySnapshot.forEach((doc) => {
+                const car = doc.data();
+                carTableBody.innerHTML += `
+                    <tr id="${doc.id}">
+                        <td>${car['Car Name']}</td>
+                        <td>${car['Car Type']}</td>
+                        <td>$${car['Price']}</td>
+                        <td>
+                            <button onclick="removeCar('${doc.id}')">Remove</button>
+                            <button onclick="editCar('${doc.id}', '${car['Car Name']}', '${car['Car Type']}', ${car['Price']})">Edit</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        };
+
+        // Fetch cars when page loads
+        window.onload = fetchCars;
+
+        // Function to add a new car to the database
+        window.addCar = async () => {
+            const carName = document.getElementById("carName").value;
+            const carType = document.getElementById("carType").value;
+            const price = document.getElementById("price").value;
+
+            try {
+                await addDoc(carsCollection, {
+                    "Car Name": carName,
+                    "Car Type": carType,
+                    "Price": price
+                });
+                alert("Car added successfully!");
+                fetchCars(); // Refresh the car list
+            } catch (error) {
+                console.error("Error adding car: ", error);
+                alert("Failed to add car.");
+            }
+        };
+
+        // Function to remove a car from the database
+        window.removeCar = async (carId) => {
+            try {
+                const carDocRef = doc(db, "cars", carId);
+                await deleteDoc(carDocRef);
+                alert("Car removed successfully!");
+                fetchCars(); // Refresh the car list
+            } catch (error) {
+                console.error("Error removing car: ", error);
+                alert("Failed to remove car.");
+            }
+        };
+
+        // Function to edit a car in the database
+        window.editCar = (carId, carName, carType, price) => {
+            const newCarName = prompt("Edit Car Name", carName);
+            const newCarType = prompt("Edit Car Type", carType);
+            const newPrice = prompt("Edit Price", price);
+
+            if (newCarName && newCarType && newPrice) {
+                const carDocRef = doc(db, "cars", carId);
+                updateDoc(carDocRef, {
+                    "Car Name": newCarName,
+                    "Car Type": newCarType,
+                    "Price": newPrice
+                })
+                .then(() => {
+                    alert("Car details updated successfully!");
+                    fetchCars(); // Refresh the car list
+                })
+                .catch((error) => {
+                    console.error("Error updating car: ", error);
+                    alert("Failed to update car.");
+                });
+            }
+        };
+    </script>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: goldenrod;">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-car me-2"></i> Manage Your Cars
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="businessportalscreen.html">
+                        <i class="fas fa-home me-2"></i>Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="managebooking.html">
+                        <i class="fas fa-book me-2"></i>Manage Booking
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="notification_business.html">
+                        <i class="fas fa-bell me-2"></i>Notifications
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="settings_business.html">
+                        <i class="fas fa-cogs me-2"></i>Settings
+                    </a>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center ms-auto">
+                <span class="text-white me-3">Hi, <strong>Profile Name</strong></span>
+                <a href="loginbusiness.html" class="text-white">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Admin Panel Content -->
+<div class="container">
+    <h2>Cars in the Database</h2>
+
+    <!-- Add Car Form -->
+    <div class="form-container">
+        <h3>Add a Car</h3>
+        <form onsubmit="event.preventDefault(); addCar();">
+            <input type="text" id="carName" placeholder="Car Name" required /><br>
+            <input type="text" id="carType" placeholder="Car Type" required /><br>
+            <input type="number" id="price" placeholder="Price" required /><br>
+            <button type="submit" class="btn btn-primary">Add Car</button>
+        </form>
+    </div>
+
+    <!-- Car Table -->
+    <div class="table-container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Car Name</th>
+                    <th>Car Type</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="carTableBody">
+                <!-- Car data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Back Button -->
+<div class="text-center mt-4">
+    <!-- Go Back Button -->
+  <button onclick="window.history.back();" class="btn btn-info mb-3">
+    <i class="fas fa-arrow-left"></i> Go Back
+    </button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="cars.js"></script>
+</body>
+</html>
