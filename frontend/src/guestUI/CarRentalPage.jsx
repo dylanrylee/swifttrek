@@ -64,13 +64,13 @@ const CarRentalPage = () => {
         });
     };
 
-    // Updated Write Review click handler: includes carID along with other car details.
+    // Updated Write Review click handler: passes carId along with other car details.
     const handleWriteReviewClick = () => {
         if (!selectedCar) return;
     
         navigate('/write-review', {
             state: {
-                carID: selectedCar.id,
+                carId: selectedCar.id,
                 model: selectedCar.model,
                 type: selectedCar.type,
                 location: selectedCar.location

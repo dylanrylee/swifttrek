@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { addDoc, collection } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 import { db } from '../firebase';
 import styles from './WriteReviewPage.module.css';
 import Header from './Header';
@@ -8,14 +9,14 @@ import Footer from './Footer';
 
 const WriteReviewPage = () => {
     const locationHook = useLocation();
-    // Expecting car details including carID to be passed in the state
-    const { model, type, location: carLocation, carID } = locationHook.state || {};
+    const navigate = useNavigate();
+    // Destructure carId (with lowercase "d") along with other details from the state
+    const { model, type, location: carLocation, carId } = locationHook.state || {};
 
     const [rating, setRating] = useState(0);
     const [description, setDescription] = useState('');
     const maxCharacters = 200;
 
-    // Handle changes to the review description with a character limit
     const handleDescriptionChange = (e) => {
         const input = e.target.value;
         if (input.length <= maxCharacters) {
@@ -23,19 +24,25 @@ const WriteReviewPage = () => {
         }
     };
 
-    // Submit review to Firestore
+    // Submit review to Firestore and navigate to /guest-home after submission
     const handleSubmit = async () => {
-        // Replace this with the actual guestID (e.g., from your auth context)
-        const guestID = 'guest123';
+        const auth = getAuth();
+        const currentUser = auth.currentUser;
+        if (!currentUser) {
+            alert('User is not authenticated.');
+            return;
+        }
+        const guestID = currentUser.uid;
+
         try {
             await addDoc(collection(db, 'reviewed_cars'), {
-                carID: carID || 'unknown',
+                carId: carId || 'unknown', // Save using the same key you want in Firestore
                 description,
                 guestID,
-                // Store the rating as a fraction string (e.g., "3/5")
                 ratings: `${rating}/5`
             });
-            alert('Review submitted successfully!');
+            alert('Review posted!');
+            navigate('/guest-home');
         } catch (error) {
             console.error('Error submitting review:', error);
             alert('Failed to submit review.');
