@@ -8,9 +8,16 @@ import Footer from './Footer';
 const PaymentCheckout = () => {
     const [showDebitForm, setShowDebitForm] = useState(false);
     const [paymentConfirmed, setPaymentConfirmed] = useState(false);
+
+    const [cardHolder, setCardHolder] = useState('');
+    const [cardNumber, setCardNumber] = useState('');
+    const [expiry, setExpiry] = useState('');
+    const [cvv, setCvv] = useState('');
+
     const navigate = useNavigate();
     const location = useLocation();
 
+<<<<<<< Updated upstream
     const [cardHolder, setCardHolder] = useState('');
     const [cardNumber, setCardNumber] = useState('');
     const [expiry, setExpiry] = useState('');
@@ -18,6 +25,10 @@ const PaymentCheckout = () => {
 
     const { selectedCar, fromDate, toDate } = location.state || {};
 
+=======
+    const { selectedCar, fromDate, toDate } = location.state || {};
+
+>>>>>>> Stashed changes
     const formatDate = (dateStr) => {
         if (!dateStr) return '';
         const options = { year: 'numeric', month: 'short', day: 'numeric' };

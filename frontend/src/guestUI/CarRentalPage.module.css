@@ -170,6 +170,7 @@
     margin-bottom: 1rem;
 }
 
+<<<<<<< Updated upstream
 
 .searchBarContainer {
     display: flex;
@@ -204,6 +205,8 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+=======
+>>>>>>> Stashed changes
 .confirmButton {
     padding: 10px 20px;
     border: none;
@@ -233,4 +236,7 @@
 .cancelButton1:hover {
     background-color: darkred;
 }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

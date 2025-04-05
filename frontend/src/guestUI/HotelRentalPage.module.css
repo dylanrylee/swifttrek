@@ -19,6 +19,10 @@
     max-width: 800px; 
     padding: 2rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+<<<<<<< Updated upstream
+=======
+    max-width: 800px; 
+>>>>>>> Stashed changes
     width: 90%;
     margin: auto;
     text-align: center;

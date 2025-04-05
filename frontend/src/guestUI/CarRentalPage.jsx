@@ -26,6 +26,10 @@ const CarRentalPage = () => {
 
     const today = new Date().toISOString().split('T')[0];
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     useEffect(() => {
         const fetchCars = async () => {
             try {
@@ -42,6 +46,9 @@ const CarRentalPage = () => {
 
         fetchCars();
     }, []);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
     const handleDetailsClick = (car) => {
@@ -59,8 +66,11 @@ const CarRentalPage = () => {
 
     const handleRentClick = () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         navigate('/payment-checkout'); 
 =======
+=======
+>>>>>>> Stashed changes
         setShowRentPopup(true);
     };
 
@@ -72,6 +82,9 @@ const CarRentalPage = () => {
                 toDate
             }
         });
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     };
 
@@ -133,11 +146,32 @@ const CarRentalPage = () => {
                             <tbody>
                                 {filteredCars.map((car) => (
                                     <tr key={car.id}>
+<<<<<<< Updated upstream
                                         <td>{car.name}</td>
                                         <td>${car.price}</td>
                                         <td>{car.avgRating} / 5</td>
                                         <td>
                                             <button className={styles.detailsButton} onClick={() => handleDetailsClick(car)}>
+=======
+                                        <td>
+                                            {car.imageUrl && (
+                                                <img
+                                                    src={car.imageUrl}
+                                                    alt={car.model}
+                                                    className={styles.thumbnail}
+                                                />
+                                            )}
+                                        </td>
+                                        <td>{car.model}</td>
+                                        <td>{car.type}</td>
+                                        <td>${car.price}</td>
+                                        <td>{car.availability}</td>
+                                        <td>
+                                            <button
+                                                className={styles.detailsButton}
+                                                onClick={() => handleDetailsClick(car)}
+                                            >
+>>>>>>> Stashed changes
                                                 Details
                                             </button>
                                         </td>
@@ -146,6 +180,10 @@ const CarRentalPage = () => {
                             </tbody>
                         </table>
                     </div>
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
                     {showDetails && selectedCar && (
                         <div className={styles.popup}>
                             <div className={styles.popupContent}>
