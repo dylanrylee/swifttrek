@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Car Rental Admin Panel</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="cars.css">
+</head>
+<body>
+
+  <!-- Navbar at the very top -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: goldenrod;">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-car me-2"></i> Manage Your Cars
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="businessportalscreen.html">
+                        <i class="fas fa-home me-2"></i>Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="managebooking.html">
+                        <i class="fas fa-book me-2"></i>Manage Booking
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="notification_business.html">
+                        <i class="fas fa-bell me-2"></i>Notifications
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="settings_business.html">
+                        <i class="fas fa-cogs me-2"></i>Settings
+                    </a>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center ms-auto"> <!-- Push profile to the right -->
+              <span class="text-white me-3">Hi, <strong id="company-name">Loading...</strong></span>
+              <a class="nav-link text-white" href="loginbusiness.html">
+                  <i class="fas fa-sign-out-alt me-2"></i> Logout
+              </a>
+          </div>
+    </div>
+  </nav>
+
+  <!-- Main container -->
+    <div class="container mt-4">
+        <h2>Search a Car</h2>
+        <input type="text" id="searchInput" class="form-control mb-4" placeholder="Search by Car Model or Location..." onkeyup="searchCars()" />
+
+        <h2 id="formHeader">Add a Car</h2>
+        <form id="carForm" onsubmit="event.preventDefault(); addCar();" class="mb-4">
+          <div class="row g-2">
+            <div class="col-md-6">
+              <input type="text" id="imageUrl" class="form-control" placeholder="Image URL" required />
+            </div>
+            <div class="col-md-6">
+              <input type="number" id="companyId" class="form-control" placeholder="Company ID" required />
+            </div>
+            <div class="col-md-6">
+              <input type="number" id="carId" class="form-control" placeholder="Car ID" required />
+            </div>
+            <div class="col-md-6">
+              <input type="text" id="model" class="form-control" placeholder="Car Model" required />
+            </div>
+            <div class="col-md-6">
+              <input type="text" id="type" class="form-control" placeholder="Car Type" required />
+            </div>
+            <div class="col-md-6">
+              <input type="number" id="price" class="form-control" placeholder="Price" required />
+            </div>
+            <div class="col-md-6">
+              <input type="text" id="location" class="form-control" placeholder="Pickup & Drop Location" required />
+            </div>
+            <div class="col-md-6">
+              <select id="availability" class="form-select" required>
+                <option value="">Select Availability</option>
+                <option value="Available">Available</option>
+                <option value="Booked">Booked</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Save Car</button>
+        </form>
+
+        <!-- Car List Table -->
+        <h2>Car List</h2>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Company ID</th>
+              <th>Car ID</th>
+              <th>Model</th>
+              <th>Type</th>
+              <th>Price</th>
+              <th>Location</th>
+              <th>Availability</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="carTableBody"></tbody>
+        </table>
+    </div>
+
+  <!-- Firebase Scripts -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDtVetfy-n7pPCCccj_EIArrlbHQGEZ2TQ",
+      authDomain: "seng513-project.firebaseapp.com",
+      projectId: "seng513-project",
+      storageBucket: "seng513-project.appspot.com",
+      messagingSenderId: "888422866543",
+      appId: "1:888422866543:web:57f170ae027e8abfdff79a",
+      measurementId: "G-G9WNFE7KBL"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    const carsCollection = collection(db, "cars");
+
+    let currentCompanyId = 2; // Dynamically change based on user login
+    let editingDocId = null;
+
+    window.fetchCars = async () => {
+      const carTableBody = document.getElementById("carTableBody");
+      carTableBody.innerHTML = "";
+
+      try {
+        const querySnapshot = await getDocs(carsCollection);
+        querySnapshot.forEach((docSnap) => {
+          const car = docSnap.data();
+          if (car.companyId === currentCompanyId) {
+            const rowHTML = `
+              <tr id="${docSnap.id}">
+                <td><img src="${car.imageUrl}" style="width: 100px;"></td>
+                <td>${car.companyId}</td>
+                <td>${car.carId}</td>
+                <td>${car.model}</td>
+                <td>${car.type}</td>
+                <td>$${car.price}</td>
+                <td>${car.location}</td>
+                <td>${car.availability}</td>
+                <td>
+                  <button onclick="editCar('${docSnap.id}')" class="btn btn-warning btn-sm">Edit</button>
+                  <button onclick="removeCar('${docSnap.id}')" class="btn btn-danger btn-sm">Remove</button>
+                </td>
+              </tr>`;
+            carTableBody.innerHTML += rowHTML;
+          }
+        });
+      } catch (error) {
+        console.error("Error fetching cars:", error);
+      }
+    };
+
+    // Check the user authentication state
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            const email = user.email;
+            try {
+                const q = query(collection(db, "business_owners"), where("email", "==", email));
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+                    const docSnap = querySnapshot.docs[0];
+                    const companyName = docSnap.data().companyName;
+                    document.getElementById("company-name").innerText = companyName;
+                } else {
+                    document.getElementById("company-name").innerText = "No company data found.";
+                }
+            } catch (error) {
+                console.error("Error fetching company name: ", error);
+                document.getElementById("company-name").innerText = "Error loading company name.";
+            }
+        } else {
+            document.getElementById("company-name").innerText = "User is not signed in.";
+        }
+    });
+
+    window.addCar = async () => {
+      const imageUrl = document.getElementById("imageUrl").value;
+      const companyId = parseInt(document.getElementById("companyId").value);
+      const carId = parseInt(document.getElementById("carId").value);
+      const model = document.getElementById("model").value;
+      const type = document.getElementById("type").value;
+      const price = parseFloat(document.getElementById("price").value);
+      const location = document.getElementById("location").value;
+      const availability = document.getElementById("availability").value;
+
+      const carData = { imageUrl, companyId, carId, model, type, price, location, availability };
+
+      try {
+        if (editingDocId) {
+          const docRef = doc(db, "cars", editingDocId);
+          await updateDoc(docRef, carData);
+          alert("Car updated!");
+          editingDocId = null;
+        } else {
+          await addDoc(carsCollection, carData);
+          alert("Car added!");
+        }
+        document.getElementById("carForm").reset();  // Reset form fields
+        fetchCars();
+      } catch (error) {
+        console.error("Error saving car: ", error);
+        alert("Failed to save car.");
+      }
+    };
+
+    window.removeCar = async (carDocId) => {
+      try {
+        await deleteDoc(doc(db, "cars", carDocId));
+        alert("Car removed!");
+        fetchCars();
+      } catch (error) {
+        console.error("Error removing car: ", error);
+        alert("Failed to remove car.");
+      }
+    };
+
+    window.editCar = async (docId) => {
+      try {
+        const docSnap = await getDocs(carsCollection);
+        docSnap.forEach((carDoc) => {
+          if (carDoc.id === docId) {
+            const car = carDoc.data();
+            document.getElementById("imageUrl").value = car.imageUrl;
+            document.getElementById("companyId").value = car.companyId;
+            document.getElementById("carId").value = car.carId;
+            document.getElementById("model").value = car.model;
+            document.getElementById("type").value = car.type;
+            document.getElementById("price").value = car.price;
+            document.getElementById("location").value = car.location;
+            document.getElementById("availability").value = car.availability;
+            editingDocId = docId;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        });
+      } catch (error) {
+        console.error("Error loading car for edit:", error);
+      }
+    };
+
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+      const keyword = e.target.value.toLowerCase();
+      const rows = document.querySelectorAll("#carTableBody tr");
+      rows.forEach(row => {
+        const model = row.cells[3].textContent.toLowerCase();
+        const carId = row.cells[2].textContent.toLowerCase();
+        const location = row.cells[6].textContent.toLowerCase();
+        row.style.display = (model.includes(keyword) || carId.includes(keyword) || location.includes(keyword)) ? "" : "none";
+      });
+    });
+
+    window.onload = fetchCars;
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

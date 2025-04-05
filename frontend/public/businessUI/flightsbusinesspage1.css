@@ -1,0 +1,229 @@
+/* Custom CSS */
+body {
+    background-image: url('https://www.libertytravel.com/sites/default/files/styles/full_size/public/flight-hero.jpg?itok=LKyRwKDq');
+    background-size: cover;
+    background-position: center;
+    color: black;
+    overflow-x: hidden; 
+    background-repeat: no-repeat; 
+    font-weight: bold;
+    position: relative;
+}
+
+.container {
+    max-height: calc(100vh - 100px); 
+    overflow-y: scroll;
+    scrollbar-width: none; 
+    margin-top: 30px;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+}
+
+.btn-primary {
+    background-color: black;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #333; 
+}
+
+.table {
+    margin-top: 20px;
+    background-color: white; /* Set background color of the table to white */
+}
+
+.table th {
+    background-color: goldenrod; /* Table headers will have goldenrod background */
+    color: black; /* Text color of headers */
+}
+
+.table td {
+    text-align: center;
+    background-color: white; /* Set the background color of table cells to white */
+}
+
+.table td button {
+    margin-right: 5px; 
+}
+
+.modal-header {
+    background-color: #5143d9;
+    color: white;
+}
+
+.modal-footer button {
+    color: white;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+input[type="text"] {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: black;
+}
+
+input[type="number"] {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: black;
+}
+
+#searchFlight {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: black;
+    width: 300px;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.navbar {
+    background-color: goldenrod;
+    transition: height 0.3s ease; 
+    font-weight: normal;
+}
+
+.navbar.scrolled {
+    height: 100px; 
+}
+
+.navbar .navbar-brand {
+    font-size: 23px;
+    font-weight: bold;
+    color: #f5f5f5;
+}
+
+.navbar-nav .nav-link {
+    color: #f5f5f5; 
+    font-size: 1.1rem;
+}
+
+.navbar-nav .nav-link:hover {
+    font-weight: bold;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 576px) {
+    body {
+        font-size: 14px; 
+    }
+
+    .container h2 {
+        font-size: 1.5rem;
+    }
+
+    .btn-primary {
+        font-size: 0.9rem;
+    }
+
+    #searchFlight {
+        width: 100%; 
+    }
+
+    .table th, .table td {
+        font-size: 0.9rem; 
+    }
+
+    .container {
+        margin-top: 15px;
+    }
+
+    .modal-footer button {
+        font-size: 0.8rem; 
+    }
+}
+
+/* For medium screens (up to 768px) */
+@media (max-width: 768px) {
+    .container {
+        margin-top: 20px;
+    }
+
+    .table th, .table td {
+        font-size: 1rem; 
+    }
+
+    #searchFlight {
+        width: 80%; 
+    }
+
+    .btn-primary {
+        font-size: 1rem; 
+    }
+
+    .container h2 {
+        font-size: 1.6rem;
+    }
+}
+
+/* For larger screens (up to 992px) */
+@media (max-width: 992px) {
+    .table th, .table td {
+        font-size: 1.1rem; 
+    }
+
+    #searchFlight {
+        width: 250px;
+    }
+
+    .btn-primary {
+        font-size: 1.1rem; 
+    }
+
+    .container h2 {
+        font-size: 1.8rem;
+    }
+}
+
+/* For larger screens (up to 1200px) */
+@media (max-width: 1200px) {
+    .container {
+        margin-top: 40px; 
+    }
+
+    .table th, .table td {
+        font-size: 1.1rem;
+    }
+
+    .btn-primary {
+        font-size: 1.1rem; 
+    }
+
+    .container h2 {
+        font-size: 2rem;
+    }
+}
+
+/* For very large screens (above 1200px) */
+@media (min-width: 1200px) {
+    .container {
+        margin-top: 50px; 
+    }
+
+    .table th, .table td {
+        font-size: 1.2rem; 
+    }
+
+    .btn-primary {
+        font-size: 1.2rem;
+    }
+
+    .container h2 {
+        font-size: 2.2rem;
+    }
+}
+
+.nav-link:hover {
+    font-weight: bold;
+}
