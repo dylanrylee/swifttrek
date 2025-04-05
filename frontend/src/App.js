@@ -9,6 +9,8 @@ const PaymentCheckout = lazy(() => import("./guestUI/PaymentCheckout"));
 const WriteReviewPage = lazy(() => import("./guestUI/WriteReviewPage"));
 const CarRentalPage = lazy(() => import("./guestUI/CarRentalPage"));
 const HotelRentalPage = lazy(() => import("./guestUI/HotelRentalPage"));
+const PlaneBookingPage = lazy(() => import("./guestUI/PlaneBookingPage"));
+
 
 const App = () => {
     return (
@@ -23,6 +25,7 @@ const App = () => {
                         <Route path="/write-review" element={<WriteReviewPage />} />
                         <Route path="/car-rental" element={<CarRentalPage />} />
                         <Route path="/hotel-rental" element={<HotelRentalPage />} />
+                        <Route path="/plane-booking" element={<PlaneBookingPage />} />
                     </Routes>
                 </Suspense>
             </Router>

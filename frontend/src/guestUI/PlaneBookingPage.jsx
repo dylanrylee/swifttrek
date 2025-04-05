@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
-import styles from './CarRentalPage.module.css';
+import styles from './PlaneBookingPage.module.css';
 import Header from './Header';
 import Footer from './Footer';
 
-const CarRentalPage = () => {
-    const [cars, setCars] = useState([]);
-    const [selectedCar, setSelectedCar] = useState(null);
+const BookFlightPage = () => {
+    const [flights, setFlights] = useState([]);
+    const [selectedFlight, setSelectedFlight] = useState(null);
     const [showDetails, setShowDetails] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [minPrice, setMinPrice] = useState('');
@@ -16,48 +16,50 @@ const CarRentalPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchCars = async () => {
+        const fetchFlights = async () => {
             try {
-                const querySnapshot = await getDocs(collection(db, 'cars'));
-                const carList = querySnapshot.docs.map(doc => ({
+                const querySnapshot = await getDocs(collection(db, 'flights'));
+                const flightList = querySnapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data()
                 }));
-                setCars(carList);
+                setFlights(flightList);
             } catch (error) {
-                console.error('Error fetching cars:', error);
+                console.error('Error fetching flights:', error);
             }
         };
 
-        fetchCars();
+        fetchFlights();
     }, []);
 
-    const filteredCars = cars.filter((car) => {
+    const filteredFlights = flights.filter((flight) => {
         const query = searchQuery.toLowerCase();
+
         const matchesSearch =
-            car.model.toLowerCase().includes(query) ||
-            car.type.toLowerCase().includes(query) ||
-            (car.location && car.location.toLowerCase().includes(query));
+            flight.flightNumber.toLowerCase().includes(query) ||
+            flight.departureCity.toLowerCase().includes(query) ||
+            flight.arrivalCity.toLowerCase().includes(query) ||
+            (flight.type && flight.type.toLowerCase().includes(query));
 
         const matchesPrice =
-            (minPrice ? car.price >= parseFloat(minPrice) : true) &&
-            (maxPrice ? car.price <= parseFloat(maxPrice) : true);
+            (minPrice ? flight.ticketPrice >= parseFloat(minPrice) : true) &&
+            (maxPrice ? flight.ticketPrice <= parseFloat(maxPrice) : true);
 
         return matchesSearch && matchesPrice;
     });
 
-    const handleDetailsClick = (car) => {
-        setSelectedCar(car);
+    const handleDetailsClick = (flight) => {
+        setSelectedFlight(flight);
         setShowDetails(true);
     };
 
     const handleClosePopup = () => {
-        setSelectedCar(null);
+        setSelectedFlight(null);
         setShowDetails(false);
     };
 
-    const handleRentClick = () => {
-        navigate('/payment-checkout');
+    const handleBookClick = () => {
+        navigate('/payment-checkout', { state: { flight: selectedFlight } });
     };
 
     const handleWriteReviewClick = () => {
@@ -69,71 +71,78 @@ const CarRentalPage = () => {
             <Header hideTabs={false} />
             <div className={styles.content}>
                 <div className={styles.whiteBox}>
-                    <h1 className={styles.heading}>Car Rental</h1>
+                    <h1 className={styles.heading}>Book a Flight</h1>
 
-                    {/* Search and Price Filter */}
                     <div className={styles.searchBarContainer}>
                         <input
                             type="text"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="Search by model, type, or location..."
+                            placeholder="Search by flight number, city, or type..."
                             className={styles.searchBar}
                         />
                     </div>
+
                     <div className={styles.priceFilterContainer}>
-                        <label>Min Price:</label>
+                        <label>Min Price: </label>
                         <input
                             type="number"
                             value={minPrice}
                             onChange={(e) => setMinPrice(e.target.value)}
-                            placeholder="Min"
+                            placeholder="Min Price"
                             className={styles.priceInput}
                         />
-                        <label>Max Price:</label>
+                        <label>Max Price: </label>
                         <input
                             type="number"
                             value={maxPrice}
                             onChange={(e) => setMaxPrice(e.target.value)}
-                            placeholder="Max"
+                            placeholder="Max Price"
                             className={styles.priceInput}
                         />
                     </div>
 
-                    {/* Table */}
                     <div className={styles.tableContainer}>
-                        <table className={styles.carTable}>
+                        <table className={styles.flightTable}>
                             <thead>
                                 <tr>
                                     <th>Image</th>
-                                    <th>Model</th>
+                                    <th>Flight Number</th>
                                     <th>Type</th>
-                                    <th>Price/Day</th>
-                                    <th>Availability</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Departure</th>
+                                    <th>Duration</th>
+                                    <th>Seats</th>
+                                    <th>Price</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredCars.length > 0 ? (
-                                    filteredCars.map((car) => (
-                                        <tr key={car.id}>
+                                {filteredFlights.length > 0 ? (
+                                    filteredFlights.map((flight) => (
+                                        <tr key={flight.id}>
                                             <td>
-                                                {car.imageUrl && (
+                                                {flight.imageUrl && (
                                                     <img
-                                                        src={car.imageUrl}
-                                                        alt={car.model}
+                                                        src={flight.imageUrl}
+                                                        alt={`Flight ${flight.flightNumber}`}
                                                         className={styles.thumbnail}
                                                     />
                                                 )}
                                             </td>
-                                            <td>{car.model}</td>
-                                            <td>{car.type}</td>
-                                            <td>${car.price}</td>
-                                            <td>{car.availability}</td>
+                                            <td>{flight.flightNumber}</td>
+                                            <td>{flight.type}</td>
+                                            <td>{flight.departureCity}</td>
+                                            <td>{flight.arrivalCity}</td>
+                                            <td>{flight.departureTime}</td>
+                                            <td>{flight.duration}</td>
+                                            <td>{flight.availableSeats}</td>
+                                            <td>${flight.ticketPrice}</td>
                                             <td>
                                                 <button
                                                     className={styles.detailsButton}
-                                                    onClick={() => handleDetailsClick(car)}
+                                                    onClick={() => handleDetailsClick(flight)}
                                                 >
                                                     Details
                                                 </button>
@@ -142,8 +151,8 @@ const CarRentalPage = () => {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="6" style={{ textAlign: 'center' }}>
-                                            No cars match your search.
+                                        <td colSpan="10" style={{ textAlign: 'center' }}>
+                                            No flights match your search.
                                         </td>
                                     </tr>
                                 )}
@@ -151,28 +160,33 @@ const CarRentalPage = () => {
                         </table>
                     </div>
 
-                    {/* Car Details Popup */}
-                    {showDetails && selectedCar && (
+                    {showDetails && selectedFlight && (
                         <div className={styles.popup}>
                             <div className={styles.popupContent}>
-                                <h2>{selectedCar.model} Details</h2>
-                                {selectedCar.imageUrl && (
+                                <h2>Flight {selectedFlight.flightNumber} Details</h2>
+                                {selectedFlight.imageUrl && (
                                     <img
-                                        src={selectedCar.imageUrl}
-                                        alt={selectedCar.model}
+                                        src={selectedFlight.imageUrl}
+                                        alt={`Flight ${selectedFlight.flightNumber}`}
                                         className={styles.carImage}
                                     />
                                 )}
-                                <p><strong>Car ID:</strong> {selectedCar.carId}</p>
-                                <p><strong>Company ID:</strong> {selectedCar.companyId}</p>
-                                <p><strong>Type:</strong> {selectedCar.type}</p>
-                                <p><strong>Location:</strong> {selectedCar.location}</p>
-                                <p><strong>Price per Day:</strong> ${selectedCar.price}</p>
-                                <p><strong>Availability:</strong> {selectedCar.availability}</p>
-                                <p><strong>Average Rating:</strong> {selectedCar.avgRating ?? 'N/A'} / 5</p>
+                                <p><strong>Company ID:</strong> {selectedFlight.companyId}</p>
+                                <p><strong>Type:</strong> {selectedFlight.type}</p>
+                                <p><strong>Departure City:</strong> {selectedFlight.departureCity}</p>
+                                <p><strong>Departure Time:</strong> {selectedFlight.departureTime}</p>
+                                <p><strong>Arrival City:</strong> {selectedFlight.arrivalCity}</p>
+                                <p><strong>Arrival Time:</strong> {selectedFlight.arrivalTime}</p>
+                                <p><strong>Duration:</strong> {selectedFlight.duration}</p>
+                                <p><strong>Available Seats:</strong> {selectedFlight.availableSeats}</p>
+                                <p><strong>Ticket Price:</strong> ${selectedFlight.ticketPrice}</p>
                                 <div className={styles.buttonContainer}>
-                                    <button className={styles.rentButton} onClick={handleRentClick}>
-                                        Rent
+                                    <button
+                                        className={styles.rentButton}
+                                        onClick={handleBookClick}
+                                        disabled={selectedFlight.availableSeats === 0}
+                                    >
+                                        {selectedFlight.availableSeats === 0 ? 'Sold Out' : 'Book'}
                                     </button>
                                     <button className={styles.cancelButton} onClick={handleClosePopup}>
                                         Cancel
@@ -195,4 +209,4 @@ const CarRentalPage = () => {
     );
 };
 
-export default CarRentalPage;
+export default BookFlightPage;
