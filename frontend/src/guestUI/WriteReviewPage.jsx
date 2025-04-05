@@ -93,7 +93,12 @@ const WriteReviewPage = () => {
 
                     {/* Buttons */}
                     <div className={styles.buttonContainer}>
-                        <button className={styles.cancelButton}>Cancel</button>
+                        <button
+                            className={styles.cancelButton}
+                            onClick={() => navigate(-1)}
+                        >
+                            Cancel
+                        </button>
                         <button className={styles.submitButton} onClick={handleSubmit}>
                             Post Review
                         </button>
