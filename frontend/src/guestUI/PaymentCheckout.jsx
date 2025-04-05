@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styles from './PaymentCheckout.module.css';
 import { FaCcVisa, FaCcMastercard, FaCcPaypal, FaCheckCircle } from 'react-icons/fa';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -12,7 +14,7 @@ const PaymentCheckout = () => {
     const [cardHolder, setCardHolder] = useState('');
     const [cardNumber, setCardNumber] = useState('');
     const [expiry, setExpiry] = useState('');
-    const [cvv, setCvv] = useState('');    
+    const [cvv, setCvv] = useState('');
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -25,13 +27,24 @@ const PaymentCheckout = () => {
         return new Date(dateStr).toLocaleDateString(undefined, options);
     };
 
+    const markCarAsBooked = async (carId) => {
+        try {
+            const carRef = doc(db, 'cars', carId);
+            await updateDoc(carRef, {
+                availability: 'Booked'
+            });
+            console.log(`Car ${carId} marked as Booked.`);
+        } catch (error) {
+            console.error('Error updating car availability:', error);
+        }
+    };
+
     return (
         <div className={styles.container}>
             <Header hideTabs={false} />
 
             <div className={styles.content}>
                 {paymentConfirmed ? (
-                    // Payment Confirmed View
                     <div className={styles.confirmationScreen}>
                         <h1 className={styles.confirmationText}>
                             Payment Confirmed <FaCheckCircle className={styles.checkmark} />
@@ -41,7 +54,6 @@ const PaymentCheckout = () => {
                         </button>
                     </div>
                 ) : (
-                    // Payment Checkout View
                     <>
                         <h1 className={styles.heading}>Payment Checkout</h1>
                         <h2 className={styles.subheading}>
@@ -119,12 +131,23 @@ const PaymentCheckout = () => {
 
                                 <button
                                     className={styles.confirmButton}
-                                    onClick={() => {
-                                        if (cardNumber.length !== 19 || expiry.length !== 5 || cvv.length !== 3 || !cardHolder) {
+                                    onClick={async () => {
+                                        if (
+                                            cardNumber.length !== 19 ||
+                                            expiry.length !== 5 ||
+                                            cvv.length !== 3 ||
+                                            !cardHolder
+                                        ) {
                                             alert('Please fill in all fields correctly.');
                                             return;
                                         }
-                                        setPaymentConfirmed(true);
+
+                                        try {
+                                            await markCarAsBooked(selectedCar.id);
+                                            setPaymentConfirmed(true);
+                                        } catch (error) {
+                                            alert('Payment failed. Please try again.');
+                                        }
                                     }}
                                 >
                                     Confirm Payment
