@@ -126,6 +126,7 @@ const CarRentalPage = () => {
                                     <th>Image</th>
                                     <th>Model</th>
                                     <th>Type</th>
+                                    <th>Location</th> {/* Added Location header */}
                                     <th>Price/Day</th>
                                     <th>Availability</th>
                                     <th>Action</th>
@@ -145,6 +146,7 @@ const CarRentalPage = () => {
                                         </td>
                                         <td>{car.model}</td>
                                         <td>{car.type}</td>
+                                        <td>{car.location}</td> {/* Display car location */}
                                         <td>${car.price}</td>
                                         <td>{car.availability}</td>
                                         <td>
@@ -160,6 +162,7 @@ const CarRentalPage = () => {
                             </tbody>
                         </table>
                     </div>
+
 
                     {showDetails && selectedCar && (
                         <div className={styles.popup}>
