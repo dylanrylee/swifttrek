@@ -11,7 +11,6 @@ const WriteReviewPage = () => {
     // Expecting car details including carID to be passed in the state
     const { model, type, location: carLocation, carID } = locationHook.state || {};
 
-    const [title, setTitle] = useState('');
     const [rating, setRating] = useState(0);
     const [description, setDescription] = useState('');
     const maxCharacters = 200;
@@ -58,15 +57,6 @@ const WriteReviewPage = () => {
                             <p><strong>Location:</strong> {carLocation}</p>
                         </div>
                     )}
-
-                    {/* Review Title */}
-                    <input
-                        type="text"
-                        placeholder="Review Title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        className={styles.inputField}
-                    />
 
                     {/* Rating Stars */}
                     <div className={styles.ratingContainer}>
