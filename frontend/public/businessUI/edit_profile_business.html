@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="settings_business.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module">
+    // Firebase SDK imports
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+    // Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyDtVetfy-n7pPCCccj_EIArrlbHQGEZ2TQ",
+        authDomain: "seng513-project.firebaseapp.com",
+        projectId: "seng513-project",
+        storageBucket: "seng513-project.firebasestorage.app",
+        messagingSenderId: "888422866543",
+        appId: "1:888422866543:web:57f170ae027e8abfdff79a",
+        measurementId: "G-G9WNFE7KBL"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Function to get user profile
+    const getUserProfile = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const docRef = doc(db, "business_owners", user.uid); // Use the current user's UID
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          document.getElementById("companyName").value = data.companyName || '';
+          document.getElementById("companyAddress").value = data.companyAddress || '';
+          document.getElementById("email").value = data.email || '';
+          document.getElementById("username").value = data.username || '';
+        } else {
+          alert("No profile found for this user!");
+        }
+      } else {
+        alert("User not logged in!");
+      }
+    };
+
+    // Function to save updated profile
+    const saveProfile = async () => {
+      const companyName = document.getElementById("companyName").value;
+      const companyAddress = document.getElementById("companyAddress").value;
+      const email = document.getElementById("email").value;
+      const username = document.getElementById("username").value;
+
+      const user = auth.currentUser;
+      if (user) {
+        const docRef = doc(db, "business_owners", user.uid);
+        await setDoc(docRef, {
+          companyName: companyName,
+          companyAddress: companyAddress,
+          email: email,
+          username: username
+        }, { merge: true });
+
+        alert("Profile updated successfully!");
+      } else {
+        alert("User not logged in!");
+      }
+    };
+
+    // Check if the user is authenticated on page load
+    window.onload = () => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          getUserProfile(); // Get profile data if user is authenticated
+        } else {
+          window.location.href = 'loginbusiness.html'; // Redirect to login if not logged in
+        }
+      });
+    };
+  </script>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: goldenrod;">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+          <i class="fas fa-eye me-2"></i>View Your Profile
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="settings_business.html">
+                        <i class="fas fa-cogs me-2"></i>Settings 
+                    </a>
+                </li>
+    </div>
+  </nav>
+  <div class="container">
+    <h2>View Your Profile</h2>
+    <form onsubmit="event.preventDefault(); saveProfile();">
+      <!-- Company Name -->
+      <div class="mb-3">
+        <label for="companyName" class="form-label">Company Name</label>
+        <input type="text" id="companyName" class="form-control" placeholder="Enter your Company Name" required>
+      </div>
+
+      <!-- Company Address -->
+      <div class="mb-3">
+        <label for="companyAddress" class="form-label">Company ID</label>
+        <input type="text" id="companyAddress" class="form-control" placeholder="Enter your Company Address" required>
+      </div>
+
+      <!-- Company Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Company Email</label>
+        <input type="email" id="email" class="form-control" placeholder="Enter your Email" required>
+      </div>
+
+      <!-- Username -->
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" id="username" class="form-control" placeholder="Enter your Username" required>
+      </div>
+
+      <!-- Save Button -->
+      <!-- <button type="submit" class="btn btn-primary">Save Changes</button> -->
+    </form>
+
+    <div class="text-center mt-4">
+      <!-- Go Back Button -->
+      <button onclick="window.history.back();" class="btn btn-info mb-3">
+        <i class="fas fa-arrow-left"></i> Go Back
+        </button>
+    </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

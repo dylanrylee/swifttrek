@@ -1,0 +1,206 @@
+body {
+   
+    background-repeat: no-repeat;
+    background-size: cover; /* Ensure the background image covers the entire viewport */
+}
+
+.navbar {
+    background-color: goldenrod;
+    transition: height 0.3s ease;
+}
+
+.navbar.scrolled {
+    height: 100px;
+}
+
+.navbar .navbar-brand {
+    font-size: 23px;
+    font-weight: bold;
+    color: #f5f5f5;
+}
+
+.navbar-nav .nav-link {
+    color: #f5f5f5;
+    font-size: 1.1rem;
+}
+
+.navbar-nav .nav-link:hover {
+    font-weight: bold;
+}
+
+#calendar {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px; /* Add padding for better spacing */
+}
+
+/* Weekday header grid */
+.week-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.week-day {
+    background: #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+/* Calendar day styling */
+.day {
+    border: 1px solid #ddd;
+    padding: 20px;
+    min-height: 80px;
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    background: #f9f9f9;
+}
+
+.day:hover {
+    background: #f0f0f0;
+}
+
+.today {
+    border: 2px solid black;
+    font-weight: bolder;
+    background-color: rgb(255, 210, 96);
+}
+
+.event {
+    background: lightblue;
+    padding: 2px;
+    margin-top: 5px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.empty {
+    visibility: hidden;
+}
+
+#monthYear {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Media Queries */
+
+/* Small screens */
+@media only screen and (max-width: 600px) {
+    .navbar {
+        height: auto; /* Adjust navbar height on smaller screens */
+    }
+
+    .navbar .navbar-brand {
+        font-size: 20px; /* Adjust font size for smaller screens */
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 1rem; /* Smaller font size on mobile */
+    }
+
+    .week-row, .days-grid {
+        grid-template-columns: repeat(4, 1fr); /* 4 columns on smaller screens */
+    }
+
+    .day {
+        padding: 10px; /* Smaller padding on mobile */
+        min-height: 60px; /* Adjust minimum height for days */
+    }
+
+    #monthYear {
+        font-size: 20px; /* Adjust size for smaller screens */
+    }
+}
+
+/* Medium screens */
+@media only screen and (min-width: 601px) {
+    .navbar .navbar-brand {
+        font-size: 22px; /* Larger font size for medium screens */
+    }
+
+    .week-row, .days-grid {
+        grid-template-columns: repeat(5, 1fr); /* 5 columns on medium screens */
+    }
+
+    .day {
+        padding: 15px; /* Increase padding on medium screens */
+        min-height: 70px; /* Adjust minimum height for days */
+    }
+
+    #monthYear {
+        font-size: 22px; /* Adjust size for medium screens */
+    }
+}
+
+/* Medium screens (starting at 768px) */
+@media only screen and (min-width: 768px) {
+    .navbar .navbar-brand {
+        font-size: 24px; /* Adjust font size for larger screens */
+    }
+
+    .week-row, .days-grid {
+        grid-template-columns: repeat(6, 1fr); /* 6 columns on medium screens */
+    }
+
+    .day {
+        padding: 18px; /* Increase padding on larger screens */
+        min-height: 75px; /* Adjust minimum height for days */
+    }
+
+    #monthYear {
+        font-size: 24px; /* Larger font size for month/year */
+    }
+}
+
+/* Large screens */
+@media only screen and (min-width: 992px) {
+    .navbar .navbar-brand {
+        font-size: 26px; /* Adjust font size for large screens */
+    }
+
+    .week-row, .days-grid {
+        grid-template-columns: repeat(7, 1fr); /* 7 columns on large screens */
+    }
+
+    .day {
+        padding: 20px; /* Increase padding for large screens */
+        min-height: 80px; /* Larger minimum height for days */
+    }
+
+    #monthYear {
+        font-size: 28px; /* Larger font size for month/year */
+    }
+}
+
+/* Extra large screens */
+@media only screen and (min-width: 1200px) {
+    .navbar .navbar-brand {
+        font-size: 28px; /* Larger font size for extra large screens */
+    }
+
+    .week-row, .days-grid {
+        grid-template-columns: repeat(7, 1fr); /* 7 columns for extra large screens */
+    }
+
+    .day {
+        padding: 25px; /* Larger padding on extra large screens */
+        min-height: 90px; /* Larger minimum height for days */
+    }
+
+    #monthYear {
+        font-size: 30px; /* Larger font size for month/year */
+    }
+}
