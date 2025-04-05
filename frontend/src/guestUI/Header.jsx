@@ -5,7 +5,6 @@ import styles from './Header.module.css';
 const Header = ({ hideTabs }) => {
     return (
         <header className={styles.header}>
-            <h1>Travel Planner Website</h1>
             {!hideTabs && (
                 <nav className={styles.nav}>
                     <ul>

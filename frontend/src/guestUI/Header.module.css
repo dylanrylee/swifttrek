@@ -3,7 +3,6 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-color: #E8AA9B;
     color: #2c2c2c;
     width: 100vw; /* Ensures full width */
     box-sizing: border-box; /* Prevents padding from shrinking width */

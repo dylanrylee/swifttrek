@@ -9,18 +9,22 @@ const SelectAccountType = () => {
 
     return (
         <div className={styles.container}>
+            {/* hideTabs={true} to mske navigation tabs invisble*/}
+            <Header hideTabs={true} />
             <main className={styles.mainContent}>
                 <div className={styles.contentBox}> 
                     <h2>Select Account Type</h2>
                     <div className={styles.buttonContainer}>
-                        <button className={styles.accountButton} onClick={() => navigate('/guest-login')}>
+                        <button className={styles.guestaccountButton} onClick={() => navigate('/guest-login')}>
                             Guest
                         </button>
-                        <button className={styles.accountButton}>Business</button>
-                        <button className={styles.accountButton}>Admin</button>
+                        <button className={styles.businessaccountButton} onClick={() => window.location.href = '/businessUI/loginbusiness.html'}>
+                            Business</button>
+                        <button className={styles.adminaccountButton}>Admin</button>
                     </div>
                 </div>
             </main>
+            <Footer className={styles.footer} />
         </div>
     );
 };
