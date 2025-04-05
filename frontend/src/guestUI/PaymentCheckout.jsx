@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './PaymentCheckout.module.css';
 import { FaCcVisa, FaCcMastercard, FaCcPaypal, FaCheckCircle } from 'react-icons/fa';
 import { useNavigate, useLocation } from 'react-router-dom';
+
 import Header from './Header';
 import Footer from './Footer';
 
