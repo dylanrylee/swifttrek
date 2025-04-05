@@ -64,8 +64,18 @@ const CarRentalPage = () => {
         });
     };
 
+    // Updated Write Review click handler: includes carID along with other car details.
     const handleWriteReviewClick = () => {
-        navigate('/write-review');
+        if (!selectedCar) return;
+    
+        navigate('/write-review', {
+            state: {
+                carID: selectedCar.id,
+                model: selectedCar.model,
+                type: selectedCar.type,
+                location: selectedCar.location
+            }
+        });
     };
 
     const filteredCars = cars.filter((car) => {
@@ -162,7 +172,7 @@ const CarRentalPage = () => {
                                         className={styles.carImage}
                                     />
                                 )}
-                                <p><strong>Car ID:</strong> {selectedCar.carId}</p>
+                                <p><strong>Car ID:</strong> {selectedCar.id}</p>
                                 <p><strong>Company ID:</strong> {selectedCar.companyId}</p>
                                 <p><strong>Type:</strong> {selectedCar.type}</p>
                                 <p><strong>Location:</strong> {selectedCar.location}</p>
@@ -211,7 +221,6 @@ const CarRentalPage = () => {
                                         onChange={(e) => setToDate(e.target.value)}
                                     />
                                 </label>
-
                                 <br />
                                 <div className={styles.buttonContainer}>
                                     <button
