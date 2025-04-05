@@ -9,6 +9,7 @@
     background-size: cover;
 }
 
+
 /* Centers content */
 .content {
     flex-grow: 1;
@@ -152,3 +153,84 @@
         padding: 20px;
     }
 }
+<<<<<<< Updated upstream
+=======
+
+.thumbnail {
+    width: 100px;
+    height: auto;
+    border-radius: 6px;
+}
+
+.carImage {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+
+.searchBarContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+}
+
+.searchInput {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 280px;
+    max-width: 100%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.priceInputs {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.priceInput {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 120px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.confirmButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: green;
+}
+
+.confirmButton:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.cancelButton1 {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: red;
+    margin-left: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.cancelButton1:hover {
+    background-color: darkred;
+}
+>>>>>>> Stashed changes
