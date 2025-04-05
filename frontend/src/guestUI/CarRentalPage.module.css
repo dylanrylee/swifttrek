@@ -55,6 +55,7 @@
     background-color: #f4f4f4;
 }
 
+/* Popup overlay */
 .popup {
     position: fixed;
     top: 0;
@@ -65,16 +66,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    overflow-y: auto;  /* Enables vertical scroll if content is too tall */
+    padding: 20px;     /* Add some padding so content doesn't stick to edges */
 }
 
+/* Popup content box */
 .popupContent {
     background-color: white;
     padding: 30px;
     border-radius: 8px;
-    width: 400px;
+    max-width: 400px;      /* Adjust as needed */
+    width: 90%;            /* Responsive width */
+    box-sizing: border-box;
     text-align: left;
-    max-width: 90%;
+    /* Optionally add margin-bottom to help with scrolling on small screens */
+    margin-bottom: 20px;
 }
 
 .buttonContainer {

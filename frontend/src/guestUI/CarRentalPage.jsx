@@ -172,8 +172,6 @@ const CarRentalPage = () => {
                                         className={styles.carImage}
                                     />
                                 )}
-                                <p><strong>Car ID:</strong> {selectedCar.id}</p>
-                                <p><strong>Company ID:</strong> {selectedCar.companyId}</p>
                                 <p><strong>Type:</strong> {selectedCar.type}</p>
                                 <p><strong>Location:</strong> {selectedCar.location}</p>
                                 <p><strong>Price per Day:</strong> ${selectedCar.price}</p>
