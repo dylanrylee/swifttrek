@@ -13,7 +13,12 @@ const CarRentalPage = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
+    const [showRentPopup, setShowRentPopup] = useState(false);
+    const [fromDate, setFromDate] = useState('');
+    const [toDate, setToDate] = useState('');
     const navigate = useNavigate();
+
+    const today = new Date().toISOString().split('T')[0];
 
     useEffect(() => {
         const fetchCars = async () => {
@@ -32,20 +37,6 @@ const CarRentalPage = () => {
         fetchCars();
     }, []);
 
-    const filteredCars = cars.filter((car) => {
-        const query = searchQuery.toLowerCase();
-        const matchesSearch =
-            car.model.toLowerCase().includes(query) ||
-            car.type.toLowerCase().includes(query) ||
-            (car.location && car.location.toLowerCase().includes(query));
-
-        const matchesPrice =
-            (minPrice ? car.price >= parseFloat(minPrice) : true) &&
-            (maxPrice ? car.price <= parseFloat(maxPrice) : true);
-
-        return matchesSearch && matchesPrice;
-    });
-
     const handleDetailsClick = (car) => {
         setSelectedCar(car);
         setShowDetails(true);
@@ -54,15 +45,36 @@ const CarRentalPage = () => {
     const handleClosePopup = () => {
         setSelectedCar(null);
         setShowDetails(false);
+        setShowRentPopup(false);
+        setFromDate('');
+        setToDate('');
     };
 
     const handleRentClick = () => {
-        navigate('/payment-checkout');
+        setShowRentPopup(true);
+    };
+
+    const handleConfirmRental = () => {
+        navigate('/payment-checkout', {
+            state: {
+                selectedCar,
+                fromDate,
+                toDate
+            }
+        });
     };
 
     const handleWriteReviewClick = () => {
         navigate('/write-review');
     };
+
+    const filteredCars = cars.filter((car) => {
+        const matchesText = `${car.model} ${car.type} ${car.location}`.toLowerCase().includes(searchQuery.toLowerCase());
+        const price = parseFloat(car.price);
+        const matchesMin = minPrice ? price >= parseFloat(minPrice) : true;
+        const matchesMax = maxPrice ? price <= parseFloat(maxPrice) : true;
+        return matchesText && matchesMin && matchesMax;
+    });
 
     return (
         <div className={styles.container}>
@@ -71,36 +83,32 @@ const CarRentalPage = () => {
                 <div className={styles.whiteBox}>
                     <h1 className={styles.heading}>Car Rental</h1>
 
-                    {/* Search and Price Filter */}
                     <div className={styles.searchBarContainer}>
                         <input
                             type="text"
+                            placeholder="Search by model, type, or location"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="Search by model, type, or location..."
-                            className={styles.searchBar}
+                            className={styles.searchInput}
                         />
-                    </div>
-                    <div className={styles.priceFilterContainer}>
-                        <label>Min Price:</label>
-                        <input
-                            type="number"
-                            value={minPrice}
-                            onChange={(e) => setMinPrice(e.target.value)}
-                            placeholder="Min"
-                            className={styles.priceInput}
-                        />
-                        <label>Max Price:</label>
-                        <input
-                            type="number"
-                            value={maxPrice}
-                            onChange={(e) => setMaxPrice(e.target.value)}
-                            placeholder="Max"
-                            className={styles.priceInput}
-                        />
+                        <div className={styles.priceInputs}>
+                            <input
+                                type="number"
+                                placeholder="Min Price"
+                                value={minPrice}
+                                onChange={(e) => setMinPrice(e.target.value)}
+                                className={styles.priceInput}
+                            />
+                            <input
+                                type="number"
+                                placeholder="Max Price"
+                                value={maxPrice}
+                                onChange={(e) => setMaxPrice(e.target.value)}
+                                className={styles.priceInput}
+                            />
+                        </div>
                     </div>
 
-                    {/* Table */}
                     <div className={styles.tableContainer}>
                         <table className={styles.carTable}>
                             <thead>
@@ -114,44 +122,35 @@ const CarRentalPage = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredCars.length > 0 ? (
-                                    filteredCars.map((car) => (
-                                        <tr key={car.id}>
-                                            <td>
-                                                {car.imageUrl && (
-                                                    <img
-                                                        src={car.imageUrl}
-                                                        alt={car.model}
-                                                        className={styles.thumbnail}
-                                                    />
-                                                )}
-                                            </td>
-                                            <td>{car.model}</td>
-                                            <td>{car.type}</td>
-                                            <td>${car.price}</td>
-                                            <td>{car.availability}</td>
-                                            <td>
-                                                <button
-                                                    className={styles.detailsButton}
-                                                    onClick={() => handleDetailsClick(car)}
-                                                >
-                                                    Details
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="6" style={{ textAlign: 'center' }}>
-                                            No cars match your search.
+                                {filteredCars.map((car) => (
+                                    <tr key={car.id}>
+                                        <td>
+                                            {car.imageUrl && (
+                                                <img
+                                                    src={car.imageUrl}
+                                                    alt={car.model}
+                                                    className={styles.thumbnail}
+                                                />
+                                            )}
+                                        </td>
+                                        <td>{car.model}</td>
+                                        <td>{car.type}</td>
+                                        <td>${car.price}</td>
+                                        <td>{car.availability}</td>
+                                        <td>
+                                            <button
+                                                className={styles.detailsButton}
+                                                onClick={() => handleDetailsClick(car)}
+                                            >
+                                                Details
+                                            </button>
                                         </td>
                                     </tr>
-                                )}
+                                ))}
                             </tbody>
                         </table>
                     </div>
 
-                    {/* Car Details Popup */}
                     {showDetails && selectedCar && (
                         <div className={styles.popup}>
                             <div className={styles.popupContent}>
@@ -183,6 +182,50 @@ const CarRentalPage = () => {
                                     <p>No reviews yet.</p>
                                     <button className={styles.writeReviewButton} onClick={handleWriteReviewClick}>
                                         Write a Review
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {showRentPopup && (
+                        <div className={styles.popup}>
+                            <div className={styles.popupContent}>
+                                <h2>Rental Dates for {selectedCar?.model}</h2>
+                                <label>
+                                    From Date:
+                                    <input
+                                        type="date"
+                                        min={today}
+                                        value={fromDate}
+                                        onChange={(e) => setFromDate(e.target.value)}
+                                    />
+                                </label>
+                                <br />
+                                <label>
+                                    To Date:
+                                    <input
+                                        type="date"
+                                        min={fromDate || today}
+                                        value={toDate}
+                                        onChange={(e) => setToDate(e.target.value)}
+                                    />
+                                </label>
+
+                                <br />
+                                <div className={styles.buttonContainer}>
+                                    <button
+                                        className={styles.confirmButton}
+                                        onClick={handleConfirmRental}
+                                        disabled={!fromDate || !toDate}
+                                    >
+                                        Confirm
+                                    </button>
+                                    <button
+                                        className={styles.cancelButton1}
+                                        onClick={() => setShowRentPopup(false)}
+                                    >
+                                        Cancel
                                     </button>
                                 </div>
                             </div>

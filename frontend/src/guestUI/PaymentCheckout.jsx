@@ -1,35 +1,27 @@
 import React, { useState } from 'react';
 import styles from './PaymentCheckout.module.css';
 import { FaCcVisa, FaCcMastercard, FaCcPaypal, FaCheckCircle } from 'react-icons/fa';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 
 const PaymentCheckout = () => {
     const [showDebitForm, setShowDebitForm] = useState(false);
     const [paymentConfirmed, setPaymentConfirmed] = useState(false);
+    const [cardHolder, setCardHolder] = useState('');
+    const [cardNumber, setCardNumber] = useState('');
+    const [expiry, setExpiry] = useState('');
+    const [cvv, setCvv] = useState('');    
+
     const navigate = useNavigate();
     const location = useLocation();
-    const flight = location.state?.flight;
 
-    const handlePaymentConfirm = async () => {
-        if (!flight || flight.availableSeats <= 0) {
-            alert('No available seats or flight data is missing.');
-            return;
-        }
+    const { selectedCar, fromDate, toDate } = location.state || {};
 
-        try {
-            const flightRef = doc(db, 'flights', flight.id);
-            await updateDoc(flightRef, {
-                availableSeats: flight.availableSeats - 1
-            });
-            setPaymentConfirmed(true);
-        } catch (error) {
-            console.error('Error updating flight seats:', error);
-            alert('Something went wrong with your booking.');
-        }
+    const formatDate = (dateStr) => {
+        if (!dateStr) return '';
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return new Date(dateStr).toLocaleDateString(undefined, options);
     };
 
     return (
@@ -38,6 +30,7 @@ const PaymentCheckout = () => {
 
             <div className={styles.content}>
                 {paymentConfirmed ? (
+                    // Payment Confirmed View
                     <div className={styles.confirmationScreen}>
                         <h1 className={styles.confirmationText}>
                             Payment Confirmed <FaCheckCircle className={styles.checkmark} />
@@ -47,11 +40,16 @@ const PaymentCheckout = () => {
                         </button>
                     </div>
                 ) : (
+                    // Payment Checkout View
                     <>
                         <h1 className={styles.heading}>Payment Checkout</h1>
-                        <h2 className={styles.subheading}>{flight?.flightNumber || 'Your Flight'}</h2>
+                        <h2 className={styles.subheading}>
+                            {selectedCar ? `${selectedCar.model} (${selectedCar.type})` : 'Selected Car'}
+                        </h2>
                         <p className={styles.date}>
-                            From {flight?.departureCity} to {flight?.arrivalCity}
+                            {fromDate && toDate
+                                ? `${formatDate(fromDate)} - ${formatDate(toDate)}`
+                                : 'No date selected'}
                         </p>
 
                         <div className={styles.buttonContainer}>
@@ -69,13 +67,65 @@ const PaymentCheckout = () => {
                         {showDebitForm && (
                             <div className={styles.debitForm}>
                                 <h3 className={styles.formHeading}>Enter Debit Card Details</h3>
-                                <input type="text" placeholder="Cardholder Name" className={styles.inputField} />
-                                <input type="text" placeholder="Card Number" className={styles.inputField} maxLength="16" />
+
+                                <input
+                                    type="text"
+                                    placeholder="Cardholder Name"
+                                    className={styles.inputField}
+                                    value={cardHolder}
+                                    onChange={(e) => setCardHolder(e.target.value)}
+                                />
+
+                                <input
+                                    type="text"
+                                    placeholder="Card Number"
+                                    className={styles.inputField}
+                                    maxLength="19"
+                                    value={cardNumber}
+                                    onChange={(e) => {
+                                        const raw = e.target.value.replace(/\D/g, '').slice(0, 16);
+                                        const formatted = raw.replace(/(.{4})/g, '$1 ').trim();
+                                        setCardNumber(formatted);
+                                    }}
+                                />
+
                                 <div className={styles.row}>
-                                    <input type="text" placeholder="Expiry Date (MM/YY)" className={styles.inputField} />
-                                    <input type="text" placeholder="CVV" className={styles.inputField} maxLength="3" />
+                                    <input
+                                        type="text"
+                                        placeholder="Expiry Date (MM/YY)"
+                                        className={styles.inputField}
+                                        maxLength="5"
+                                        value={expiry}
+                                        onChange={(e) => {
+                                            let input = e.target.value.replace(/\D/g, '').slice(0, 4);
+                                            if (input.length >= 3) input = `${input.slice(0, 2)}/${input.slice(2)}`;
+                                            setExpiry(input);
+                                        }}
+                                    />
+
+                                    <input
+                                        type="text"
+                                        placeholder="CVV"
+                                        className={styles.inputField}
+                                        maxLength="3"
+                                        value={cvv}
+                                        onChange={(e) => {
+                                            const input = e.target.value.replace(/\D/g, '').slice(0, 3);
+                                            setCvv(input);
+                                        }}
+                                    />
                                 </div>
-                                <button className={styles.confirmButton} onClick={handlePaymentConfirm}>
+
+                                <button
+                                    className={styles.confirmButton}
+                                    onClick={() => {
+                                        if (cardNumber.length !== 19 || expiry.length !== 5 || cvv.length !== 3 || !cardHolder) {
+                                            alert('Please fill in all fields correctly.');
+                                            return;
+                                        }
+                                        setPaymentConfirmed(true);
+                                    }}
+                                >
                                     Confirm Payment
                                 </button>
                             </div>

@@ -96,7 +96,6 @@ const HotelRentalPage = () => {
 
                     {/* Price Range Filter */}
                     <div className={styles.priceFilterContainer}>
-                        <label>Min Price: </label>
                         <input
                             type="number"
                             value={minPrice}
@@ -104,7 +103,6 @@ const HotelRentalPage = () => {
                             placeholder="Min Price"
                             className={styles.priceInput}
                         />
-                        <label>Max Price: </label>
                         <input
                             type="number"
                             value={maxPrice}

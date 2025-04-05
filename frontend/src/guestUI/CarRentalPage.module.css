@@ -166,3 +166,33 @@
     border-radius: 12px;
     margin-bottom: 1rem;
 }
+
+.confirmButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: green;
+}
+
+.confirmButton:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.cancelButton1 {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: red;
+    margin-left: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.cancelButton1:hover {
+    background-color: darkred;
+}
