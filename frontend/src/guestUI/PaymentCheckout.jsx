@@ -65,7 +65,7 @@ const PaymentCheckout = () => {
                 await addDoc(collection(db, 'booked_cars'), {
                     carName: selectedCar.model,
                     carPrice: selectedCar.price,
-                    companyID: selectedCar.companyID,
+                    companyID: selectedCar.companyId,
                     fromDate: fromDate,
                     toDate: toDate,
                     guestID: currentUser?.uid
