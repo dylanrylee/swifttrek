@@ -85,9 +85,10 @@ const HotelRentalPage = () => {
             state: {
                 hotelId: selectedHotel.id,
                 hotelName: selectedHotel.hotelName,
-                location: selectedHotel.location
+                location: selectedHotel.location,
+                roomType: selectedHotel.roomType // make sure this key exists in Firestore
             }
-        });
+        });        
     };
 
     const handleViewReviewsClick = () => {

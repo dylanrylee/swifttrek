@@ -10,8 +10,12 @@ import Footer from './Footer';
 const WriteReviewPage = () => {
     const locationHook = useLocation();
     const navigate = useNavigate();
-    // Destructure carId (with lowercase "d") along with other details from the state
-    const { model, type, location: carLocation, carId } = locationHook.state || {};
+
+    // Grab both car and hotel values from route state
+    const {
+        model, type, location: carLocation, carId,
+        hotelName, roomType, location: hotelLocation, hotelId
+    } = locationHook.state || {};
 
     const [rating, setRating] = useState(0);
     const [description, setDescription] = useState('');
@@ -24,23 +28,40 @@ const WriteReviewPage = () => {
         }
     };
 
-    // Submit review to Firestore and navigate to /guest-home after submission
     const handleSubmit = async () => {
         const auth = getAuth();
         const currentUser = auth.currentUser;
+
         if (!currentUser) {
             alert('User is not authenticated.');
             return;
         }
+
         const guestID = currentUser.uid;
+        const formattedRating = `${rating}/5`;
 
         try {
-            await addDoc(collection(db, 'reviewed_cars'), {
-                carId: carId || 'unknown', // Save using the same key you want in Firestore
-                description,
-                guestID,
-                ratings: `${rating}/5`
-            });
+            if (carId) {
+                // Submit car review
+                await addDoc(collection(db, 'reviewed_cars'), {
+                    carId,
+                    guestID,
+                    description,
+                    ratings: formattedRating
+                });
+            } else if (hotelId) {
+                // Submit hotel review
+                await addDoc(collection(db, 'reviewed_hotels'), {
+                    hotelID: hotelId,
+                    guestID,
+                    description,
+                    rating: formattedRating
+                });
+            } else {
+                alert('No valid car or hotel ID provided.');
+                return;
+            }
+
             alert('Review posted!');
             navigate('/guest-home');
         } catch (error) {
@@ -56,12 +77,21 @@ const WriteReviewPage = () => {
                 <div className={styles.reviewBox}>
                     <h1 className={styles.heading}>Write a Review</h1>
 
-                    {/* Display Car Information if available */}
+                    {/* Car Info */}
                     {model && type && carLocation && (
                         <div className={styles.carInfoBox}>
                             <p><strong>Car Model:</strong> {model}</p>
                             <p><strong>Car Type:</strong> {type}</p>
                             <p><strong>Location:</strong> {carLocation}</p>
+                        </div>
+                    )}
+
+                    {/* Hotel Info */}
+                    {hotelName && roomType && hotelLocation && (
+                        <div className={styles.carInfoBox}>
+                            <p><strong>Hotel Name:</strong> {hotelName}</p>
+                            <p><strong>Room Type:</strong> {roomType}</p>
+                            <p><strong>Location:</strong> {hotelLocation}</p>
                         </div>
                     )}
 
@@ -78,7 +108,7 @@ const WriteReviewPage = () => {
                         ))}
                     </div>
 
-                    {/* Review Description */}
+                    {/* Review Text */}
                     <textarea
                         placeholder="Write your review here..."
                         value={description}
