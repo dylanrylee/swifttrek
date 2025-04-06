@@ -20,7 +20,7 @@ const PaymentCheckout = () => {
     const location = useLocation();
 
     // Get car and hotel details from location.state
-    const { selectedCar, fromDate, toDate, hotelName, roomNumber, price } = location.state || {};
+    const { selectedCar, fromDate, toDate, hotelName, roomNumber, price, hotelId } = location.state || {};
 
     const formatDate = (dateStr) => {
         if (!dateStr) return '';
@@ -40,15 +40,13 @@ const PaymentCheckout = () => {
         }
     };
 
-    const markHotelAsBooked = async (hotelName, roomNumber) => {
+    const markHotelAsBooked = async (hotelDocId) => {
         try {
-            const hotelRef = doc(db, 'hotels', hotelName); // Assuming hotelName is unique
+            const hotelRef = doc(db, 'hotels', hotelDocId);
             await updateDoc(hotelRef, {
-                rooms: {
-                    [roomNumber]: 'Booked'
-                }
+                availability: 'Booked'
             });
-            console.log(`Room ${roomNumber} at ${hotelName} marked as Booked.`);
+            console.log(`Hotel room ${hotelDocId} marked as Booked.`);
         } catch (error) {
             console.error('Error updating hotel room availability:', error);
         }
@@ -74,16 +72,14 @@ const PaymentCheckout = () => {
 
                         {/* Display Car Details */}
                         {selectedCar && (
-                            <>
-                                <div className={styles.carInfoBox}>
-                                    <h2 className={styles.subheading}>Car Booking</h2>
-                                    <p><strong>Car Model:</strong> {selectedCar.model}</p>
-                                    <p><strong>Car Type:</strong> {selectedCar.type}</p>
-                                    <p><strong>Booked From:</strong> {formatDate(fromDate)}</p>
-                                    <p><strong>Booked To:</strong> {formatDate(toDate)}</p>
-                                    <p><strong>Price per Day:</strong> ${selectedCar.price}</p> 
-                                </div>
-                            </>
+                            <div className={styles.carInfoBox}>
+                                <h2 className={styles.subheading}>Car Booking</h2>
+                                <p><strong>Car Model:</strong> {selectedCar.model}</p>
+                                <p><strong>Car Type:</strong> {selectedCar.type}</p>
+                                <p><strong>Booked From:</strong> {formatDate(fromDate)}</p>
+                                <p><strong>Booked To:</strong> {formatDate(toDate)}</p>
+                                <p><strong>Price per Day:</strong> ${selectedCar.price}</p>
+                            </div>
                         )}
 
                         {/* Display Hotel Details */}
@@ -176,9 +172,8 @@ const PaymentCheckout = () => {
                                         }
 
                                         try {
-                                            // Mark car and hotel as booked
-                                            if (selectedCar) await markCarAsBooked(selectedCar.id);
-                                            if (hotelName && roomNumber) await markHotelAsBooked(hotelName, roomNumber);
+                                            if (selectedCar?.id) await markCarAsBooked(selectedCar.id);
+                                            if (hotelId) await markHotelAsBooked(hotelId);
                                             setPaymentConfirmed(true);
                                         } catch (error) {
                                             alert('Payment failed. Please try again.');

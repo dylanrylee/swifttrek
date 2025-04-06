@@ -44,7 +44,8 @@ const HotelRentalPage = () => {
         const price = parseFloat(hotel.price);
         const matchesMin = minPrice ? price >= parseFloat(minPrice) : true;
         const matchesMax = maxPrice ? price <= parseFloat(maxPrice) : true;
-        return matchesText && matchesMin && matchesMax;
+        const isAvailable = hotel.availability === 'Available';
+        return matchesText && matchesMin && matchesMax && isAvailable;
     });
 
     const handleDetailsClick = (hotel) => {
@@ -70,12 +71,14 @@ const HotelRentalPage = () => {
                 hotelName: selectedHotel.hotelName,
                 roomNumber: selectedHotel.roomNumber,
                 price: selectedHotel.price,
+                availability: selectedHotel.availability,
+                hotelId: selectedHotel.id, // needed to update Firestore
                 fromDate,
                 toDate
             }
         });
     };
-
+    
     const handleWriteReviewClick = () => {
         if (!selectedHotel) return;
         navigate('/write-review', {

@@ -85,7 +85,9 @@ const CarRentalPage = () => {
         const price = parseFloat(car.price);
         const matchesMin = minPrice ? price >= parseFloat(minPrice) : true;
         const matchesMax = maxPrice ? price <= parseFloat(maxPrice) : true;
-        return matchesText && matchesMin && matchesMax;
+        const isAvailable = car.availability === 'Available';
+
+        return matchesText && matchesMin && matchesMax && isAvailable;
     });
 
     const handleViewReviewsClick = () => {
