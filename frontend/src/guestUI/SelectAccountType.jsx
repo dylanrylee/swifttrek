@@ -9,17 +9,30 @@ const SelectAccountType = () => {
 
     return (
         <div className={styles.container}>
-            {/* hideTabs={true} to mske navigation tabs invisble*/}
+            {/* hideTabs={true} to make navigation tabs invisible*/}
             <Header hideTabs={true} />
             <main className={styles.mainContent}>
                 <div className={styles.contentBox}> 
                     <h2>Select Account Type</h2>
                     <div className={styles.buttonContainer}>
-                        <button className={styles.accountButton} onClick={() => navigate('/guest-login')}>
+                        <button 
+                            className={styles.accountButton} 
+                            onClick={() => navigate('/guest-login')}
+                        >
                             Guest
                         </button>
-                        <button className={styles.accountButton}>Business</button>
-                        <button className={styles.accountButton}>Admin</button>
+                        <button 
+                            className={styles.accountButton}
+                            onClick={() => navigate('/business-login')}  // Added business navigation
+                        >
+                            Business
+                        </button>
+                        <button 
+                            className={styles.accountButton}
+                            onClick={() => navigate('/admin-login')}
+                        >
+                            Admin
+                        </button>
                     </div>
                 </div>
             </main>

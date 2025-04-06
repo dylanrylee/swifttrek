@@ -1,0 +1,202 @@
+/* Base Container */
+.serviceContainer {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  /* Controls */
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+  }
+  
+  .searchInput {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    flex-grow: 1;
+    max-width: 400px;
+  }
+  
+  /* Tables */
+  .listTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .listTable th, .listTable td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .listTable th {
+    background-color: #f5f5f5;
+    color: #008080;
+  }
+  
+  /* Status */
+  .status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+  
+  .available {
+    background-color: #e6f7ee;
+    color: #27ae60;
+  }
+  
+  .unavailable {
+    background-color: #fde8e8;
+    color: #e74c3c;
+  }
+  
+  /* Buttons */
+  .addButton {
+    background-color: #008080;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .addButton:hover {
+    background-color: #006666;
+  }
+  
+  .actionButton {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 0.5rem;
+  }
+  
+  .deleteButton {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .backButton {
+    background-color: #95a5a6;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Form */
+  .formContainer {
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+  
+  .formGroup {
+    margin-bottom: 1rem;
+  }
+  
+  .formGroup label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+  }
+  
+  .formGroup input,
+  .formGroup select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-width: 400px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .controls {
+      flex-direction: column;
+    }
+    
+    .searchInput {
+      max-width: 100%;
+    }
+  }
+
+ 
+/* Tabs */
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tab {
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-weight: 500;
+    color: #555;
+  }
+  
+  .activeTab {
+    border-bottom-color: #008080;
+    color: #008080;
+  }
+  
+  /* Status */
+  .pending {
+    background-color: #fff3e0;
+    color: #ff9800;
+  }
+  
+  .approved {
+    background-color: #e6f7ee;
+    color: #27ae60;
+  }
+  
+  .rejected {
+    background-color: #fde8e8;
+    color: #e74c3c;
+  }
+  
+  /* Action Buttons */
+  .approveButton {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+  }
+  
+  .rejectButton {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+  }
