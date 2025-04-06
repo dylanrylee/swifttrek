@@ -19,7 +19,8 @@ const PaymentCheckout = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { selectedCar, fromDate, toDate } = location.state || {};
+    // Get car and hotel details from location.state
+    const { selectedCar, fromDate, toDate, hotelName, roomNumber, price } = location.state || {};
 
     const formatDate = (dateStr) => {
         if (!dateStr) return '';
@@ -36,6 +37,20 @@ const PaymentCheckout = () => {
             console.log(`Car ${carId} marked as Booked.`);
         } catch (error) {
             console.error('Error updating car availability:', error);
+        }
+    };
+
+    const markHotelAsBooked = async (hotelName, roomNumber) => {
+        try {
+            const hotelRef = doc(db, 'hotels', hotelName); // Assuming hotelName is unique
+            await updateDoc(hotelRef, {
+                rooms: {
+                    [roomNumber]: 'Booked'
+                }
+            });
+            console.log(`Room ${roomNumber} at ${hotelName} marked as Booked.`);
+        } catch (error) {
+            console.error('Error updating hotel room availability:', error);
         }
     };
 
@@ -56,14 +71,32 @@ const PaymentCheckout = () => {
                 ) : (
                     <>
                         <h1 className={styles.heading}>Payment Checkout</h1>
-                        <h2 className={styles.subheading}>
-                            {selectedCar ? `${selectedCar.model} (${selectedCar.type})` : 'Selected Car'}
-                        </h2>
-                        <p className={styles.date}>
-                            {fromDate && toDate
-                                ? `${formatDate(fromDate)} - ${formatDate(toDate)}`
-                                : 'No date selected'}
-                        </p>
+
+                        {/* Display Car Details */}
+                        {selectedCar && (
+                            <>
+                                <div className={styles.carInfoBox}>
+                                    <h2 className={styles.subheading}>Car Booking</h2>
+                                    <p><strong>Car Model:</strong> {selectedCar.model}</p>
+                                    <p><strong>Car Type:</strong> {selectedCar.type}</p>
+                                    <p><strong>Booked From:</strong> {formatDate(fromDate)}</p>
+                                    <p><strong>Booked To:</strong> {formatDate(toDate)}</p>
+                                    <p><strong>Price per Day:</strong> ${selectedCar.price}</p> 
+                                </div>
+                            </>
+                        )}
+
+                        {/* Display Hotel Details */}
+                        {hotelName && roomNumber && price && (
+                            <div className={styles.hotelInfoBox}>
+                                <h2 className={styles.subheading}>Hotel Booking</h2>
+                                <p><strong>Hotel Name:</strong> {hotelName}</p>
+                                <p><strong>Room Number:</strong> {roomNumber}</p>
+                                <p><strong>Booked From:</strong> {formatDate(fromDate)}</p>
+                                <p><strong>Booked To:</strong> {formatDate(toDate)}</p>
+                                <p><strong>Price per Night:</strong> ${price}</p>
+                            </div>
+                        )}
 
                         <div className={styles.buttonContainer}>
                             <button className={styles.paymentButton} onClick={() => setShowDebitForm(true)}>
@@ -143,7 +176,9 @@ const PaymentCheckout = () => {
                                         }
 
                                         try {
-                                            await markCarAsBooked(selectedCar.id);
+                                            // Mark car and hotel as booked
+                                            if (selectedCar) await markCarAsBooked(selectedCar.id);
+                                            if (hotelName && roomNumber) await markHotelAsBooked(hotelName, roomNumber);
                                             setPaymentConfirmed(true);
                                         } catch (error) {
                                             alert('Payment failed. Please try again.');

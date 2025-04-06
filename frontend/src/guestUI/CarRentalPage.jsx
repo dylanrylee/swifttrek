@@ -59,10 +59,12 @@ const CarRentalPage = () => {
             state: {
                 selectedCar,
                 fromDate,
-                toDate
+                toDate,
+                pricePerDay: selectedCar.price // Add the price per day here
             }
         });
     };
+    
 
     // Updated Write Review click handler: passes carId along with other car details.
     const handleWriteReviewClick = () => {
@@ -85,6 +87,11 @@ const CarRentalPage = () => {
         const matchesMax = maxPrice ? price <= parseFloat(maxPrice) : true;
         return matchesText && matchesMin && matchesMax;
     });
+
+    const handleViewReviewsClick = () => {
+        if (!selectedCar) return;
+        navigate(`/reviews/${selectedCar.id}`);
+    };
 
     return (
         <div className={styles.container}>
@@ -179,7 +186,6 @@ const CarRentalPage = () => {
                                 <p><strong>Location:</strong> {selectedCar.location}</p>
                                 <p><strong>Price per Day:</strong> ${selectedCar.price}</p>
                                 <p><strong>Availability:</strong> {selectedCar.availability}</p>
-                                <p><strong>Average Rating:</strong> {selectedCar.avgRating ?? 'N/A'} / 5</p>
                                 <div className={styles.buttonContainer}>
                                     <button className={styles.rentButton} onClick={handleRentClick}>
                                         Rent
@@ -188,11 +194,12 @@ const CarRentalPage = () => {
                                         Cancel
                                     </button>
                                 </div>
-                                <h3>Reviews</h3>
-                                <div className={styles.reviewsSection}>
-                                    <p>No reviews yet.</p>
-                                    <button className={styles.writeReviewButton} onClick={handleWriteReviewClick}>
-                                        Write a Review
+                                <div className={styles.reviewSection}>
+                                    <button className={styles.yellowButton} onClick={handleWriteReviewClick}>
+                                        Write Review
+                                    </button>
+                                    <button className={styles.yellowButton} onClick={handleViewReviewsClick}>
+                                        View Reviews
                                     </button>
                                 </div>
                             </div>
@@ -229,7 +236,7 @@ const CarRentalPage = () => {
                                         onClick={handleConfirmRental}
                                         disabled={!fromDate || !toDate}
                                     >
-                                        Confirm
+                                        Confirm Booking
                                     </button>
                                     <button
                                         className={styles.cancelButton1}

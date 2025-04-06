@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
-import styles from './CarRentalPage.module.css'; // Use same styles as CarRentalPage
+import styles from './HotelRentalPage.module.css'; 
 import Header from './Header';
 import Footer from './Footer';
 
@@ -13,7 +13,12 @@ const HotelRentalPage = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
+    const [showBookingPopup, setShowBookingPopup] = useState(false); // Add state for booking popup
+    const [fromDate, setFromDate] = useState('');
+    const [toDate, setToDate] = useState('');
     const navigate = useNavigate();
+
+    const today = new Date().toISOString().split('T')[0]; // Set minimum date to today
 
     useEffect(() => {
         const fetchHotels = async () => {
@@ -28,21 +33,18 @@ const HotelRentalPage = () => {
                 console.error('Error fetching hotels:', error);
             }
         };
-
         fetchHotels();
     }, []);
 
     const filteredHotels = hotels.filter((hotel) => {
-        const lowerCaseSearchQuery = searchQuery.toLowerCase();
-        const matchesSearchQuery =
-            hotel.hotelName.toLowerCase().includes(lowerCaseSearchQuery) ||
-            hotel.location.toLowerCase().includes(lowerCaseSearchQuery);
-
-        const matchesPriceRange =
-            (minPrice ? hotel.price >= parseFloat(minPrice) : true) &&
-            (maxPrice ? hotel.price <= parseFloat(maxPrice) : true);
-
-        return matchesSearchQuery && matchesPriceRange;
+        const query = searchQuery.toLowerCase();
+        const matchesText =
+            hotel.hotelName.toLowerCase().includes(query) ||
+            hotel.location.toLowerCase().includes(query);
+        const price = parseFloat(hotel.price);
+        const matchesMin = minPrice ? price >= parseFloat(minPrice) : true;
+        const matchesMax = maxPrice ? price <= parseFloat(maxPrice) : true;
+        return matchesText && matchesMin && matchesMax;
     });
 
     const handleDetailsClick = (hotel) => {
@@ -53,10 +55,41 @@ const HotelRentalPage = () => {
     const handleClosePopup = () => {
         setSelectedHotel(null);
         setShowDetails(false);
+        setShowBookingPopup(false);
+        setFromDate('');
+        setToDate('');
     };
 
     const handleBookClick = () => {
-        navigate('/payment-checkout');
+        setShowBookingPopup(true);
+    };
+
+    const handleConfirmBooking = () => {
+        navigate('/payment-checkout', {
+            state: {
+                hotelName: selectedHotel.hotelName,
+                roomNumber: selectedHotel.roomNumber,
+                price: selectedHotel.price,
+                fromDate,
+                toDate
+            }
+        });
+    };
+
+    const handleWriteReviewClick = () => {
+        if (!selectedHotel) return;
+        navigate('/write-review', {
+            state: {
+                hotelId: selectedHotel.id,
+                hotelName: selectedHotel.hotelName,
+                location: selectedHotel.location
+            }
+        });
+    };
+
+    const handleViewReviewsClick = () => {
+        if (!selectedHotel) return;
+        navigate(`/reviews/${selectedHotel.id}`);
     };
 
     return (
@@ -156,11 +189,65 @@ const HotelRentalPage = () => {
                                 <p><strong>Location:</strong> {selectedHotel.location}</p>
                                 <p><strong>Price per Night:</strong> ${selectedHotel.price}</p>
                                 <p><strong>Availability:</strong> {selectedHotel.availability ?? 'N/A'}</p>
+                                
                                 <div className={styles.buttonContainer}>
-                                    <button className={styles.bookButton} onClick={handleBookClick}>
-                                        Book Now
+                                    <button className={styles.bookButtonGreen} onClick={handleBookClick}>
+                                        Book
                                     </button>
                                     <button className={styles.cancelButton} onClick={handleClosePopup}>
+                                        Cancel
+                                    </button>
+                                </div>
+
+                                <div className={styles.reviewSection}>
+                                    <button className={styles.yellowButton} onClick={handleWriteReviewClick}>
+                                        Write Review
+                                    </button>
+                                    <button className={styles.yellowButton} onClick={handleViewReviewsClick}>
+                                        View Reviews
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Booking Popup */}
+                    {showBookingPopup && (
+                        <div className={styles.popup}>
+                            <div className={styles.popupContent}>
+                                <h2>Booking Dates for {selectedHotel?.hotelName}</h2>
+                                <label>
+                                    From Date:
+                                    <input
+                                        type="date"
+                                        min={today}
+                                        value={fromDate}
+                                        onChange={(e) => setFromDate(e.target.value)}
+                                    />
+                                </label>
+                                <br />
+                                <label>
+                                    To Date:
+                                    <input
+                                        type="date"
+                                        min={fromDate || today}
+                                        value={toDate}
+                                        onChange={(e) => setToDate(e.target.value)}
+                                    />
+                                </label>
+                                <br />
+                                <div className={styles.buttonContainer}>
+                                    <button
+                                        className={styles.confirmButton}
+                                        onClick={handleConfirmBooking}
+                                        disabled={!fromDate || !toDate}
+                                    >
+                                        Confirm Booking
+                                    </button>
+                                    <button
+                                        className={styles.cancelButton1}
+                                        onClick={() => setShowBookingPopup(false)}
+                                    >
                                         Cancel
                                     </button>
                                 </div>
