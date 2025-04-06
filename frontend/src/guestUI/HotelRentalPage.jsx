@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
-import styles from './HotelRentalPage.module.css';
+import styles from './CarRentalPage.module.css'; // Use same styles as CarRentalPage
 import Header from './Header';
 import Footer from './Footer';
 
@@ -10,9 +10,9 @@ const HotelRentalPage = () => {
     const [hotels, setHotels] = useState([]);
     const [selectedHotel, setSelectedHotel] = useState(null);
     const [showDetails, setShowDetails] = useState(false);
-    const [searchQuery, setSearchQuery] = useState(''); // State for search input
-    const [minPrice, setMinPrice] = useState(''); // State for min price input
-    const [maxPrice, setMaxPrice] = useState(''); // State for max price input
+    const [searchQuery, setSearchQuery] = useState('');
+    const [minPrice, setMinPrice] = useState('');
+    const [maxPrice, setMaxPrice] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -32,17 +32,12 @@ const HotelRentalPage = () => {
         fetchHotels();
     }, []);
 
-    // Filter hotels based on search query and price range
     const filteredHotels = hotels.filter((hotel) => {
         const lowerCaseSearchQuery = searchQuery.toLowerCase();
-
-        // Check if the hotel matches the search query
         const matchesSearchQuery =
             hotel.hotelName.toLowerCase().includes(lowerCaseSearchQuery) ||
-            hotel.location.toLowerCase().includes(lowerCaseSearchQuery) ||
-            (hotel.amenities && hotel.amenities.toLowerCase().includes(lowerCaseSearchQuery));
+            hotel.location.toLowerCase().includes(lowerCaseSearchQuery);
 
-        // Check if the hotel matches the price range
         const matchesPriceRange =
             (minPrice ? hotel.price >= parseFloat(minPrice) : true) &&
             (maxPrice ? hotel.price <= parseFloat(maxPrice) : true);
@@ -64,18 +59,6 @@ const HotelRentalPage = () => {
         navigate('/payment-checkout');
     };
 
-    const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value); // Update the search query state
-    };
-
-    const handleMinPriceChange = (e) => {
-        setMinPrice(e.target.value); // Update the min price state
-    };
-
-    const handleMaxPriceChange = (e) => {
-        setMaxPrice(e.target.value); // Update the max price state
-    };
-
     return (
         <div className={styles.container}>
             <Header hideTabs={false} />
@@ -83,44 +66,41 @@ const HotelRentalPage = () => {
                 <div className={styles.whiteBox}>
                     <h1 className={styles.heading}>Hotel Rentals</h1>
 
-                    {/* Search Bar */}
                     <div className={styles.searchBarContainer}>
                         <input
                             type="text"
                             value={searchQuery}
-                            onChange={handleSearchChange}
-                            placeholder="Search by name, location, or amenities..."
-                            className={styles.searchBar}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder="Search by name or location..."
+                            className={styles.searchInput}
                         />
-                    </div>
-
-                    {/* Price Range Filter */}
-                    <div className={styles.priceFilterContainer}>
-                        <input
-                            type="number"
-                            value={minPrice}
-                            onChange={handleMinPriceChange}
-                            placeholder="Min Price"
-                            className={styles.priceInput}
-                        />
-                        <input
-                            type="number"
-                            value={maxPrice}
-                            onChange={handleMaxPriceChange}
-                            placeholder="Max Price"
-                            className={styles.priceInput}
-                        />
+                        <div className={styles.priceInputs}>
+                            <input
+                                type="number"
+                                placeholder="Min Price"
+                                value={minPrice}
+                                onChange={(e) => setMinPrice(e.target.value)}
+                                className={styles.priceInput}
+                            />
+                            <input
+                                type="number"
+                                placeholder="Max Price"
+                                value={maxPrice}
+                                onChange={(e) => setMaxPrice(e.target.value)}
+                                className={styles.priceInput}
+                            />
+                        </div>
                     </div>
 
                     <div className={styles.tableContainer}>
-                        <table className={styles.hotelTable}>
+                        <table className={styles.carTable}>
                             <thead>
                                 <tr>
                                     <th>Image</th>
                                     <th>Name</th>
                                     <th>Location</th>
                                     <th>Price/Night</th>
-                                    <th>Rating</th>
+                                    <th>Availability</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -140,7 +120,7 @@ const HotelRentalPage = () => {
                                             <td>{hotel.hotelName}</td>
                                             <td>{hotel.location}</td>
                                             <td>${hotel.price}</td>
-                                            <td>{hotel.rating ?? 'N/A'} / 5</td>
+                                            <td>{hotel.availability ?? 'N/A'}</td>
                                             <td>
                                                 <button
                                                     className={styles.detailsButton}
@@ -165,18 +145,17 @@ const HotelRentalPage = () => {
                     {showDetails && selectedHotel && (
                         <div className={styles.popup}>
                             <div className={styles.popupContent}>
-                                <h2>{selectedHotel.name}</h2>
+                                <h2>{selectedHotel.hotelName}</h2>
                                 {selectedHotel.imageUrl && (
                                     <img
                                         src={selectedHotel.imageUrl}
-                                        alt={selectedHotel.name}
+                                        alt={selectedHotel.hotelName}
                                         className={styles.hotelImage}
                                     />
                                 )}
                                 <p><strong>Location:</strong> {selectedHotel.location}</p>
                                 <p><strong>Price per Night:</strong> ${selectedHotel.price}</p>
-                                <p><strong>Rating:</strong> {selectedHotel.rating ?? 'N/A'} / 5</p>
-                                <p><strong>Amenities:</strong> {selectedHotel.amenities ?? 'Not listed'}</p>
+                                <p><strong>Availability:</strong> {selectedHotel.availability ?? 'N/A'}</p>
                                 <div className={styles.buttonContainer}>
                                     <button className={styles.bookButton} onClick={handleBookClick}>
                                         Book Now
