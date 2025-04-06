@@ -72,9 +72,11 @@ const HotelRentalPage = () => {
                 roomNumber: selectedHotel.roomNumber,
                 price: selectedHotel.price,
                 availability: selectedHotel.availability,
-                hotelId: selectedHotel.id, // needed to update Firestore
+                hotelId: selectedHotel.id, 
                 fromDate,
-                toDate
+                toDate,
+                hotelLocation: selectedHotel.location,
+                companyID: selectedHotel.companyId
             }
         });
     };

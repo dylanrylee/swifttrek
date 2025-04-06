@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import styles from './PaymentCheckout.module.css';
 import { FaCcVisa, FaCcMastercard, FaCcPaypal, FaCheckCircle } from 'react-icons/fa';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import { getAuth } from 'firebase/auth';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -20,20 +21,30 @@ const PaymentCheckout = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
+    const { currentUser } = getAuth();
 
-    const { selectedCar, fromDate, toDate, hotelName, roomNumber, price, hotelId } = location.state || {};
+    const {
+        selectedCar,
+        fromDate,
+        toDate,
+        hotelName,
+        roomNumber,
+        price,
+        hotelId,
+        hotelLocation,
+        companyID
+    } = location.state || {};
 
     const formatDate = (dateStr) => {
         if (!dateStr) return '';
         const [year, month, day] = dateStr.split('-');
-        return `${month}/${day}/${year}`;  // Return in MM/DD/YYYY format
+        return `${month}/${day}/${year}`;
     };
 
     const markCarAsBooked = async (carId) => {
         try {
             const carRef = doc(db, 'cars', carId);
             await updateDoc(carRef, { availability: 'Booked' });
-            console.log(`Car ${carId} marked as Booked.`);
         } catch (error) {
             console.error('Error updating car availability:', error);
         }
@@ -43,9 +54,37 @@ const PaymentCheckout = () => {
         try {
             const hotelRef = doc(db, 'hotels', hotelDocId);
             await updateDoc(hotelRef, { availability: 'Booked' });
-            console.log(`Hotel room ${hotelDocId} marked as Booked.`);
         } catch (error) {
             console.error('Error updating hotel room availability:', error);
+        }
+    };
+
+    const storeBookingData = async () => {
+        try {
+            if (selectedCar) {
+                await addDoc(collection(db, 'booked_cars'), {
+                    carName: selectedCar.model,
+                    carPrice: selectedCar.price,
+                    companyID: selectedCar.companyID,
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    guestID: currentUser?.uid
+                });
+            }
+
+            if (hotelName) {
+                await addDoc(collection(db, 'booked_hotels'), {
+                    fromDate,
+                    toDate,
+                    guestID: currentUser?.uid ,
+                    hotelLocation: hotelLocation,
+                    hotelName,
+                    hotelPrice: price,
+                    companyID: companyID
+                });
+            }
+        } catch (err) {
+            console.error('Error saving booking data:', err);
         }
     };
 
@@ -63,6 +102,7 @@ const PaymentCheckout = () => {
         try {
             if (selectedCar?.id) await markCarAsBooked(selectedCar.id);
             if (hotelId) await markHotelAsBooked(hotelId);
+            await storeBookingData(); // Add booking to appropriate collection
             setPaymentConfirmed(true);
         } catch (error) {
             alert('Payment failed. Please try again.');
@@ -73,6 +113,7 @@ const PaymentCheckout = () => {
         try {
             if (selectedCar?.id) await markCarAsBooked(selectedCar.id);
             if (hotelId) await markHotelAsBooked(hotelId);
+            await storeBookingData(); // Add booking to appropriate collection
             setPaymentConfirmed(true);
         } catch (error) {
             alert('Payment failed. Please try again.');
@@ -97,7 +138,6 @@ const PaymentCheckout = () => {
                     <>
                         <h1 className={styles.heading}>Payment Checkout</h1>
 
-                        {/* Car Details */}
                         {selectedCar && (
                             <div className={styles.carInfoBox}>
                                 <h2 className={styles.subheading}>Car Booking</h2>
@@ -109,7 +149,6 @@ const PaymentCheckout = () => {
                             </div>
                         )}
 
-                        {/* Hotel Details */}
                         {hotelName && roomNumber && price && (
                             <div className={styles.hotelInfoBox}>
                                 <h2 className={styles.subheading}>Hotel Booking</h2>
@@ -121,7 +160,6 @@ const PaymentCheckout = () => {
                             </div>
                         )}
 
-                        {/* Payment Options */}
                         <div className={styles.buttonContainer}>
                             <button className={styles.paymentButton} onClick={() => {
                                 setShowDebitForm(true);
@@ -146,7 +184,6 @@ const PaymentCheckout = () => {
                             </button>
                         </div>
 
-                        {/* Card Form (shared for debit/credit) */}
                         {(showDebitForm || showCreditForm) && (
                             <div className={styles.debitForm}>
                                 <h3 className={styles.formHeading}>
@@ -207,7 +244,6 @@ const PaymentCheckout = () => {
                             </div>
                         )}
 
-                        {/* PayPal Confirmation */}
                         {showPaypalForm && (
                             <div className={styles.debitForm}>
                                 <h3 className={styles.formHeading}>Pay with PayPal</h3>
