@@ -25,8 +25,8 @@ const PaymentCheckout = () => {
 
     const formatDate = (dateStr) => {
         if (!dateStr) return '';
-        const options = { year: 'numeric', month: 'short', day: 'numeric' };
-        return new Date(dateStr).toLocaleDateString(undefined, options);
+        const [year, month, day] = dateStr.split('-');
+        return `${month}/${day}/${year}`;  // Return in MM/DD/YYYY format
     };
 
     const markCarAsBooked = async (carId) => {

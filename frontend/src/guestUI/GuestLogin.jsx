@@ -1,11 +1,10 @@
-// src/GuestLogin.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './GuestLogin.module.css'; 
 import RegisterAccount from './RegisterAccount';
 
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase'; // ✅ Add this line
+import { auth } from '../firebase';
 
 const GuestLogin = () => {
     const navigate = useNavigate();
