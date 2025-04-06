@@ -10,6 +10,8 @@ import Footer from './Footer';
 
 const PaymentCheckout = () => {
     const [showDebitForm, setShowDebitForm] = useState(false);
+    const [showCreditForm, setShowCreditForm] = useState(false);
+    const [showPaypalForm, setShowPaypalForm] = useState(false);
     const [paymentConfirmed, setPaymentConfirmed] = useState(false);
     const [cardHolder, setCardHolder] = useState('');
     const [cardNumber, setCardNumber] = useState('');
@@ -19,7 +21,6 @@ const PaymentCheckout = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Get car and hotel details from location.state
     const { selectedCar, fromDate, toDate, hotelName, roomNumber, price, hotelId } = location.state || {};
 
     const formatDate = (dateStr) => {
@@ -31,9 +32,7 @@ const PaymentCheckout = () => {
     const markCarAsBooked = async (carId) => {
         try {
             const carRef = doc(db, 'cars', carId);
-            await updateDoc(carRef, {
-                availability: 'Booked'
-            });
+            await updateDoc(carRef, { availability: 'Booked' });
             console.log(`Car ${carId} marked as Booked.`);
         } catch (error) {
             console.error('Error updating car availability:', error);
@@ -43,12 +42,40 @@ const PaymentCheckout = () => {
     const markHotelAsBooked = async (hotelDocId) => {
         try {
             const hotelRef = doc(db, 'hotels', hotelDocId);
-            await updateDoc(hotelRef, {
-                availability: 'Booked'
-            });
+            await updateDoc(hotelRef, { availability: 'Booked' });
             console.log(`Hotel room ${hotelDocId} marked as Booked.`);
         } catch (error) {
             console.error('Error updating hotel room availability:', error);
+        }
+    };
+
+    const handleConfirm = async () => {
+        if (
+            cardNumber.length !== 19 ||
+            expiry.length !== 5 ||
+            cvv.length !== 3 ||
+            !cardHolder
+        ) {
+            alert('Please fill in all fields correctly.');
+            return;
+        }
+
+        try {
+            if (selectedCar?.id) await markCarAsBooked(selectedCar.id);
+            if (hotelId) await markHotelAsBooked(hotelId);
+            setPaymentConfirmed(true);
+        } catch (error) {
+            alert('Payment failed. Please try again.');
+        }
+    };
+
+    const handlePaypalConfirm = async () => {
+        try {
+            if (selectedCar?.id) await markCarAsBooked(selectedCar.id);
+            if (hotelId) await markHotelAsBooked(hotelId);
+            setPaymentConfirmed(true);
+        } catch (error) {
+            alert('Payment failed. Please try again.');
         }
     };
 
@@ -70,7 +97,7 @@ const PaymentCheckout = () => {
                     <>
                         <h1 className={styles.heading}>Payment Checkout</h1>
 
-                        {/* Display Car Details */}
+                        {/* Car Details */}
                         {selectedCar && (
                             <div className={styles.carInfoBox}>
                                 <h2 className={styles.subheading}>Car Booking</h2>
@@ -82,7 +109,7 @@ const PaymentCheckout = () => {
                             </div>
                         )}
 
-                        {/* Display Hotel Details */}
+                        {/* Hotel Details */}
                         {hotelName && roomNumber && price && (
                             <div className={styles.hotelInfoBox}>
                                 <h2 className={styles.subheading}>Hotel Booking</h2>
@@ -94,21 +121,37 @@ const PaymentCheckout = () => {
                             </div>
                         )}
 
+                        {/* Payment Options */}
                         <div className={styles.buttonContainer}>
-                            <button className={styles.paymentButton} onClick={() => setShowDebitForm(true)}>
+                            <button className={styles.paymentButton} onClick={() => {
+                                setShowDebitForm(true);
+                                setShowCreditForm(false);
+                                setShowPaypalForm(false);
+                            }}>
                                 <FaCcVisa className={styles.icon} /> Debit Card
                             </button>
-                            <button className={styles.paymentButton}>
+                            <button className={styles.paymentButton} onClick={() => {
+                                setShowDebitForm(false);
+                                setShowCreditForm(true);
+                                setShowPaypalForm(false);
+                            }}>
                                 <FaCcMastercard className={styles.icon} /> Credit Card
                             </button>
-                            <button className={styles.paymentButton}>
+                            <button className={styles.paymentButton} onClick={() => {
+                                setShowDebitForm(false);
+                                setShowCreditForm(false);
+                                setShowPaypalForm(true);
+                            }}>
                                 <FaCcPaypal className={styles.icon} /> PayPal
                             </button>
                         </div>
 
-                        {showDebitForm && (
+                        {/* Card Form (shared for debit/credit) */}
+                        {(showDebitForm || showCreditForm) && (
                             <div className={styles.debitForm}>
-                                <h3 className={styles.formHeading}>Enter Debit Card Details</h3>
+                                <h3 className={styles.formHeading}>
+                                    Enter {showDebitForm ? 'Debit' : 'Credit'} Card Details
+                                </h3>
 
                                 <input
                                     type="text"
@@ -158,29 +201,19 @@ const PaymentCheckout = () => {
                                     />
                                 </div>
 
-                                <button
-                                    className={styles.confirmButton}
-                                    onClick={async () => {
-                                        if (
-                                            cardNumber.length !== 19 ||
-                                            expiry.length !== 5 ||
-                                            cvv.length !== 3 ||
-                                            !cardHolder
-                                        ) {
-                                            alert('Please fill in all fields correctly.');
-                                            return;
-                                        }
-
-                                        try {
-                                            if (selectedCar?.id) await markCarAsBooked(selectedCar.id);
-                                            if (hotelId) await markHotelAsBooked(hotelId);
-                                            setPaymentConfirmed(true);
-                                        } catch (error) {
-                                            alert('Payment failed. Please try again.');
-                                        }
-                                    }}
-                                >
+                                <button className={styles.confirmButton} onClick={handleConfirm}>
                                     Confirm Payment
+                                </button>
+                            </div>
+                        )}
+
+                        {/* PayPal Confirmation */}
+                        {showPaypalForm && (
+                            <div className={styles.debitForm}>
+                                <h3 className={styles.formHeading}>Pay with PayPal</h3>
+                                <p>This will redirect you to PayPal in a real-world scenario.</p>
+                                <button className={styles.confirmButton} onClick={handlePaypalConfirm}>
+                                    Confirm PayPal Payment
                                 </button>
                             </div>
                         )}
