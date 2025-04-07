@@ -10,7 +10,7 @@ const Header = ({ hideTabs }) => {
                 <nav className={styles.nav}>
                     <ul>
                         <li><Link to="/guest-home">Home</Link></li>
-                        <li><Link to="/about">Profile</Link></li>
+                        <li><Link to="/guest-profile">Profile</Link></li>
                         <li><Link to="/contact">Settings</Link></li>
                     </ul>
                 </nav>

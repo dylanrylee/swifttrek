@@ -35,17 +35,12 @@ const BookFlightPage = () => {
     const filteredFlights = flights.filter((flight) => {
         const query = searchQuery.toLowerCase();
 
-        const matchesSearch =
-            flight.flightNumber.toLowerCase().includes(query) ||
-            flight.departureCity.toLowerCase().includes(query) ||
-            flight.arrivalCity.toLowerCase().includes(query) ||
-            (flight.type && flight.type.toLowerCase().includes(query));
+        const matchesText = `${flight.flightNumber} ${flight.departureCity} ${flight.arrivalCity} ${flight.type}`.toLowerCase().includes(query);
+        const matchesMin = minPrice ? flight.ticketPrice >= parseFloat(minPrice) : true;
+        const matchesMax = maxPrice ? flight.ticketPrice <= parseFloat(maxPrice) : true;
+        const hasSeats = flight.availableSeats > 0;
 
-        const matchesPrice =
-            (minPrice ? flight.ticketPrice >= parseFloat(minPrice) : true) &&
-            (maxPrice ? flight.ticketPrice <= parseFloat(maxPrice) : true);
-
-        return matchesSearch && matchesPrice;
+        return matchesText && matchesMin && matchesMax && hasSeats;
     });
 
     const handleDetailsClick = (flight) => {
@@ -59,11 +54,31 @@ const BookFlightPage = () => {
     };
 
     const handleBookClick = () => {
-        navigate('/payment-checkout', { state: { flight: selectedFlight } });
+        if (!selectedFlight) return;
+        navigate('/payment-checkout', {
+            state: {
+                flight: selectedFlight,
+                ticketPrice: selectedFlight.ticketPrice
+            }
+        });
     };
 
     const handleWriteReviewClick = () => {
-        navigate('/write-review');
+        if (!selectedFlight) return;
+        navigate('/write-review', {
+            state: {
+                flightId: selectedFlight.id,
+                flightNumber: selectedFlight.flightNumber,
+                type: selectedFlight.type,
+                departureCity: selectedFlight.departureCity,
+                arrivalCity: selectedFlight.arrivalCity
+            }
+        });
+    };
+
+    const handleViewReviewsClick = () => {
+        if (!selectedFlight) return;
+        navigate(`/reviews/${selectedFlight.id}`);
     };
 
     return (
@@ -76,30 +91,27 @@ const BookFlightPage = () => {
                     <div className={styles.searchBarContainer}>
                         <input
                             type="text"
+                            placeholder="Search by flight number, city, or type"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="Search by flight number, city, or type..."
-                            className={styles.searchBar}
+                            className={styles.searchInput}
                         />
-                    </div>
-
-                    <div className={styles.priceFilterContainer}>
-                        <label>Min Price: </label>
-                        <input
-                            type="number"
-                            value={minPrice}
-                            onChange={(e) => setMinPrice(e.target.value)}
-                            placeholder="Min Price"
-                            className={styles.priceInput}
-                        />
-                        <label>Max Price: </label>
-                        <input
-                            type="number"
-                            value={maxPrice}
-                            onChange={(e) => setMaxPrice(e.target.value)}
-                            placeholder="Max Price"
-                            className={styles.priceInput}
-                        />
+                        <div className={styles.priceInputs}>
+                            <input
+                                type="number"
+                                placeholder="Min Price"
+                                value={minPrice}
+                                onChange={(e) => setMinPrice(e.target.value)}
+                                className={styles.priceInput}
+                            />
+                            <input
+                                type="number"
+                                placeholder="Max Price"
+                                value={maxPrice}
+                                onChange={(e) => setMaxPrice(e.target.value)}
+                                className={styles.priceInput}
+                            />
+                        </div>
                     </div>
 
                     <div className={styles.tableContainer}>
@@ -107,7 +119,7 @@ const BookFlightPage = () => {
                             <thead>
                                 <tr>
                                     <th>Image</th>
-                                    <th>Flight Number</th>
+                                    <th>Flight No.</th>
                                     <th>Type</th>
                                     <th>From</th>
                                     <th>To</th>
@@ -119,43 +131,35 @@ const BookFlightPage = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredFlights.length > 0 ? (
-                                    filteredFlights.map((flight) => (
-                                        <tr key={flight.id}>
-                                            <td>
-                                                {flight.imageUrl && (
-                                                    <img
-                                                        src={flight.imageUrl}
-                                                        alt={`Flight ${flight.flightNumber}`}
-                                                        className={styles.thumbnail}
-                                                    />
-                                                )}
-                                            </td>
-                                            <td>{flight.flightNumber}</td>
-                                            <td>{flight.type}</td>
-                                            <td>{flight.departureCity}</td>
-                                            <td>{flight.arrivalCity}</td>
-                                            <td>{flight.departureTime}</td>
-                                            <td>{flight.duration}</td>
-                                            <td>{flight.availableSeats}</td>
-                                            <td>${flight.ticketPrice}</td>
-                                            <td>
-                                                <button
-                                                    className={styles.detailsButton}
-                                                    onClick={() => handleDetailsClick(flight)}
-                                                >
-                                                    Details
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="10" style={{ textAlign: 'center' }}>
-                                            No flights match your search.
+                                {filteredFlights.map((flight) => (
+                                    <tr key={flight.id}>
+                                        <td>
+                                            {flight.imageUrl && (
+                                                <img
+                                                    src={flight.imageUrl}
+                                                    alt={flight.flightNumber}
+                                                    className={styles.thumbnail}
+                                                />
+                                            )}
+                                        </td>
+                                        <td>{flight.flightNumber}</td>
+                                        <td>{flight.type}</td>
+                                        <td>{flight.departureCity}</td>
+                                        <td>{flight.arrivalCity}</td>
+                                        <td>{flight.departureTime}</td>
+                                        <td>{flight.duration}</td>
+                                        <td>{flight.availableSeats}</td>
+                                        <td>${flight.ticketPrice}</td>
+                                        <td>
+                                            <button
+                                                className={styles.detailsButton}
+                                                onClick={() => handleDetailsClick(flight)}
+                                            >
+                                                Details
+                                            </button>
                                         </td>
                                     </tr>
-                                )}
+                                ))}
                             </tbody>
                         </table>
                     </div>
@@ -167,36 +171,32 @@ const BookFlightPage = () => {
                                 {selectedFlight.imageUrl && (
                                     <img
                                         src={selectedFlight.imageUrl}
-                                        alt={`Flight ${selectedFlight.flightNumber}`}
+                                        alt={selectedFlight.flightNumber}
                                         className={styles.carImage}
                                     />
                                 )}
-                                <p><strong>Company ID:</strong> {selectedFlight.companyId}</p>
                                 <p><strong>Type:</strong> {selectedFlight.type}</p>
-                                <p><strong>Departure City:</strong> {selectedFlight.departureCity}</p>
-                                <p><strong>Departure Time:</strong> {selectedFlight.departureTime}</p>
-                                <p><strong>Arrival City:</strong> {selectedFlight.arrivalCity}</p>
-                                <p><strong>Arrival Time:</strong> {selectedFlight.arrivalTime}</p>
+                                <p><strong>From:</strong> {selectedFlight.departureCity}</p>
+                                <p><strong>To:</strong> {selectedFlight.arrivalCity}</p>
+                                <p><strong>Departure:</strong> {selectedFlight.departureTime}</p>
+                                <p><strong>Arrival:</strong> {selectedFlight.arrivalTime}</p>
                                 <p><strong>Duration:</strong> {selectedFlight.duration}</p>
                                 <p><strong>Available Seats:</strong> {selectedFlight.availableSeats}</p>
-                                <p><strong>Ticket Price:</strong> ${selectedFlight.ticketPrice}</p>
+                                <p><strong>Price:</strong> ${selectedFlight.ticketPrice}</p>
                                 <div className={styles.buttonContainer}>
-                                    <button
-                                        className={styles.rentButton}
-                                        onClick={handleBookClick}
-                                        disabled={selectedFlight.availableSeats === 0}
-                                    >
-                                        {selectedFlight.availableSeats === 0 ? 'Sold Out' : 'Book'}
+                                    <button className={styles.rentButton} onClick={handleBookClick}>
+                                        Book
                                     </button>
                                     <button className={styles.cancelButton} onClick={handleClosePopup}>
                                         Cancel
                                     </button>
                                 </div>
-                                <h3>Reviews</h3>
-                                <div className={styles.reviewsSection}>
-                                    <p>No reviews yet.</p>
-                                    <button className={styles.writeReviewButton} onClick={handleWriteReviewClick}>
-                                        Write a Review
+                                <div className={styles.reviewSection}>
+                                    <button className={styles.yellowButton} onClick={handleWriteReviewClick}>
+                                        Write Review
+                                    </button>
+                                    <button className={styles.yellowButton} onClick={handleViewReviewsClick}>
+                                        View Reviews
                                     </button>
                                 </div>
                             </div>
