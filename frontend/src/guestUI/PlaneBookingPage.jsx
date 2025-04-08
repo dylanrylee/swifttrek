@@ -2,83 +2,85 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
-import styles from './PlaneBookingPage.module.css';
 import Header from './Header';
 import Footer from './Footer';
+import styles from './PlaneBookingPage.module.css';
 
-const BookFlightPage = () => {
-    const [flights, setFlights] = useState([]);
-    const [selectedFlight, setSelectedFlight] = useState(null);
+const PlaneBookingPage = () => {
+    const [planes, setPlanes] = useState([]);
+    const [selectedPlane, setSelectedPlane] = useState(null);
     const [showDetails, setShowDetails] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
+    const [showBookingPopup, setShowBookingPopup] = useState(false);
+    const [fromDate, setFromDate] = useState('');
+    const [toDate, setToDate] = useState('');
     const navigate = useNavigate();
 
+    const today = new Date().toISOString().split('T')[0];
+
     useEffect(() => {
-        const fetchFlights = async () => {
+        const fetchPlanes = async () => {
             try {
-                const querySnapshot = await getDocs(collection(db, 'flights'));
-                const flightList = querySnapshot.docs.map(doc => ({
+                const querySnapshot = await getDocs(collection(db, 'planes'));
+                const planeList = querySnapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data()
                 }));
-                setFlights(flightList);
+                setPlanes(planeList);
             } catch (error) {
-                console.error('Error fetching flights:', error);
+                console.error('Error fetching planes:', error);
             }
         };
-
-        fetchFlights();
+        fetchPlanes();
     }, []);
 
-    const filteredFlights = flights.filter((flight) => {
+    const filteredPlanes = planes.filter((plane) => {
         const query = searchQuery.toLowerCase();
-
-        const matchesText = `${flight.flightNumber} ${flight.departureCity} ${flight.arrivalCity} ${flight.type}`.toLowerCase().includes(query);
-        const matchesMin = minPrice ? flight.ticketPrice >= parseFloat(minPrice) : true;
-        const matchesMax = maxPrice ? flight.ticketPrice <= parseFloat(maxPrice) : true;
-        const hasSeats = flight.availableSeats > 0;
-
-        return matchesText && matchesMin && matchesMax && hasSeats;
+        const matchesText =
+            plane.flightNumber.toLowerCase().includes(query) ||
+            plane.departureLocation.toLowerCase().includes(query) ||
+            plane.arrivalLocation.toLowerCase().includes(query);
+        const price = parseFloat(plane.price);
+        const matchesMin = minPrice ? price >= parseFloat(minPrice) : true;
+        const matchesMax = maxPrice ? price <= parseFloat(maxPrice) : true;
+        const isAvailable = plane.availability === 'Available';
+        return matchesText && matchesMin && matchesMax && isAvailable;
     });
 
-    const handleDetailsClick = (flight) => {
-        setSelectedFlight(flight);
+    const handleDetailsClick = (plane) => {
+        setSelectedPlane(plane);
         setShowDetails(true);
     };
 
     const handleClosePopup = () => {
-        setSelectedFlight(null);
+        setSelectedPlane(null);
         setShowDetails(false);
+        setShowBookingPopup(false);
+        setFromDate('');
+        setToDate('');
     };
 
     const handleBookClick = () => {
-        if (!selectedFlight) return;
+        setShowBookingPopup(true);
+    };
+
+    const handleConfirmBooking = () => {
         navigate('/payment-checkout', {
             state: {
-                flight: selectedFlight,
-                ticketPrice: selectedFlight.ticketPrice
+                flightNumber: selectedPlane.flightNumber,
+                seatNumber: selectedPlane.seatNumber,
+                price: selectedPlane.price,
+                availability: selectedPlane.availability,
+                planeId: selectedPlane.id,
+                fromDate,
+                toDate,
+                departure: selectedPlane.departureLocation,
+                arrival: selectedPlane.arrivalLocation,
+                companyID: selectedPlane.companyId
             }
         });
-    };
-
-    const handleWriteReviewClick = () => {
-        if (!selectedFlight) return;
-        navigate('/write-review', {
-            state: {
-                flightId: selectedFlight.id,
-                flightNumber: selectedFlight.flightNumber,
-                type: selectedFlight.type,
-                departureCity: selectedFlight.departureCity,
-                arrivalCity: selectedFlight.arrivalCity
-            }
-        });
-    };
-
-    const handleViewReviewsClick = () => {
-        if (!selectedFlight) return;
-        navigate(`/reviews/${selectedFlight.id}`);
     };
 
     return (
@@ -86,14 +88,14 @@ const BookFlightPage = () => {
             <Header hideTabs={false} />
             <div className={styles.content}>
                 <div className={styles.whiteBox}>
-                    <h1 className={styles.heading}>Book a Flight</h1>
+                    <h1 className={styles.heading}>Plane Bookings</h1>
 
                     <div className={styles.searchBarContainer}>
                         <input
                             type="text"
-                            placeholder="Search by flight number, city, or type"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder="Search by flight number or location..."
                             className={styles.searchInput}
                         />
                         <div className={styles.priceInputs}>
@@ -115,88 +117,122 @@ const BookFlightPage = () => {
                     </div>
 
                     <div className={styles.tableContainer}>
-                        <table className={styles.flightTable}>
+                        <table className={styles.carTable}>
                             <thead>
                                 <tr>
                                     <th>Image</th>
-                                    <th>Flight No.</th>
-                                    <th>Type</th>
+                                    <th>Flight</th>
                                     <th>From</th>
                                     <th>To</th>
-                                    <th>Departure</th>
-                                    <th>Duration</th>
-                                    <th>Seats</th>
                                     <th>Price</th>
+                                    <th>Availability</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredFlights.map((flight) => (
-                                    <tr key={flight.id}>
-                                        <td>
-                                            {flight.imageUrl && (
-                                                <img
-                                                    src={flight.imageUrl}
-                                                    alt={flight.flightNumber}
-                                                    className={styles.thumbnail}
-                                                />
-                                            )}
-                                        </td>
-                                        <td>{flight.flightNumber}</td>
-                                        <td>{flight.type}</td>
-                                        <td>{flight.departureCity}</td>
-                                        <td>{flight.arrivalCity}</td>
-                                        <td>{flight.departureTime}</td>
-                                        <td>{flight.duration}</td>
-                                        <td>{flight.availableSeats}</td>
-                                        <td>${flight.ticketPrice}</td>
-                                        <td>
-                                            <button
-                                                className={styles.detailsButton}
-                                                onClick={() => handleDetailsClick(flight)}
-                                            >
-                                                Details
-                                            </button>
+                                {filteredPlanes.length > 0 ? (
+                                    filteredPlanes.map((plane) => (
+                                        <tr key={plane.id}>
+                                            <td>
+                                                {plane.imageUrl && (
+                                                    <img
+                                                        src={plane.imageUrl}
+                                                        alt={plane.flightNumber}
+                                                        className={styles.thumbnail}
+                                                    />
+                                                )}
+                                            </td>
+                                            <td>{plane.flightNumber}</td>
+                                            <td>{plane.departureLocation}</td>
+                                            <td>{plane.arrivalLocation}</td>
+                                            <td>${plane.price}</td>
+                                            <td>{plane.availability ?? 'N/A'}</td>
+                                            <td>
+                                                <button
+                                                    className={styles.detailsButton}
+                                                    onClick={() => handleDetailsClick(plane)}
+                                                >
+                                                    Details
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="7" style={{ textAlign: 'center' }}>
+                                            No flights match your search.
                                         </td>
                                     </tr>
-                                ))}
+                                )}
                             </tbody>
                         </table>
                     </div>
 
-                    {showDetails && selectedFlight && (
+                    {showDetails && selectedPlane && (
                         <div className={styles.popup}>
                             <div className={styles.popupContent}>
-                                <h2>Flight {selectedFlight.flightNumber} Details</h2>
-                                {selectedFlight.imageUrl && (
+                                <h2>{selectedPlane.flightNumber}</h2>
+                                {selectedPlane.imageUrl && (
                                     <img
-                                        src={selectedFlight.imageUrl}
-                                        alt={selectedFlight.flightNumber}
-                                        className={styles.carImage}
+                                        src={selectedPlane.imageUrl}
+                                        alt={selectedPlane.flightNumber}
+                                        className={styles.hotelImage}
                                     />
                                 )}
-                                <p><strong>Type:</strong> {selectedFlight.type}</p>
-                                <p><strong>From:</strong> {selectedFlight.departureCity}</p>
-                                <p><strong>To:</strong> {selectedFlight.arrivalCity}</p>
-                                <p><strong>Departure:</strong> {selectedFlight.departureTime}</p>
-                                <p><strong>Arrival:</strong> {selectedFlight.arrivalTime}</p>
-                                <p><strong>Duration:</strong> {selectedFlight.duration}</p>
-                                <p><strong>Available Seats:</strong> {selectedFlight.availableSeats}</p>
-                                <p><strong>Price:</strong> ${selectedFlight.ticketPrice}</p>
+                                <p><strong>From:</strong> {selectedPlane.departureLocation}</p>
+                                <p><strong>To:</strong> {selectedPlane.arrivalLocation}</p>
+                                <p><strong>Price:</strong> ${selectedPlane.price}</p>
+                                <p><strong>Availability:</strong> {selectedPlane.availability ?? 'N/A'}</p>
+
                                 <div className={styles.buttonContainer}>
-                                    <button className={styles.rentButton} onClick={handleBookClick}>
+                                    <button className={styles.bookButtonGreen} onClick={handleBookClick}>
                                         Book
                                     </button>
                                     <button className={styles.cancelButton} onClick={handleClosePopup}>
                                         Cancel
                                     </button>
                                 </div>
-                                <div className={styles.reviewSection}>
-                                    <button className={styles.yellowButton} onClick={handleWriteReviewClick}>
-                                        Write Review
+                            </div>
+                        </div>
+                    )}
+
+                    {showBookingPopup && (
+                        <div className={styles.popup}>
+                            <div className={styles.popupContent}>
+                                <h2>Booking Dates for {selectedPlane?.flightNumber}</h2>
+                                <label>
+                                    From Date:
+                                    <input
+                                        type="date"
+                                        min={today}
+                                        value={fromDate}
+                                        onChange={(e) => setFromDate(e.target.value)}
+                                    />
+                                </label>
+                                <br />
+                                <label>
+                                    To Date:
+                                    <input
+                                        type="date"
+                                        min={fromDate || today}
+                                        value={toDate}
+                                        onChange={(e) => setToDate(e.target.value)}
+                                    />
+                                </label>
+                                <br />
+                                <div className={styles.buttonContainer}>
+                                    <button
+                                        className={styles.confirmButton}
+                                        onClick={handleConfirmBooking}
+                                        disabled={!fromDate || !toDate}
+                                    >
+                                        Confirm Booking
                                     </button>
-                                    <button className={styles.yellowButton} onClick={handleViewReviewsClick}>
-                                        View Reviews
+                                    <button
+                                        className={styles.cancelButton1}
+                                        onClick={() => setShowBookingPopup(false)}
+                                    >
+                                        Cancel
                                     </button>
                                 </div>
                             </div>
@@ -209,4 +245,4 @@ const BookFlightPage = () => {
     );
 };
 
-export default BookFlightPage;
+export default PlaneBookingPage;

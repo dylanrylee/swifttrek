@@ -19,7 +19,7 @@ const GuestProfilePage = () => {
     const [carBookings, setCarBookings] = useState([]);
 
     const fetchPlaneBookings = async (userId) => {
-        const snapshot = await getDocs(query(collection(db, 'planeBookings'), where('userID', '==', userId)));
+        const snapshot = await getDocs(query(collection(db, 'booked_planes'), where('guestID', '==', userId)));
         return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'plane' }));
     };
 
@@ -35,7 +35,7 @@ const GuestProfilePage = () => {
 
     const handleDelete = async (type, id) => {
         const collectionName = {
-            plane: 'planeBookings',
+            plane: 'booked_planes',
             hotel: 'booked_hotels',
             car: 'booked_cars'
         }[type];
@@ -90,7 +90,7 @@ const GuestProfilePage = () => {
                     <ul className={styles.bookingList}>
                         {planeBookings.map(b => (
                             <li key={b.id}>
-                                <strong>{b.flightNumber}</strong> — {b.departureCity} to {b.arrivalCity} on {b.departureDate}
+                                <strong>{b.planeName}</strong> with {b.airline} from {b.fromDate} to {b.toDate} — ${b.price}
                                 <button onClick={() => handleDelete('plane', b.id)} className={styles.deleteButton}>Delete</button>
                             </li>
                         ))}

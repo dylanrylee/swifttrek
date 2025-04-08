@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './PaymentCheckout.module.css';
 import { FaCcVisa, FaCcMastercard, FaCcPaypal, FaCheckCircle } from 'react-icons/fa';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { doc, updateDoc, collection, addDoc } from 'firebase/firestore';
+import { doc, updateDoc, collection, addDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { getAuth } from 'firebase/auth';
 
@@ -32,7 +32,8 @@ const PaymentCheckout = () => {
         price,
         hotelId,
         hotelLocation,
-        companyID
+        companyID,
+        selectedPlane
     } = location.state || {};
 
     const formatDate = (dateStr) => {
@@ -42,49 +43,63 @@ const PaymentCheckout = () => {
     };
 
     const markCarAsBooked = async (carId) => {
-        try {
-            const carRef = doc(db, 'cars', carId);
-            await updateDoc(carRef, { availability: 'Booked' });
-        } catch (error) {
-            console.error('Error updating car availability:', error);
-        }
+        const carRef = doc(db, 'cars', carId);
+        await updateDoc(carRef, { availability: 'Booked' });
     };
 
     const markHotelAsBooked = async (hotelDocId) => {
-        try {
-            const hotelRef = doc(db, 'hotels', hotelDocId);
-            await updateDoc(hotelRef, { availability: 'Booked' });
-        } catch (error) {
-            console.error('Error updating hotel room availability:', error);
+        const hotelRef = doc(db, 'hotels', hotelDocId);
+        await updateDoc(hotelRef, { availability: 'Booked' });
+    };
+
+    const updatePlaneSeatCount = async (planeId) => {
+        const planeRef = doc(db, 'planes', planeId);
+        const planeSnap = await getDoc(planeRef);
+        const currentSeats = planeSnap.data()?.seats;
+
+        if (currentSeats > 0) {
+            const newSeats = currentSeats - 1;
+            await updateDoc(planeRef, {
+                seats: newSeats,
+                availability: newSeats === 0 ? 'Unavailable' : 'Available'
+            });
         }
     };
 
     const storeBookingData = async () => {
-        try {
-            if (selectedCar) {
-                await addDoc(collection(db, 'booked_cars'), {
-                    carName: selectedCar.model,
-                    carPrice: selectedCar.price,
-                    companyID: selectedCar.companyId,
-                    fromDate: fromDate,
-                    toDate: toDate,
-                    guestID: currentUser?.uid
-                });
-            }
+        if (selectedCar) {
+            await addDoc(collection(db, 'booked_cars'), {
+                carName: selectedCar.model,
+                carPrice: selectedCar.price,
+                companyID: selectedCar.companyId,
+                fromDate,
+                toDate,
+                guestID: currentUser?.uid
+            });
+        }
 
-            if (hotelName) {
-                await addDoc(collection(db, 'booked_hotels'), {
-                    fromDate,
-                    toDate,
-                    guestID: currentUser?.uid ,
-                    hotelLocation: hotelLocation,
-                    hotelName,
-                    hotelPrice: price,
-                    companyID: companyID
-                });
-            }
-        } catch (err) {
-            console.error('Error saving booking data:', err);
+        if (hotelName) {
+            await addDoc(collection(db, 'booked_hotels'), {
+                fromDate,
+                toDate,
+                guestID: currentUser?.uid,
+                hotelLocation,
+                hotelName,
+                hotelPrice: price,
+                companyID
+            });
+        }
+
+        if (selectedPlane) {
+            await addDoc(collection(db, 'booked_planes'), {
+                fromDate,
+                toDate,
+                guestID: currentUser?.uid,
+                planeName: selectedPlane.name,
+                airline: selectedPlane.airline,
+                price: selectedPlane.price,
+                companyID: selectedPlane.companyId
+            });
         }
     };
 
@@ -102,7 +117,8 @@ const PaymentCheckout = () => {
         try {
             if (selectedCar?.id) await markCarAsBooked(selectedCar.id);
             if (hotelId) await markHotelAsBooked(hotelId);
-            await storeBookingData(); // Add booking to appropriate collection
+            if (selectedPlane?.id) await updatePlaneSeatCount(selectedPlane.id);
+            await storeBookingData();
             setPaymentConfirmed(true);
         } catch (error) {
             alert('Payment failed. Please try again.');
@@ -113,7 +129,8 @@ const PaymentCheckout = () => {
         try {
             if (selectedCar?.id) await markCarAsBooked(selectedCar.id);
             if (hotelId) await markHotelAsBooked(hotelId);
-            await storeBookingData(); // Add booking to appropriate collection
+            if (selectedPlane?.id) await updatePlaneSeatCount(selectedPlane.id);
+            await storeBookingData();
             setPaymentConfirmed(true);
         } catch (error) {
             alert('Payment failed. Please try again.');
@@ -123,7 +140,6 @@ const PaymentCheckout = () => {
     return (
         <div className={styles.container}>
             <Header hideTabs={false} />
-
             <div className={styles.content}>
                 {paymentConfirmed ? (
                     <div className={styles.confirmationScreen}>
@@ -157,6 +173,18 @@ const PaymentCheckout = () => {
                                 <p><strong>Booked From:</strong> {formatDate(fromDate)}</p>
                                 <p><strong>Booked To:</strong> {formatDate(toDate)}</p>
                                 <p><strong>Price per Night:</strong> ${price}</p>
+                            </div>
+                        )}
+
+                        {selectedPlane && (
+                            <div className={styles.hotelInfoBox}>
+                                <h2 className={styles.subheading}>Flight Booking</h2>
+                                <p><strong>Airline:</strong> {selectedPlane.airline}</p>
+                                <p><strong>Plane:</strong> {selectedPlane.name}</p>
+                                <p><strong>Seats Left:</strong> {selectedPlane.seats}</p>
+                                <p><strong>Booked From:</strong> {formatDate(fromDate)}</p>
+                                <p><strong>Booked To:</strong> {formatDate(toDate)}</p>
+                                <p><strong>Price:</strong> ${selectedPlane.price}</p>
                             </div>
                         )}
 
@@ -256,7 +284,6 @@ const PaymentCheckout = () => {
                     </>
                 )}
             </div>
-
             <Footer />
         </div>
     );
