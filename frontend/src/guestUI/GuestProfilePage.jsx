@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import {
     collection,
@@ -17,6 +18,7 @@ const GuestProfilePage = () => {
     const [planeBookings, setPlaneBookings] = useState([]);
     const [hotelBookings, setHotelBookings] = useState([]);
     const [carBookings, setCarBookings] = useState([]);
+    const navigate = useNavigate();
 
     const fetchPlaneBookings = async (userId) => {
         const snapshot = await getDocs(query(collection(db, 'booked_planes'), where('guestID', '==', userId)));
@@ -50,6 +52,15 @@ const GuestProfilePage = () => {
         }
     };
 
+    const handleLogout = async () => {
+        try {
+            await auth.signOut();
+            navigate('/guest-login');
+        } catch (error) {
+            console.error('Error signing out:', error);
+        }
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             const currentUser = auth.currentUser;
@@ -75,56 +86,62 @@ const GuestProfilePage = () => {
         fetchData();
     }, []);
 
+    const renderBookings = (bookings, type) => {
+        if (bookings.length === 0) return <p>No {type} bookings found.</p>;
+
+        return (
+            <ul className={styles.bookingList}>
+                {bookings.map(b => (
+                    <li key={b.id}>
+                        <div>
+                            {type === 'plane' && (
+                                <strong>{b.planeName}</strong>
+                            )}
+                            {type === 'hotel' && (
+                                <strong>{b.hotelName}</strong>
+                            )}
+                            {type === 'car' && (
+                                <strong>{b.carName}</strong>
+                            )}
+                            <br />
+                            {type === 'plane' && `${b.airline} from ${b.fromDate} to ${b.toDate} — $${b.price}`}
+                            {type === 'hotel' && `in ${b.hotelLocation} from ${b.fromDate} to ${b.toDate} — $${b.hotelPrice}`}
+                            {type === 'car' && `from ${b.fromDate} to ${b.toDate} — $${b.carPrice}`}
+                        </div>
+                        <button onClick={() => handleDelete(type, b.id)} className={styles.deleteButton}>
+                            Delete
+                        </button>
+                    </li>
+                ))}
+            </ul>
+        );
+    };
+
     return (
         <div className={styles.container}>
             <Header hideTabs={false} />
+
             <div className={styles.content}>
                 <h1>Guest Profile</h1>
                 <p><strong>Email:</strong> {email}</p>
                 <p><strong>Password:</strong> ******</p>
 
                 <h2>Plane Bookings</h2>
-                {planeBookings.length === 0 ? (
-                    <p>No plane bookings found.</p>
-                ) : (
-                    <ul className={styles.bookingList}>
-                        {planeBookings.map(b => (
-                            <li key={b.id}>
-                                <strong>{b.planeName}</strong> with {b.airline} from {b.fromDate} to {b.toDate} — ${b.price}
-                                <button onClick={() => handleDelete('plane', b.id)} className={styles.deleteButton}>Delete</button>
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                {renderBookings(planeBookings, 'plane')}
 
                 <h2>Hotel Bookings</h2>
-                {hotelBookings.length === 0 ? (
-                    <p>No hotel bookings found.</p>
-                ) : (
-                    <ul className={styles.bookingList}>
-                        {hotelBookings.map(b => (
-                            <li key={b.id}>
-                                <strong>{b.hotelName}</strong> in {b.hotelLocation} from {b.fromDate} to {b.toDate} — ${b.hotelPrice}
-                                <button onClick={() => handleDelete('hotel', b.id)} className={styles.deleteButton}>Delete</button>
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                {renderBookings(hotelBookings, 'hotel')}
 
                 <h2>Car Bookings</h2>
-                {carBookings.length === 0 ? (
-                    <p>No car bookings found.</p>
-                ) : (
-                    <ul className={styles.bookingList}>
-                        {carBookings.map(b => (
-                            <li key={b.id}>
-                                <strong>{b.carName}</strong> from {b.fromDate} to {b.toDate} — ${b.carPrice}
-                                <button onClick={() => handleDelete('car', b.id)} className={styles.deleteButton}>Delete</button>
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                {renderBookings(carBookings, 'car')}
             </div>
+
+            <div className={styles.logoutSection}>
+                <button onClick={handleLogout} className={styles.logoutButton}>
+                    Logout
+                </button>
+            </div>
+
             <Footer />
         </div>
     );
