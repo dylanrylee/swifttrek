@@ -17,14 +17,30 @@ const PlaneBookingPage = () => {
         const fetchPlanes = async () => {
             try {
                 const querySnapshot = await getDocs(collection(db, 'planes'));
-                const planeData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                setPlanes(planeData);
+                const planeList = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setPlanes(planeList);
             } catch (error) {
                 console.error('Error fetching planes: ', error);
             }
         };
         fetchPlanes();
     }, []);
+
+    const filteredPlanes = planes.filter((plane) => {
+        const query = searchQuery.toLowerCase();
+        const matchesSearch = plane.flightNumber?.toLowerCase().includes(query) ||
+                              plane.departureLocation?.toLowerCase().includes(query) ||
+                              plane.arrivalLocation?.toLowerCase().includes(query);
+        const price = parseFloat(plane.price);
+        const matchesMinPrice = minPrice === '' || price >= parseFloat(minPrice);
+        const matchesMaxPrice = maxPrice === '' || price <= parseFloat(maxPrice);
+        const hasAvailableSeats = typeof plane.availableSeats === 'number' && plane.availableSeats > 0;
+
+        return matchesSearch && matchesMinPrice && matchesMaxPrice && hasAvailableSeats;
+    });
 
     const handleDetailsClick = (plane) => {
         setSelectedPlane(plane);
@@ -35,18 +51,6 @@ const PlaneBookingPage = () => {
         setShowPopup(false);
         setSelectedPlane(null);
     };
-
-    const filteredPlanes = planes.filter((plane) => {
-        const matchesSearch = plane.flightNumber?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                              plane.departureLocation?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                              plane.arrivalLocation?.toLowerCase().includes(searchQuery.toLowerCase());
-
-        const price = parseFloat(plane.price);
-        const meetsMinPrice = minPrice === '' || price >= parseFloat(minPrice);
-        const meetsMaxPrice = maxPrice === '' || price <= parseFloat(maxPrice);
-
-        return matchesSearch && meetsMinPrice && meetsMaxPrice;
-    });
 
     return (
         <div className={styles.container}>
@@ -91,7 +95,7 @@ const PlaneBookingPage = () => {
                                         <th>From</th>
                                         <th>To</th>
                                         <th>Price</th>
-                                        <th>Availability</th>
+                                        <th>Available Seats</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -112,7 +116,7 @@ const PlaneBookingPage = () => {
                                                 <td>{plane.departureLocation}</td>
                                                 <td>{plane.arrivalLocation}</td>
                                                 <td>${plane.price}</td>
-                                                <td>{plane.availability ?? 'N/A'}</td>
+                                                <td>{plane.availableSeats}</td>
                                                 <td>
                                                     <button
                                                         className={styles.detailsButton}
@@ -147,7 +151,7 @@ const PlaneBookingPage = () => {
                                 <p>From: {selectedPlane.departureLocation}</p>
                                 <p>To: {selectedPlane.arrivalLocation}</p>
                                 <p>Price: ${selectedPlane.price}</p>
-                                <p>Availability: {selectedPlane.availability ?? 'N/A'}</p>
+                                <p>Available Seats: {selectedPlane.availableSeats}</p>
                                 <div className={styles.buttonContainer}>
                                     <button className={styles.rentButton}>Book Now</button>
                                     <button className={styles.cancelButton} onClick={handleClosePopup}>Close</button>
