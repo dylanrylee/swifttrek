@@ -94,18 +94,12 @@ const GuestProfilePage = () => {
                 {bookings.map(b => (
                     <li key={b.id}>
                         <div>
-                            {type === 'plane' && (
-                                <strong>{b.planeName}</strong>
-                            )}
-                            {type === 'hotel' && (
-                                <strong>{b.hotelName}</strong>
-                            )}
-                            {type === 'car' && (
-                                <strong>{b.carName}</strong>
-                            )}
+                            {type === 'plane' && <strong>{b.planeName}</strong>}
+                            {type === 'hotel' && <strong>{b.hotelName}</strong>}
+                            {type === 'car' && <strong>{b.carName}</strong>}
                             <br />
                             {type === 'plane' && `${b.airline} from ${b.fromDate} to ${b.toDate} — $${b.price}`}
-                            {type === 'hotel' && `in ${b.hotelLocation} from ${b.fromDate} to ${b.toDate} — $${b.hotelPrice}`}
+                            {type === 'hotel' && ` ${b.hotelLocation} from ${b.fromDate} to ${b.toDate} — $${b.hotelPrice}`}
                             {type === 'car' && `from ${b.fromDate} to ${b.toDate} — $${b.carPrice}`}
                         </div>
                         <button onClick={() => handleDelete(type, b.id)} className={styles.deleteButton}>
@@ -117,7 +111,7 @@ const GuestProfilePage = () => {
         );
     };
 
-    return (
+    const renderContent = () => (
         <div className={styles.container}>
             <Header hideTabs={false} />
 
@@ -145,6 +139,8 @@ const GuestProfilePage = () => {
             <Footer />
         </div>
     );
+
+    return renderContent();
 };
 
 export default GuestProfilePage;
