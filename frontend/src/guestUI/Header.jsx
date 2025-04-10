@@ -11,7 +11,6 @@ const Header = ({ hideTabs }) => {
                     <ul>
                         <li><Link to="/guest-home">Home</Link></li>
                         <li><Link to="/guest-profile">Profile</Link></li>
-                        <li><Link to="/contact">Settings</Link></li>
                     </ul>
                 </nav>
             )}
