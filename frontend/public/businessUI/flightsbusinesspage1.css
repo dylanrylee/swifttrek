@@ -1,4 +1,4 @@
-/* Custom CSS */
+
 body {
     background-image: url('https://www.libertytravel.com/sites/default/files/styles/full_size/public/flight-hero.jpg?itok=LKyRwKDq');
     background-size: cover;
@@ -13,7 +13,6 @@ body {
 .container {
     max-height: calc(100vh - 100px); 
     overflow-y: scroll;
-    scrollbar-width: none; 
     margin-top: 30px;
 }
 
@@ -32,17 +31,17 @@ body {
 
 .table {
     margin-top: 20px;
-    background-color: white; /* Set background color of the table to white */
+    background-color: white;
 }
 
 .table th {
-    background-color: goldenrod; /* Table headers will have goldenrod background */
-    color: black; /* Text color of headers */
+    background-color: goldenrod;
+    color: black;
 }
 
 .table td {
     text-align: center;
-    background-color: white; /* Set the background color of table cells to white */
+    background-color: white;
 }
 
 .table td button {
@@ -62,30 +61,17 @@ body {
     margin-bottom: 10px;
 }
 
-input[type="text"] {
-    background-color: rgba(255, 255, 255, 0.7);
-    color: black;
-}
-
-input[type="number"] {
+input[type="text"], input[type="number"], #searchFlight {
     background-color: rgba(255, 255, 255, 0.7);
     color: black;
 }
 
 #searchFlight {
-    background-color: rgba(255, 255, 255, 0.7);
-    color: black;
     width: 300px;
 }
 
 .table-striped tbody tr:nth-child(odd) {
     background-color: #f9f9f9;
-}
-
-.action-buttons {
-    display: flex;
-    gap: 10px;
-    align-items: center;
 }
 
 .navbar {
@@ -113,7 +99,7 @@ input[type="number"] {
     font-weight: bold;
 }
 
-/* Media Queries for responsiveness */
+/* Media Queries*/
 @media (max-width: 576px) {
     body {
         font-size: 14px; 
@@ -144,12 +130,7 @@ input[type="number"] {
     }
 }
 
-/* For medium screens (up to 768px) */
 @media (max-width: 768px) {
-    .container {
-        margin-top: 20px;
-    }
-
     .table th, .table td {
         font-size: 1rem; 
     }
@@ -167,7 +148,6 @@ input[type="number"] {
     }
 }
 
-/* For larger screens (up to 992px) */
 @media (max-width: 992px) {
     .table th, .table td {
         font-size: 1.1rem; 
@@ -186,7 +166,6 @@ input[type="number"] {
     }
 }
 
-/* For larger screens (up to 1200px) */
 @media (max-width: 1200px) {
     .container {
         margin-top: 40px; 
@@ -205,7 +184,6 @@ input[type="number"] {
     }
 }
 
-/* For very large screens (above 1200px) */
 @media (min-width: 1200px) {
     .container {
         margin-top: 50px; 
@@ -224,6 +202,48 @@ input[type="number"] {
     }
 }
 
-.nav-link:hover {
-    font-weight: bold;
+/* Responsive table stack */
+@media screen and (max-width: 768px) {
+    .table-stacked thead {
+      display: none;
+    }
+
+    .table-stacked,
+    .table-stacked tbody,
+    .table-stacked tr,
+    .table-stacked td {
+      display: block;
+      width: 100%;
+    }
+
+    .table-stacked tr {
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #fff;
+      padding: 10px;
+    }
+
+    .table-stacked td {
+      text-align: right;
+      position: relative;
+      padding-left: 50%;
+      border: none;
+      border-bottom: 1px solid #eee;
+    }
+
+    .table-stacked td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 10px;
+      width: 45%;
+      white-space: nowrap;
+      text-align: left;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .table-stacked td:last-child {
+      border-bottom: none;
+    }
 }
