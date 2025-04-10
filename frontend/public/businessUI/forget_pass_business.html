@@ -6,9 +6,11 @@
   <title>Forgot Password</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
-  <link rel="stylesheet" href="forget_pass_bussiness.css">
+  <!-- css file -->
+  <link rel="stylesheet" href="forget_pass_business.css">
 </head>
 <body>
+  <!--container for forgot password -->
   <div class="container">
     <div class="centered-card">
       <div class="card">
@@ -22,6 +24,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
               </div>
+              <!-- email id field  -->
               <input type="email" class="form-control" placeholder="Enter your email" required id="emailInput">
             </div>
             <div class="form-group">
@@ -29,7 +32,7 @@
             </div>
           </form>
 
-          <!-- Verification code input, initially hidden -->
+          <!-- field to put verification code-->
           <div id="codeSection" style="display:none;">
             <p>Please enter the verification code sent to your email:</p>
             <div class="input-group form-group">
@@ -52,11 +55,11 @@
     </div>
   </div>
   
+  <!-- Footer for About Us and Contact Us -->
   <footer>
     <div class="footer-links">
       <a href="aboutus.html" class="nav-link text-white">About Us</a>
       <a href="mailto:swifttrek@gmail.com" class="nav-link text-white">Contact Us</a>
-
     </div>
     <div class="footer-logo">
       <img src="https://static.vecteezy.com/system/resources/previews/041/041/333/non_2x/travel-app-logo-icon-brand-identity-sign-symbol-vector.jpg" alt="SwiftTrek Logo" style="height: 30px;">
@@ -64,6 +67,7 @@
     </div>
   </footer>
 
+  <!-- Javascript part -->
   <script>
     // Listener for the "Send Reset Link" button
     document.getElementById("sendResetLinkBtn").addEventListener("click", function(event) {
@@ -86,12 +90,10 @@
     // Listener for the "Verify Code" button
     document.getElementById("verifyCodeBtn").addEventListener("click", function(event) {
       event.preventDefault();
-      
       var code = document.getElementById("verificationCode").value;
       
       if (code) {
         alert("Code verified!");
-       
       } else {
         alert("Please enter the verification code.");
       }
