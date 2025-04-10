@@ -1,0 +1,193 @@
+body {
+  background-image: url('https://media.timeout.com/images/106150176/750/422/image.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100vh;
+  font-family: 'Numans', sans-serif;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centered-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  width: 400px;
+  height: auto;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.card-header h3 {
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.remember {
+  color: white;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.remember input {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.login_btn {
+  color: white;
+  background-color: #FF7F50;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login_btn:hover {
+  background-color: #FF6347;
+  color: white;
+}
+
+.input-group-text {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-group-text i {
+  font-size: 1.2rem;
+}
+
+.forgot-password {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.forgot-password a {
+  font-size: 15px;
+  color: skyblue;
+  text-align: center;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.card-footer {
+  margin-top: 10px;
+  padding-top: 5px;
+}
+
+.card .form-group {
+  margin-bottom: 10px;
+}
+
+.links {
+  color: white;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.links a {
+  margin-left: 4px;
+  color: #FF7F50;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.links a:hover {
+  color: #FF6347;
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+  .card {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .card-header h3 {
+    font-size: 18px;
+  }
+
+  .login_btn {
+    padding: 12px;
+  }
+
+  .forgot-password a {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .card {
+    width: 80%;
+    padding: 25px;
+  }
+
+  .card-header h3 {
+    font-size: 20px;
+  }
+
+  .login_btn {
+    padding: 10px;
+  }
+
+  .forgot-password a {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 769px) {
+  .card {
+    width: 400px;
+    padding: 20px;
+  }
+
+  .card-header h3 {
+    font-size: 24px;
+  }
+
+  .login_btn {
+    padding: 10px;
+  }
+
+  .forgot-password a {
+    font-size: 16px;
+  }
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+}

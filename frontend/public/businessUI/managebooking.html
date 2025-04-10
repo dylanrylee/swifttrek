@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Bookings</title>
+
+  <!-- Bootstrap and FontAwesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
+  <link rel="stylesheet" href="managebooking.css">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .search-input {
+      max-width: 300px;
+    }
+    .booked-flights, .booked-hotels, .booked-cars {
+      color: navy;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: goldenrod;">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-calendar-check me-2"></i> Booking Schedule
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="businessportalscreen.html"><i class="fas fa-home me-2"></i>Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="managebooking.html"><i class="fas fa-book me-2"></i>Manage Booking</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="settings_business.html"><i class="fas fa-cogs me-2"></i>Settings</a>
+          </li>
+        </ul>
+        <div class="d-flex align-items-center ms-auto">
+          <span class="text-white me-3">Hi, <strong id="company-name">Loading...</strong></span>
+          <a class="nav-link text-white" href="loginbusiness.html">
+              <i class="fas fa-sign-out-alt me-2"></i> Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Bookings Display -->
+  <div class="container mt-5">
+
+    <!-- Flights Section -->
+    <div class="mb-5">
+      <h3 class="booked-flights"><i class="fas fa-plane me-2"></i>Booked Flights</h3>
+      <input type="text" class="form-control mb-2 search-input" placeholder="Search flights..." onkeyup="searchTable('flightTable', this.value)">
+      <table class="table table-striped" id="flightTable">
+        <thead>
+          <tr>
+            <th>Flight Number</th>
+            <th>Flight Type</th>
+            <th>Available Date</th>
+            <th>Available Seats</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dynamic flight rows will go here -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Hotels Section -->
+    <div class="mb-5">
+      <h3 class="booked-hotels"><i class="fas fa-hotel me-2"></i>Booked Hotels</h3>
+      <input type="text" class="form-control mb-2 search-input" placeholder="Search hotels..." onkeyup="searchTable('hotelTable', this.value)">
+      <table class="table table-striped" id="hotelTable">
+        <thead>
+          <tr>
+            <th>Hotel Name</th>
+            <th>Room Number</th>
+            <th>Location</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dynamic hotel rows will go here -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Car Rentals Section -->
+    <div class="mb-5">
+      <h3 class="booked-cars"><i class="fas fa-car me-2"></i>Booked Car Rentals</h3>
+      <input type="text" class="form-control mb-2 search-input" placeholder="Search cars..." onkeyup="searchTable('carTable', this.value)">
+      <table class="table table-striped" id="carTable">
+        <thead>
+          <tr>
+            <th>Car Model</th>
+            <th>Car Type</th>
+            <th>Location</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dynamic car rental rows will go here -->
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Back Button -->
+  <div class="text-center mt-4">
+    <button onclick="window.history.back();" class="btn btn-info mb-3">
+      <i class="fas fa-arrow-left"></i> Go Back
+    </button>
+  </div>
+
+  <!-- Bootstrap & Firebase Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, where, getDoc, doc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDtVetfy-n7pPCCccj_EIArrlbHQGEZ2TQ",
+      authDomain: "seng513-project.firebaseapp.com",
+      projectId: "seng513-project",
+      storageBucket: "seng513-project.appspot.com",
+      messagingSenderId: "888422866543",
+      appId: "1:888422866543:web:57f170ae027e8abfdff79a",
+      measurementId: "G-G9WNFE7KBL"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    let currentUserCompanyId = null;
+
+    // Function to fetch only booked flights for the current company
+    const fetchBookedFlights = async () => {
+      if (!currentUserCompanyId) return;
+      
+      const flightsCollection = collection(db, "flights");
+      const q = query(flightsCollection, where("companyId", "==", currentUserCompanyId));
+      const querySnapshot = await getDocs(q);
+      const tableBody = document.querySelector("#flightTable tbody");
+      tableBody.innerHTML = "";
+
+      if (querySnapshot.empty) {
+        tableBody.innerHTML = `<tr><td colspan="4">No flight bookings found for your company.</td></tr>`;
+        return;
+      }
+
+      querySnapshot.forEach((doc) => {
+        const flight = doc.data();
+        tableBody.innerHTML += `
+          <tr>
+            <td>${flight.flightNumber || "N/A"}</td>
+            <td>${flight.type || "N/A"}</td>
+            <td>${flight.availableDate || "N/A"}</td>
+            <td>${flight.availableSeats || "N/A"}</td>
+          </tr>
+        `;
+      });
+    };
+
+    // Function to fetch only booked hotels for the current company
+    const fetchBookedHotels = async () => {
+      if (!currentUserCompanyId) return;
+      
+      const hotelsCollection = collection(db, "hotels");
+      const q = query(hotelsCollection, where("companyId", "==", currentUserCompanyId));
+      const querySnapshot = await getDocs(q);
+      const tableBody = document.querySelector("#hotelTable tbody");
+      tableBody.innerHTML = "";
+
+      if (querySnapshot.empty) {
+        tableBody.innerHTML = `<tr><td colspan="3">No hotel bookings found for your company.</td></tr>`;
+        return;
+      }
+
+      querySnapshot.forEach((doc) => {
+        const hotel = doc.data();
+        tableBody.innerHTML += `
+          <tr>
+            <td>${hotel.hotelName || "N/A"}</td>
+            <td>${hotel.roomNumber || "N/A"}</td>
+            <td>${hotel.location || "N/A"}</td>
+          </tr>
+        `;
+      });
+    };
+
+    // Function to fetch only booked car rentals for the current company
+    const fetchBookedCars = async () => {
+      if (!currentUserCompanyId) return;
+      
+      const carsCollection = collection(db, "cars");
+      const q = query(carsCollection, where("companyId", "==", currentUserCompanyId));
+      const querySnapshot = await getDocs(q);
+      const tableBody = document.querySelector("#carTable tbody");
+      tableBody.innerHTML = "";
+
+      if (querySnapshot.empty) {
+        tableBody.innerHTML = `<tr><td colspan="3">No car rental bookings found for your company.</td></tr>`;
+        return;
+      }
+
+      querySnapshot.forEach((doc) => {
+        const car = doc.data();
+        tableBody.innerHTML += `
+          <tr>
+            <td>${car.model || "N/A"}</td>
+            <td>${car.type || "N/A"}</td>
+            <td>${car.location || "N/A"}</td>
+          </tr>
+        `;
+      });
+    };
+
+    // Initialize the page
+    window.onload = () => {
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          // Get the user's company ID from business_owners collection
+          const ownerDoc = await getDoc(doc(db, "business_owners", user.uid));
+          if (ownerDoc.exists()) {
+            currentUserCompanyId = ownerDoc.data().companyAddress;
+            document.getElementById("company-name").textContent = ownerDoc.data().companyName || 'User';
+            
+            // Fetch all bookings for this company
+            fetchBookedFlights();
+            fetchBookedHotels();
+            fetchBookedCars();
+          } else {
+            alert("No company profile found for this user!");
+            window.location.href = 'loginbusiness.html';
+          }
+        } else {
+          window.location.href = 'loginbusiness.html';
+        }
+      });
+    };
+  </script>
+
+  <!-- Search Logic -->
+  <script>
+    function searchTable(tableId, query) {
+      const filter = query.toUpperCase();
+      const table = document.getElementById(tableId);
+      const rows = table.getElementsByTagName("tr");
+
+      for (let i = 1; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName("td");
+        let match = false;
+        for (let j = 0; j < cells.length; j++) {
+          if (cells[j].textContent.toUpperCase().includes(filter)) {
+            match = true;
+            break;
+          }
+        }
+        rows[i].style.display = match ? "" : "none";
+      }
+    }
+  </script>
+
+</body>
+</html>
