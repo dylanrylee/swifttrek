@@ -1,0 +1,64 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-image: url('https://media.timeout.com/images/106150176/750/422/image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+
+.main-center {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    color: white;
+}
+
+/* Input and Label Styling */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    color: white;
+    font-size: 14px;
+}
+
+input, input::-webkit-input-placeholder {
+    font-size: 14px;
+}
+
+.login-button, .login-register a {
+    display: block;
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 5px;
+    background: rgba(0, 123, 255, 0.7);
+    color: white;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.login-button:hover, .login-register a:hover {
+    background: rgba(0, 123, 255, 1);
+}
+
+
+@media (max-width: 576px) {
+    .main-center {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .login-button {
+        font-size: 12px;
+    }
+}
