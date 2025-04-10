@@ -1,12 +1,11 @@
 body {
   background-image: url('https://media.timeout.com/images/106150176/750/422/image.jpg');
-  background-size: cover; 
-  background-repeat: no-repeat; 
-  background-position: center center; 
-  height: 100vh; 
-  font-family: 'Numans', sans-serif; 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100vh;
+  font-family: 'Numans', sans-serif;
   color: aliceblue;
-
 }
 
 /* Container Styling */
@@ -18,31 +17,29 @@ body {
   padding-bottom: 60px;
 }
 
-/* Card styling */
+/* Card Styling */
 .card {
-  width: 100%; 
-  max-width: 400px; 
-  height: auto; 
-  margin: auto;
-  background-color: rgba(0, 0, 0, 0.5); 
+  width: 100%;
+  max-width: 400px;
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border-radius: 10px;
+  margin: auto;
 }
 
-/* Header within the card */
-.card-header h3 { 
+/* Forgot Password header Styling */
+.card-header h3 {
   color: white;
   text-align: center;
   margin-bottom: 20px;
 }
 
-/*input fields */
 input:focus {
   outline: none;
   box-shadow: none;
 }
 
-/* Styling for the login button */
+/* Login button Styling*/
 .login_btn {
   color: black;
   background-color: #FF7F50;
@@ -53,46 +50,28 @@ input:focus {
   cursor: pointer;
 }
 
-/* Hover effect for the login button */
+/* Login button on hover */
 .login_btn:hover {
   background-color: #FF6347;
   color: white;
 }
 
-/* Styling for the links section */
+/* Sign in Link styling */
 .links {
   color: white;
   text-align: center;
   margin-top: 20px;
 }
 
-/* Styling for links*/
 .links a {
   margin-left: 4px;
   color: #FF7F50;
-  text-decoration: none;
   transition: color 0.3s ease;
 }
 
-/* Hover effect for links */
 .links a:hover {
   color: #FF6347;
-}
-
-/* Styling for forgot password link */
-.forgot-password {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px; 
-}
-
-.forgot-password a {
-  font-size: 15px;
-}
-
-.forgot-password a:hover {
   text-decoration: underline;
-  color:white;
 }
 
 /* Footer Styling */
@@ -101,7 +80,7 @@ footer {
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: transparent; 
+  background-color: transparent;
   color: white;
   text-align: center;
   padding: 10px 0;
@@ -123,42 +102,29 @@ footer {
   font-weight: bolder;
 }
 
-/* Media queries*/
+/*Media Queries */
 @media (max-width: 576px) {
-  .card {
-      padding: 15px; 
-  }
   .card-header h3 {
-      font-size: 1.5rem; 
-  }
-  .login_btn {
-      padding: 12px; 
-  }
-  .forgot-password a {
-      font-size: 14px; 
+    font-size: 1.5rem;
   }
 }
 
 @media (min-width: 577px) and (max-width: 768px) {
   .card {
-      width: 90%; 
+    width: 90%;
   }
+
   .card-header h3 {
-      font-size: 1.75rem; 
-  }
-  .login_btn {
-      padding: 12px;
+    font-size: 1.75rem;
   }
 }
 
 @media (min-width: 769px) {
   .card {
-      width: 400px; 
+    width: 400px;
   }
+
   .card-header h3 {
-      font-size: 2rem; 
-  }
-  .login_btn {
-      padding: 14px;
+    font-size: 2rem;
   }
 }
