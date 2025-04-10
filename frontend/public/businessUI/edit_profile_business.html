@@ -34,7 +34,7 @@
     const getUserProfile = async () => {
       const user = auth.currentUser;
       if (user) {
-        const docRef = doc(db, "business_owners", user.uid); // Use the current user's UID
+        const docRef = doc(db, "business_owners", user.uid); 
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -78,9 +78,9 @@
     window.onload = () => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          getUserProfile(); // Get profile data if user is authenticated
+          getUserProfile(); 
         } else {
-          window.location.href = 'loginbusiness.html'; // Redirect to login if not logged in
+          window.location.href = 'loginbusiness.html'; 
         }
       });
     };
@@ -131,9 +131,6 @@
         <label for="username" class="form-label">Username</label>
         <input type="text" id="username" class="form-control" placeholder="Enter your Username" required>
       </div>
-
-      <!-- Save Button -->
-      <!-- <button type="submit" class="btn btn-primary">Save Changes</button> -->
     </form>
 
     <div class="text-center mt-4">
