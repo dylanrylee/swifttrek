@@ -20,7 +20,7 @@ const SelectAccountType = () => {
                         </button>
                         <button className={styles.businessaccountButton} onClick={() => window.location.href = '/businessUI/loginbusiness.html'}>
                             Business</button>
-                        <button className={styles.adminaccountButton}>Admin</button>
+                        <button className={styles.adminaccountButton} onClick={() => window.location.href = '/adminUI/login_admin.html'}> Admin</button>
                     </div>
                 </div>
             </main>
