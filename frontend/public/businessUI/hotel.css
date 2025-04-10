@@ -1,27 +1,19 @@
-/* Custom CSS */
 body {
     background-image: url('https://www.grecotel.com/luxme-whitepalace/wp-content/uploads/sites/6/2025/02/10-grecotel-luxme-white-room-details-768x960.jpg');
     background-position: center;
-    background-size: cover; /* Ensures the image covers the entire screen */
-    background-repeat: no-repeat; /* Prevents repeating */
+    background-size: cover;
+    background-repeat: no-repeat;
     color: white;
-    height: 100vh; /* Makes the body take up the full height of the viewport */
-    margin: 0; /* Removes any default margin */
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
     font-weight: bold;
 }
 
-
-
 .container {
-    max-height: calc(100vh - 100px); /* Adjust the height for the remaining viewport */
+    max-height: calc(100vh - 100px);
     overflow-y: scroll;
-    scrollbar-width: none; 
     margin-top: 30px;
-}
-
-.container h2 {
-    color: black;
 }
 
 .card-header {
@@ -34,26 +26,26 @@ body {
 }
 
 .btn-primary:hover {
-    background-color: #333; /* Dark gray hover color */
+    background-color: #333;
 }
 
 .table {
     margin-top: 20px;
-    background-color: white; /* Set table background color to white */
+    background-color: white;
 }
 
 .table th {
-    background-color: goldenrod; /* Table header background */
+    background-color: goldenrod;
     color: black;
 }
 
 .table td {
-    background-color: white; /* Table cell background color */
+    background-color: white;
     text-align: center;
 }
 
 .table td button {
-    margin-right: 5px; /* Buttons in the same row */
+    margin-right: 5px;
 }
 
 .modal-header {
@@ -81,23 +73,11 @@ input[type="number"] {
     width: 300px;
 }
 
+/* Media Queries  */
 
-.table th {
-    background-color: goldenrod; /* Table header background */
-    color: black;
-}
-
-.table td button {
-    display: inline-block;  /* Ensure buttons are inline */
-    margin-right: 5px;      /* Space between buttons */
-}
-
-/* Media Queries for responsiveness */
-
-/* For small screens (up to 576px) */
 @media (max-width: 576px) {
     body {
-        font-size: 14px; /* Smaller font size */
+        font-size: 14px;
     }
 
     .container h2 {
@@ -109,11 +89,11 @@ input[type="number"] {
     }
 
     #searchAccomodation {
-        width: 100%; /* Make the search box full-width */
+        width: 100%;
     }
 
     .table th, .table td {
-        font-size: 0.9rem; /* Smaller font size for table */
+        font-size: 0.9rem;
     }
 
     .container {
@@ -121,45 +101,33 @@ input[type="number"] {
     }
 
     .modal-footer button {
-        font-size: 0.8rem; /* Adjust button size for smaller screens */
+        font-size: 0.8rem;
     }
 }
 
-/* For medium screens (up to 768px) */
+
 @media (max-width: 768px) {
-    .container {
-        margin-top: 20px;
-    }
-
-    .table th, .table td {
-        font-size: 1rem; /* Table font adjustment */
-    }
-
-    #searchAccomodation {
-        width: 80%; /* Adjust search box width */
-    }
-
-    .btn-primary {
-        font-size: 1rem; /* Adjust button font size */
-    }
-
     .container h2 {
         font-size: 1.6rem;
     }
-}
-
-/* For larger screens (up to 992px) */
-@media (max-width: 992px) {
-    .table th, .table td {
-        font-size: 1.1rem; /* Adjust font size for table */
-    }
 
     #searchAccomodation {
-        width: 250px; /* Adjust search box size */
+        width: 80%;
     }
 
     .btn-primary {
-        font-size: 1.1rem; /* Adjust button font size */
+        font-size: 1rem;
+    }
+}
+
+
+@media (max-width: 992px) {
+    #searchAccomodation {
+        width: 250px;
+    }
+
+    .btn-primary {
+        font-size: 1.1rem;
     }
 
     .container h2 {
@@ -167,18 +135,13 @@ input[type="number"] {
     }
 }
 
-/* For larger screens (up to 1200px) */
 @media (max-width: 1200px) {
     .container {
-        margin-top: 40px; /* More spacing for larger screens */
-    }
-
-    .table th, .table td {
-        font-size: 1.1rem;
+        margin-top: 40px;
     }
 
     .btn-primary {
-        font-size: 1.1rem; /* Adjust button size */
+        font-size: 1.1rem;
     }
 
     .container h2 {
@@ -186,14 +149,10 @@ input[type="number"] {
     }
 }
 
-/* For very large screens (above 1200px) */
+
 @media (min-width: 1200px) {
     .container {
-        margin-top: 50px; /* More spacing for larger screens */
-    }
-
-    .table th, .table td {
-        font-size: 1.2rem; /* Larger font size for bigger screens */
+        margin-top: 50px;
     }
 
     .btn-primary {
@@ -207,12 +166,11 @@ input[type="number"] {
 
 .navbar {
     background-color: goldenrod;
-    transition: height 0.3s ease; /* Smooth transition for height change */
-    font-weight: normal;
+    transition: height 0.3s ease;
 }
 
 .navbar.scrolled {
-    height: 100px; /* Increase navbar height when scrolled */
+    height: 100px;
 }
 
 .navbar .navbar-brand {
@@ -222,7 +180,7 @@ input[type="number"] {
 }
 
 .navbar-nav .nav-link {
-    color: #f5f5f5; /* Set navbar links to black */
+    color: #f5f5f5;
     font-size: 1.1rem;
 }
 
@@ -230,6 +188,48 @@ input[type="number"] {
     font-weight: bold;
 }
 
-.nav-link:hover {
-    font-weight: bold;
+
+@media screen and (max-width: 768px) {
+    .table-stacked thead {
+        display: none;
+    }
+
+    .table-stacked,
+    .table-stacked tbody,
+    .table-stacked tr,
+    .table-stacked td {
+        display: block;
+        width: 100%;
+    }
+
+    .table-stacked tr {
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #fff;
+        padding: 10px;
+    }
+
+    .table-stacked td {
+        text-align: right;
+        position: relative;
+        padding-left: 50%;
+        border: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    .table-stacked td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .table-stacked td:last-child {
+        border-bottom: none;
+    }
 }

@@ -200,7 +200,7 @@
             document.getElementById("companyId").value = ownerDoc.data().companyAddress;
           }
         }
-        
+        //fetch hotels
         fetchHotels();
       } catch (error) {
         console.error("Error adding/updating hotel: ", error);
@@ -232,6 +232,7 @@
         }
     });
 
+    //remove hotels
     window.removeHotel = async (hotelDocId) => {
       try {
         await deleteDoc(doc(db, "hotels", hotelDocId));
@@ -242,7 +243,8 @@
         alert("Failed to remove hotel.");
       }
     };
-
+    
+    //add hotels
     window.editHotel = async (hotelDocId) => {
       const row = document.getElementById(hotelDocId);
       const cells = row.getElementsByTagName("td");
@@ -360,7 +362,7 @@
         </form>
       
         <h2>Hotel List</h2>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-stacked">
           <thead>
             <tr>
               <th>Image</th>
@@ -373,10 +375,8 @@
               <th>Price</th>
               <th>Availability</th>
               <th>Actions</th>
-            </tr>
-          </thead>
+            </tr>        
           <tbody id="hotelTableBody">
-            <!-- Dynamic content from Firestore -->
           </tbody>
         </table>
     </div>
