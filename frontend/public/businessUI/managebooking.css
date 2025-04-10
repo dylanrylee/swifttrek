@@ -1,9 +1,14 @@
 body {
-   
-    background-repeat: no-repeat;
-    background-size: cover; /* Ensure the background image covers the entire viewport */
+    background-color: #f8f9fa;
 }
 
+.search-input {
+    max-width: 300px;
+}
+
+.booked-flights, .booked-hotels, .booked-cars {
+    color: navy;
+}
 .navbar {
     background-color: goldenrod;
     transition: height 0.3s ease;
@@ -31,14 +36,16 @@ body {
 #calendar {
     max-width: 100%;
     margin: 0 auto;
-    padding: 10px; /* Add padding for better spacing */
+    padding: 10px;
 }
 
-/* Weekday header grid */
-.week-row {
+.week-row, .days-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
     gap: 5px;
+}
+
+.week-row {
+    grid-template-columns: repeat(7, 1fr);
     font-weight: bold;
     text-align: center;
     margin-bottom: 5px;
@@ -50,13 +57,6 @@ body {
     border-radius: 5px;
 }
 
-.days-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-}
-
-/* Calendar day styling */
 .day {
     border: 1px solid #ddd;
     padding: 20px;
@@ -96,115 +96,101 @@ body {
 }
 
 /* Media Queries */
-
-/* Small screens */
 @media only screen and (max-width: 600px) {
     .navbar {
-        height: auto; /* Adjust navbar height on smaller screens */
+        height: auto;
     }
 
     .navbar .navbar-brand {
-        font-size: 20px; /* Adjust font size for smaller screens */
+        font-size: 20px;
     }
 
     .navbar-nav .nav-link {
-        font-size: 1rem; /* Smaller font size on mobile */
+        font-size: 1rem;
     }
 
     .week-row, .days-grid {
-        grid-template-columns: repeat(4, 1fr); /* 4 columns on smaller screens */
+        grid-template-columns: repeat(4, 1fr);
     }
 
     .day {
-        padding: 10px; /* Smaller padding on mobile */
-        min-height: 60px; /* Adjust minimum height for days */
+        padding: 10px;
+        min-height: 60px;
     }
 
     #monthYear {
-        font-size: 20px; /* Adjust size for smaller screens */
+        font-size: 20px;
     }
 }
 
-/* Medium screens */
-@media only screen and (min-width: 601px) {
+@media only screen and (min-width: 601px) and (max-width: 767px) {
     .navbar .navbar-brand {
-        font-size: 22px; /* Larger font size for medium screens */
+        font-size: 22px;
     }
 
     .week-row, .days-grid {
-        grid-template-columns: repeat(5, 1fr); /* 5 columns on medium screens */
+        grid-template-columns: repeat(5, 1fr);
     }
 
     .day {
-        padding: 15px; /* Increase padding on medium screens */
-        min-height: 70px; /* Adjust minimum height for days */
+        padding: 15px;
+        min-height: 70px;
     }
 
     #monthYear {
-        font-size: 22px; /* Adjust size for medium screens */
+        font-size: 22px;
     }
 }
 
-/* Medium screens (starting at 768px) */
 @media only screen and (min-width: 768px) {
     .navbar .navbar-brand {
-        font-size: 24px; /* Adjust font size for larger screens */
+        font-size: 24px;
     }
 
     .week-row, .days-grid {
-        grid-template-columns: repeat(6, 1fr); /* 6 columns on medium screens */
+        grid-template-columns: repeat(6, 1fr);
     }
 
     .day {
-        padding: 18px; /* Increase padding on larger screens */
-        min-height: 75px; /* Adjust minimum height for days */
+        padding: 18px;
+        min-height: 75px;
     }
 
     #monthYear {
-        font-size: 24px; /* Larger font size for month/year */
+        font-size: 24px;
     }
 }
 
-/* Large screens */
 @media only screen and (min-width: 992px) {
     .navbar .navbar-brand {
-        font-size: 26px; /* Adjust font size for large screens */
+        font-size: 26px;
     }
 
     .week-row, .days-grid {
-        grid-template-columns: repeat(7, 1fr); /* 7 columns on large screens */
+        grid-template-columns: repeat(7, 1fr);
     }
 
     .day {
-        padding: 20px; /* Increase padding for large screens */
-        min-height: 80px; /* Larger minimum height for days */
+        padding: 20px;
+        min-height: 80px;
     }
 
     #monthYear {
-        font-size: 28px; /* Larger font size for month/year */
+        font-size: 28px;
     }
 }
 
-/* Extra large screens */
 @media only screen and (min-width: 1200px) {
     .navbar .navbar-brand {
-        font-size: 28px; /* Larger font size for extra large screens */
-    }
-
-    .week-row, .days-grid {
-        grid-template-columns: repeat(7, 1fr); /* 7 columns for extra large screens */
+        font-size: 28px;
     }
 
     .day {
-        padding: 25px; /* Larger padding on extra large screens */
-        min-height: 90px; /* Larger minimum height for days */
+        padding: 25px;
+        min-height: 90px;
     }
 
     #monthYear {
-        font-size: 30px; /* Larger font size for month/year */
+        font-size: 30px;
     }
-}
-
-.nav-link:hover {
-    font-weight: bold;
 }
