@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login</title>
+  <style>
+    /* Same styles as you had */
+    .loginContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #f5f5f5;
+      padding: 1rem;
+    }
+
+    .loginBox {
+      background-color: #ffffff;
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+      border: 1px solid rgba(0, 128, 128, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .loginBox:hover {
+      transform: translateY(-5px);
+    }
+
+    .loginBox h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #008080;
+    }
+
+    .formGroup {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .formGroup label {
+      text-align: left;
+      font-weight: 500;
+      color: #555;
+    }
+
+    .formGroup input {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .formGroup input:focus {
+      border-color: #008080;
+      box-shadow: 0 0 0 2px rgba(0, 128, 128, 0.15);
+      outline: none;
+    }
+
+    .loginButton {
+      background-color: #008080;
+      color: #fff;
+      border: none;
+      padding: 0.75rem;
+      width: 100%;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      margin-top: 0.5rem;
+    }
+
+    .loginButton:hover {
+      background-color: #006666;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .loginBox {
+        padding: 1.8rem;
+      }
+    }
+  </style>
+
+  <!-- Firebase SDKs (ES Module imports) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-analytics.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCnkAHKbdygTDGRIqTzLhD511luEjNgcyQ",
+      authDomain: "seng513admin.firebaseapp.com",
+      projectId: "seng513admin",
+      storageBucket: "seng513admin.appspot.com",
+      messagingSenderId: "710297455796",
+      appId: "1:710297455796:web:3804b5a3a16e8fe65b1be1",
+      measurementId: "G-N4XBXQ2R03"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("adminLoginForm");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        try {
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+          alert("Login successful!\nWelcome " + user.email);
+          window.location.href = "dashboard.html";
+        } catch (error) {
+          alert("Login failed:\n" + error.message);
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="loginContainer">
+    <div class="loginBox">
+      <h2>Admin Login</h2>
+      <form id="adminLoginForm">
+        <div class="formGroup">
+          <label for="email">Email</label>
+          <input id="email" type="email" required />
+        </div>
+        <div class="formGroup">
+          <label for="password">Password</label>
+          <input id="password" type="password" required />
+        </div>
+        <button type="submit" class="loginButton">Login</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

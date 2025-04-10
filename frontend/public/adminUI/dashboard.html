@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+    }
+
+    .dashboardContainer {
+      padding: 2rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      min-height: calc(100vh - 120px);
+      position: relative;
+    }
+
+    .adminTopBar {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+    }
+
+    .profileWrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .profileButton {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #008080;
+      color: white;
+      border: none;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .profileButton:hover {
+      background-color: #006666;
+      transform: scale(1.05);
+    }
+
+    .profileDropdown {
+      position: absolute;
+      right: 0;
+      top: 50px;
+      width: 280px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s ease;
+    }
+
+    .profileDropdown.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdownHeader {
+      display: flex;
+      padding: 1rem;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .profileInitial {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #008080;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .profileName {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .profileEmail {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 0.2rem;
+    }
+
+    .dropdownDivider {
+      height: 1px;
+      background-color: #eee;
+      margin: 0.5rem 0;
+    }
+
+    .dropdownItem {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      color: #333;
+      font-size: 0.9rem;
+      transition: background-color 0.2s ease;
+    }
+
+    .dropdownItem:hover {
+      background-color: #f5f5f5;
+      color: #008080;
+    }
+
+    .dashboardHeader {
+      color: #008080;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      font-size: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid rgba(0, 128, 128, 0.2);
+      margin-top: 3rem;
+    }
+
+    .actionsGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .actionButton {
+      background-color: #008080;
+      color: white;
+      border: none;
+      padding: 1.5rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 120px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .actionButton:hover {
+      background-color: #006666;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .actionButton:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      .actionsGrid {
+        grid-template-columns: 1fr;
+      }
+
+      .actionButton {
+        min-height: 90px;
+        padding: 1.2rem;
+      }
+
+      .adminTopBar {
+        top: 1rem;
+        right: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .dashboardContainer {
+        padding: 1.5rem 1rem;
+      }
+
+      .dashboardHeader {
+        font-size: 1.7rem;
+        margin-bottom: 2rem;
+        margin-top: 2.5rem;
+      }
+
+      .profileDropdown {
+        width: 240px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboardContainer">
+    <!-- Top Bar -->
+    <div class="adminTopBar">
+      <div class="profileWrapper">
+        <button class="profileButton" onclick="toggleDropdown()">A</button>
+        <div class="profileDropdown" id="profileDropdown">
+          <div class="dropdownHeader">
+            <div class="profileInitial">A</div>
+            <div>
+              <div class="profileName" id="adminName">Admin</div>
+              <div class="profileEmail" id="adminEmail">admin@travelplanner.com</div>
+            </div>
+          </div>
+          <div class="dropdownDivider"></div>
+          <div class="dropdownItem" onclick="window.location.href='sign_up.html'">Add Other Admin Users</div>
+          <div class="dropdownItem">Help Center</div>
+          <div class="dropdownDivider"></div>
+          <div class="dropdownItem" onclick="window.location.href='login_admin.html'">Log Out</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <h1 class="dashboardHeader">Admin Dashboard</h1>
+    <div class="actionsGrid">
+        <button class="actionButton" onclick="window.location.href='business_listings.html'">Manage Business Listings</button>
+        <button class="actionButton" onclick="window.location.href='customer_bookings.html'">Manage Customer Bookings</button>   
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDtVetfy-n7pPCCccj_EIArrlbHQGEZ2TQ",
+      authDomain: "seng513-project.firebaseapp.com",
+      projectId: "seng513-project",
+      storageBucket: "seng513-project.appspot.com",
+      messagingSenderId: "888422866543",
+      appId: "1:888422866543:web:57f170ae027e8abfdff79a",
+      measurementId: "G-G9WNFE7KBL"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Logout function
+    function logout() {
+      const auth = firebase.auth();
+      auth.signOut().then(() => {
+        console.log("User signed out.");
+        window.location.href = "login_admin.html";
+      }).catch((error) => {
+        console.error("Sign-out error:", error);
+        alert("Failed to log out. Please try again.");
+      });
+    }
+
+    // Check if user is authenticated
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (!user) {
+        window.location.href = "/admin-login.html"; // Redirect if not logged in
+      } else {
+        // Set profile name/email
+        document.getElementById("adminName").innerText = user.displayName || "Admin";
+        document.getElementById("adminEmail").innerText = user.email;
+      }
+    });
+
+    // Toggle Profile Dropdown
+    function toggleDropdown() {
+      const dropdown = document.getElementById('profileDropdown');
+      dropdown.classList.toggle('show');
+    }
+
+    // Navigate to different admin pages
+    function navigateTo(page) {
+      window.location.href = "/admin/" + page + ".html";
+    }
+
+    document.addEventListener('click', function (event) {
+      const dropdown = document.getElementById('profileDropdown');
+      const button = document.querySelector('.profileButton');
+      if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+        dropdown.classList.remove('show');
+      }
+    });
+  </script>
+</body>
+</html>
