@@ -5,15 +5,20 @@ body {
   background-position: center center;
   height: 100vh;
   font-family: 'Numans', sans-serif;
+  padding-bottom: 80px;
+  margin: 0;
 }
 
+/* Container Styling */
 .container {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
+/* Card styling */
 .centered-card {
   display: flex;
   justify-content: center;
@@ -22,53 +27,31 @@ body {
 }
 
 .card {
-  width: 400px;
-  height: auto;
-  margin: auto;
+  width: 100%;
+  max-width: 400px;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border-radius: 10px;
+  text-align: center;
 }
 
+/* Sign In header Styling */
 .card-header h3 {
   color: white;
   text-align: center;
   margin-bottom: 20px;
 }
 
-input:focus {
-  outline: none;
-  box-shadow: none;
+.card .form-group {
+  margin-bottom: 10px;
 }
 
-.remember {
-  color: white;
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
+.card-footer {
+  margin-top: 10px;
+  padding-top: 5px;
 }
 
-.remember input {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-}
-
-.login_btn {
-  color: white;
-  background-color: #FF7F50;
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.login_btn:hover {
-  background-color: #FF6347;
-  color: white;
-}
-
+/* fields Styling */
 .input-group-text {
   height: 100%;
   display: flex;
@@ -80,11 +63,49 @@ input:focus {
   font-size: 1.2rem;
 }
 
+/* Login Button Styling */
+.login_btn {
+  color: white;
+  background-color: #FF7F50;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Button when hover */
+.login_btn:hover {
+  background-color: #FF6347;
+  color: white;
+}
+
+/* Link styling */
+.links {
+  color: white;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Sign In link Styling */
+.links a {
+  margin-left: 4px;
+  color: #FF7F50;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/*Sign In link when hover */
+.links a:hover {
+  color: #FF6347;
+  text-decoration: underline;
+}
+
+/* Forgot Password Link Styling */
 .forgot-password {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0;
   width: 100%;
 }
 
@@ -99,34 +120,36 @@ input:focus {
   text-decoration: underline;
 }
 
-.card-footer {
-  margin-top: 10px;
-  padding-top: 5px;
+/* Footer Styling */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: transparent;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
 }
 
-.card .form-group {
+.footer-links {
+  display: flex;
+  justify-content: center;
   margin-bottom: 10px;
 }
 
-.links {
+.footer-links a {
   color: white;
-  text-align: center;
-  margin-top: 10px;
-}
-
-.links a {
-  margin-left: 4px;
-  color: #FF7F50;
+  margin: 0 15px;
   text-decoration: none;
-  transition: color 0.3s ease;
 }
 
-.links a:hover {
-  color: #FF6347;
-  text-decoration: underline;
+.footer-links a:hover {
+  font-weight: bolder;
 }
 
-/* Responsive Design */
+
+/* Media Queries */
 @media (max-width: 576px) {
   .card {
     width: 90%;
@@ -156,10 +179,6 @@ input:focus {
     font-size: 20px;
   }
 
-  .login_btn {
-    padding: 10px;
-  }
-
   .forgot-password a {
     font-size: 14px;
   }
@@ -175,19 +194,7 @@ input:focus {
     font-size: 24px;
   }
 
-  .login_btn {
-    padding: 10px;
-  }
-
   .forgot-password a {
     font-size: 16px;
   }
-}
-
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 9999;
 }
