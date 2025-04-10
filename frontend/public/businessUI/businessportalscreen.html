@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Account Selection</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="businessportalscreen.css"> <!-- Link to the CSS file -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
+    <!-- css file -->
+    <link rel="stylesheet" href="businessportalscreen.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
 
     <script type="module">
         // Firebase SDK imports
@@ -30,19 +31,18 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Check the user authentication state
+        // Check the user authentication status
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const email = user.email;
                 try {
-                    // Query Firestore for the business_owner document based on email field
+                    // Query Firestore for the business_owner document based on email id 
                     const q = query(collection(db, "business_owners"), where("email", "==", email));
                     const querySnapshot = await getDocs(q);
-
+                    // Get the company name 
                     if (!querySnapshot.empty) {
-                        // Since we're using a query, get the first document from the result
                         const docSnap = querySnapshot.docs[0];
-                        const companyName = docSnap.data().companyName; // Assuming 'companyName' field exists
+                        const companyName = docSnap.data().companyName; 
                         document.getElementById("company-name").innerText = companyName;
                     } else {
                         console.log("No company data found for this user.");
@@ -60,19 +60,20 @@
     </script>
 </head>
 <body>
+    <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: goldenrod;">
         <div class="container">
             <!-- Brand Logo and Name -->
             <a class="navbar-brand" href="#">
                 <i class="fas fa-globe"></i> Select Your Business Account
             </a>
-            <!-- Navbar Toggler for mobile -->
+            <!-- Navbar Toggler for mobile version-->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <!-- Navbar Links -->
+            <!-- Navbar Links on header tab -->
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto"> <!-- Push links to the right -->
+                <ul class="navbar-nav ms-auto"> 
                     <li class="nav-item">
                         <a class="nav-link" href="businessportalscreen.html">
                             <i class="fas fa-home me-2"></i>Home
@@ -89,7 +90,8 @@
                         </a>
                     </li>
                 </ul>
-                <div class="d-flex align-items-center ms-auto"> <!-- Push profile to the right -->
+                <!--Company user name-->
+                <div class="d-flex align-items-center ms-auto"> 
                     <span class="text-white me-3">Hi, <strong id="company-name">Loading...</strong></span>
                     <a class="nav-link text-white" href="loginbusiness.html">
                         <i class="fas fa-sign-out-alt me-2"></i> Logout
@@ -100,13 +102,13 @@
         </div>
     </nav>
 
-    <!-- Header Section -->
+    <!-- Header section for welcome-->
     <header class="text-center my-5">
         <h1>Welcome to Your Business Account Selection</h1>
         <p>Please select an account to manage your services.</p>
     </header>
 
-    <!-- Account Selection Cards -->
+    <!--Account Selection-->
     <div class="container-fluid">
         <div class="row text-center">
             <!-- Flight Owner Account -->
@@ -129,7 +131,7 @@
                 </a>
             </div>
 
-            <!-- Car Rent Account -->
+            <!-- Car Rental Owner Account -->
             <div class="col-md-4 mb-4">
                 <a href="cars.html" class="text-decoration-none">
                     <div class="card p-4 d-flex flex-column">
