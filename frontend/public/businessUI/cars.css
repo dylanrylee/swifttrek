@@ -1,266 +1,231 @@
-/* Custom CSS */
 body {
-    background-repeat: no-repeat; 
     background-image: url('https://www.bmw-m.com/content/dam/bmw/marketBMW_M/www_bmw-m_com/topics/magazine-article-pool/2024/wallpaper/m-wallpaper/3-0-csl/bmw-3-0-csl-mi-05.jpg');
     background-position: center;
-    background-size: cover; /* Ensures the image covers the entire screen */
-    background-repeat: no-repeat; /* Prevents repeating */
+    background-size: cover;
+    background-repeat: no-repeat;
     color: white;
-    height: 100vh; /* Makes the body take up the full height of the viewport */
-    margin: 0; /* Removes any default margin */
-    overflow-x: hidden; /* Prevent horizontal scroll */
-    font-weight: bold;
-}
-
-
-
-.container {
-    max-height: calc(100vh - 100px);
-    overflow-y: scroll;
-    scrollbar-width: none; /* Firefox */
-}
-
-/* For WebKit browsers */
-.container::-webkit-scrollbar {
-    display: none;
-}
-
-
-.navbar {
-    background-color: goldenrod;
-    transition: height 0.3s ease; 
-    font-weight: normal;
-}
-
-.navbar.scrolled {
-    height: 100px; 
-}
-
-.navbar .navbar-brand {
-    font-size: 23px;
-    font-weight: bold;
-    color: #f5f5f5;
-}
-
-.navbar-nav .nav-link {
-    color: #f5f5f5; 
-    font-size: 1.1rem;
-}
-
-.navbar-nav .nav-link:hover {
+    height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
     font-weight: bold;
 }
 
 .container {
     margin-top: 30px;
+    max-height: calc(100vh - 100px);
+    overflow-y: scroll;
+    scrollbar-width: none; 
+}
+.container::-webkit-scrollbar {
+    display: none;
+}
+.container h2 {
+    color: black;
 }
 
-.container h2{
-    color:black
+.navbar {
+    background-color: goldenrod;
+    transition: height 0.3s ease;
+    font-weight: normal;
+}
+.navbar.scrolled {
+    height: 100px;
+}
+.navbar .navbar-brand {
+    font-size: 23px;
+    font-weight: bold;
+    color: #f5f5f5;
+}
+.navbar-nav .nav-link {
+    color: #f5f5f5;
+    font-size: 1.1rem;
+}
+.nav-link:hover {
+    font-weight: bold;
 }
 
 .card-header {
     background-color: #f8f9fa;
+    padding: 10px;
 }
-
 
 .btn-primary {
     background-color: black;
     border: none;
 }
-
 .btn-primary:hover {
-    background-color: #333; /* Dark gray hover color */
+    background-color: #333;
+}
+
+.table-container {
+    background-color: black;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .table {
+    background-color: black;
     margin-top: 20px;
 }
-
 .table th {
-    background-color:white(0, 0, 0, 0.6);  
-    
+    background-color: goldenrod;
+    color: black;
 }
-
-.table td button {
-    margin-right: 5px; 
-}
-
-.modal-header {
-    background-color: #5143d9;
-    color:black;
-}
-
-.modal-footer button {
-    color:black;
-}
-
-.form-control {
-    margin-bottom: 10px;
-}
-
-input[type="text"] {
-    background-color: rgba(255, 255, 255, 0.7);
-    color:black;
-}
-
-input[type="number"] {
-    background-color: rgba(255, 255, 255, 0.7);
-    color:black;
-}
-
-#searchVehicle {
-    background-color: rgba(255, 255, 255, 0.7);
-    color:black;
-    width: 300px;
-}
-
-
-.table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-.table th {
-    background-color: rgba(0, 0, 0, 0.6); 
-}
-
-.table td button {
-    display: inline-block;  
-    margin-right: 5px;      
-}
-
-/* Media Queries for responsiveness */
-
-@media (max-width: 768px) {
-    .navbar-nav .nav-link {
-        font-size: 1rem; 
-    }
-
-    .container h2 {
-        font-size: 1.5rem; 
-    }
-
-    .card-header {
-        padding: 10px; 
-    }
-
-    .table th, .table td {
-        font-size: 0.9rem; 
-    }
-
-    .table td button {
-        font-size: 0.9rem; 
-    }
-
-    #searchVehicle {
-        width: 100%; 
-    }
-
-    .navbar .navbar-brand {
-        font-size: 20px; 
-    }
-
-    .container {
-        margin-top: 20px; 
-    }
-}
-
-/* Mobile devices */
-@media (max-width: 480px) {
-    .navbar-nav .nav-link {
-        font-size: 0.9rem; 
-    }
-
-    .navbar .navbar-brand {
-        font-size: 18px; 
-    }
-
-    .container h2 {
-        font-size: 1.2rem; 
-    }
-
-    .table th, .table td {
-        font-size: 0.8rem;
-    }
-
-    .btn-primary {
-        font-size: 0.9rem; 
-    }
-
-    .modal-header {
-        font-size: 1rem; 
-    }
-
-    .form-control {
-        font-size: 0.9rem; 
-    }
-
-    #searchVehicle {
-        width: 100%; 
-    }
-
-    .card {
-        padding: 15px; 
-        margin-top: 15px; 
-    }
-
-    .table td button {
-        font-size: 0.8rem; 
-    }
-}
-
-/* For small mobile screens */
-@media (max-width: 320px) {
-    .navbar-nav .nav-link {
-        font-size: 0.8rem; 
-    }
-
-    .table th, .table td {
-        font-size: 0.7rem; 
-    }
-
-    .card h3 {
-        font-size: 1.1rem; 
-    }
-
-    .table td button {
-        font-size: 0.7rem; 
-    }
-
-    .container h2 {
-        font-size: 1rem; 
-    }
-}
-
-   /* Custom Styles for Table */
-   .table-container {
-    background-color:black; 
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-}
-
-.table {
-    background-color:black; 
-}
-
-th, td {
+.table td {
+    text-align: center;
     vertical-align: middle;
+}
+.table td button {
+    display: inline-block;
+    margin-right: 5px;
 }
 
 .table-striped tbody tr:nth-child(odd) {
     background-color: #f9f9f9;
 }
 
-.table th {
-    background-color: goldenrod;
-    color:black;
+.modal-header {
+    background-color: #5143d9;
+    color: black;
+    font-size: 1rem;
+}
+.modal-footer button {
+    color: black;
 }
 
-.table td {
-    text-align: center;
+.form-control {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+input[type="text"],
+input[type="number"],
+#searchVehicle {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: black;
+}
+#searchVehicle {
+    width: 300px;
 }
 
-.nav-link:hover {
-    font-weight: bold;
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/*Media Querries */
+@media (max-width: 768px) {
+    .navbar-nav .nav-link,
+    .table td button {
+        font-size: 0.9rem;
+    }
+
+    .container h2 {
+        font-size: 1.5rem;
+    }
+
+    .table th, .table td {
+        font-size: 0.9rem;
+    }
+
+    #searchVehicle,
+    .container {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .navbar .navbar-brand {
+        font-size: 20px;
+    }
+
+    .table thead {
+        display: none;
+    }
+
+    .table,
+    .table tbody,
+    .table tr,
+    .table td {
+        display: block;
+        width: 100%;
+    }
+
+    .table tr {
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        background-color: #fff;
+    }
+
+    .table td {
+        text-align: right;
+        position: relative;
+        padding-left: 50%;
+        border: none;
+        border-bottom: 1px solid #eee;
+        color: #333;
+    }
+
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        white-space: nowrap;
+        font-weight: bold;
+        text-align: left;
+        color: #333;
+    }
+
+    .table td:last-child {
+        border-bottom: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-nav .nav-link {
+        font-size: 0.9rem;
+    }
+
+    .navbar .navbar-brand {
+        font-size: 18px;
+    }
+
+    .container h2 {
+        font-size: 1.2rem;
+    }
+
+    .table th, .table td,
+    .btn-primary,
+    .table td button {
+        font-size: 0.8rem;
+    }
+
+    .card {
+        padding: 15px;
+        margin-top: 15px;
+    }
+
+    #searchVehicle {
+        width: 100%;
+    }
+}
+
+@media (max-width: 320px) {
+    .navbar-nav .nav-link {
+        font-size: 0.8rem;
+    }
+
+    .container h2 {
+        font-size: 1rem;
+    }
+
+    .card h3 {
+        font-size: 1.1rem;
+    }
+
+    .table th, .table td,
+    .table td button {
+        font-size: 0.7rem;
+    }
 }

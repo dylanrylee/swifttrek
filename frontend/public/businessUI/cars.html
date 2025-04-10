@@ -10,7 +10,7 @@
 </head>
 <body>
 
-  <!-- Navbar at the very top -->
+  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: goldenrod;">
     <div class="container">
         <a class="navbar-brand" href="#">
@@ -21,22 +21,26 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+              <!-- Link to portal -->
                 <li class="nav-item">
                     <a class="nav-link" href="businessportalscreen.html">
                         <i class="fas fa-home me-2"></i>Home
                     </a>
                 </li>
+                <!-- Link to manage booking -->
                 <li class="nav-item">
                     <a class="nav-link" href="managebooking.html">
                         <i class="fas fa-book me-2"></i>Manage Booking
                     </a>
                 </li>
+                <!-- Link to settings -->
                 <li class="nav-item">
                     <a class="nav-link" href="settings_business.html">
                         <i class="fas fa-cogs me-2"></i>Settings
                     </a>
                 </li>
             </ul>
+            <!-- Profile -->
             <div class="d-flex align-items-center ms-auto">
               <span class="text-white me-3">Hi, <strong id="company-name">Loading...</strong></span>
               <a class="nav-link text-white" href="loginbusiness.html">
@@ -89,20 +93,21 @@
 
         <!-- Car List Table -->
         <h2>Car List</h2>
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Company ID</th>
-              <th>Car ID</th>
-              <th>Model</th>
-              <th>Type</th>
-              <th>Price</th>
-              <th>Location</th>
-              <th>Availability</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+        <div class="table-responsive-stacked">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Company ID</th>
+                <th>Car ID</th>
+                <th>Model</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Location</th>
+                <th>Availability</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
           <tbody id="carTableBody"></tbody>
         </table>
     </div>
@@ -131,7 +136,7 @@
     let editingDocId = null;
     let currentCompanyAddress = null;
 
-    // Get user profile and set company info
+    // Get user 
     const getUserProfile = async () => {
       const user = auth.currentUser;
       if (user) {
@@ -157,12 +162,11 @@
       }
     };
 
-    // Fetch cars for the current company (matching companyAddress to companyId)
+    // Fetch cars for the current company 
     const fetchCars = async () => {
       if (!currentCompanyAddress) return;
       
       try {
-        // Query cars where companyId matches the user's companyAddress
         const q = query(carsCollection, where("companyId", "==", currentCompanyAddress));
         const querySnapshot = await getDocs(q);
         const carTableBody = document.getElementById("carTableBody");
