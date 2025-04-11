@@ -1,3 +1,4 @@
+/* General styles */
 html, body {
     height: 100%;
     width: 100%;
@@ -5,17 +6,20 @@ html, body {
     padding: 0;
     font-family: 'Arial', sans-serif;
     background-image: url('https://media.timeout.com/images/106150176/750/422/image.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background-size: cover; /* Ensure the image covers the entire screen */
+    background-position: center center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent tiling */
+    background-attachment: fixed; /* Keep the image fixed during scrolling */
+    
 }
 
 
+/* Form Container */
 .main-center {
-    max-width: 400px;
+    max-width: 400px; /* Adjusted form width for better appearance */
     margin: 0 auto;
     padding: 30px;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for the form */
     border-radius: 10px;
     color: white;
 }
@@ -28,19 +32,21 @@ html, body {
 label {
     color: white;
     font-size: 14px;
+    
 }
 
 input, input::-webkit-input-placeholder {
     font-size: 14px;
 }
 
+/* General button styles for both Register and Back to Login */
 .login-button, .login-register a {
     display: block;
     width: 100%;
-    padding: 14px 16px;
-    font-size: 16px;
+    padding: 14px 16px; /* Consistent size for both buttons */
+    font-size: 16px;     /* Matching font size */
     text-align: center;
-    border-radius: 5px;
+    border-radius: 5px;  /* Uniform rounded corners */
     background: rgba(0, 123, 255, 0.7);
     color: white;
     text-decoration: none;
@@ -48,10 +54,41 @@ input, input::-webkit-input-placeholder {
 }
 
 .login-button:hover, .login-register a:hover {
-    background: rgba(0, 123, 255, 1);
+    background: rgba(0, 123, 255, 1); /* Hover effect for both */
+}
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 15px;
+    color:white
 }
 
+.footer-links {
+    margin-bottom: 10px;
+}
 
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+.footer-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-logo img {
+    height: 30px;
+    margin-right: 10px;
+}
+
+/* Responsiveness */
 @media (max-width: 576px) {
     .main-center {
         width: 90%;
