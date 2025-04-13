@@ -38,7 +38,7 @@ const ViewHotelReviewPage = () => {
                 
                 const reviewsQuery = query(
                     collection(db, 'reviewed_hotels'),
-                    where('hotelID', '==', hotelId)
+                    where('hotelId', '==', hotelId)
                 );
                 
                 const querySnapshot = await getDocs(reviewsQuery);

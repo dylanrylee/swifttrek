@@ -67,9 +67,9 @@ const PaymentCheckout = () => {
     const storeBookingData = async () => {
         if (selectedCar) {
             await addDoc(collection(db, 'booked_cars'), {
-                carName: selectedCar.model,
-                carPrice: Number(selectedCar.price),
-                companyID: Number(selectedCar.companyId),
+                model: selectedCar.model,
+                price: Number(selectedCar.price),
+                companyId: Number(selectedCar.companyId),
                 fromDate,
                 toDate,
                 guestID: currentUser?.uid || ''
@@ -81,10 +81,10 @@ const PaymentCheckout = () => {
                 fromDate,
                 toDate,
                 guestID: currentUser?.uid || '',
-                hotelLocation,
+                location: hotelLocation,
                 hotelName,
-                hotelPrice: Number(price),
-                companyID: Number(companyID)
+                price: Number(price),   
+                companyId: Number(companyID)
             });
         }
 
@@ -93,7 +93,7 @@ const PaymentCheckout = () => {
                 arrivalCity: selectedPlane.arrivalCity,
                 arrivalTime: selectedPlane.arrivalTime,
                 availableDate: fromDate,
-                companyID: selectedPlane.companyId,
+                companyId: selectedPlane.companyId,
                 departureCity: selectedPlane.departureCity,
                 departureTime: selectedPlane.departureTime,
                 guestID: currentUser?.uid || '',

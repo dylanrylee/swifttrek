@@ -53,7 +53,7 @@ const WriteReviewPage = () => {
             } else if (hotelId) {
                 // Submit hotel review
                 await addDoc(collection(db, 'reviewed_hotels'), {
-                    hotelID: hotelId,
+                    hotelId,
                     guestID,
                     description,
                     rating: formattedRating
