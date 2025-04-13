@@ -14,8 +14,19 @@ const GuestHomePage = () => {
             <main className={styles.mainContent}>
                 <img src={frontpageImage} alt="Welcome" className={styles.welcomePhoto} />
                 <div className={styles.buttonContainer}>
-                    <button className={styles.actionButton}>Book Flight</button>
-                    <button className={styles.actionButton}>Book Hotel</button>
+                    <button 
+                        className={styles.actionButton}
+                        onClick={() => navigate('/plane-booking')}
+                    
+                    >
+                        Book Flight
+                    </button>
+                    <button 
+                        className={styles.actionButton}
+                        onClick={() => navigate('/hotel-rental')}
+                    >
+                        Book Hotel
+                    </button>
                     <button 
                         className={styles.actionButton} 
                         onClick={() => navigate('/car-rental')}

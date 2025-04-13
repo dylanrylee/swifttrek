@@ -4,6 +4,7 @@ import styles from './Footer.module.css';
 const Footer = () => {
     return (
         <footer className={styles.footer}>
+            <p>© 2025 SwiftTrek. All rights reserved.</p>
             <div className={styles.footerLinks}>
                 <a href='/businessUI/aboutus.html' className="nav-link text-white">About Us</a>
                 <a href="mailto:swifttrek@gmail.com" className="nav-link text-white">Contact Us</a>
