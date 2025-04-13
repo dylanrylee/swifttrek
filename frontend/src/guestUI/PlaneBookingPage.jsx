@@ -83,14 +83,15 @@ const PlaneBookingPage = () => {
                 flightId: selectedFlight.id,
                 flightNumber: selectedFlight.flightNumber,
                 departureCity: selectedFlight.departureCity,
-                arrivalCity: selectedFlight.arrivalCity
+                arrivalCity: selectedFlight.arrivalCity,
+                companyId: selectedFlight.companyId
             }
         });
     };
 
     const handleViewReviewsClick = () => {
         if (!selectedFlight) return;
-        navigate(`/reviews/${selectedFlight.id}`);
+        navigate(`/view-flight-reviews/${selectedFlight.companyId}`);
     };
 
     return (

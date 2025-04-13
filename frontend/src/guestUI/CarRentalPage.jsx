@@ -92,7 +92,7 @@ const CarRentalPage = () => {
 
     const handleViewReviewsClick = () => {
         if (!selectedCar) return;
-        navigate(`/reviews/${selectedCar.id}`);
+        navigate(`/view-car-reviews/${selectedCar.id}`);
     };
 
     return (

@@ -11,10 +11,11 @@ const WriteReviewPage = () => {
     const locationHook = useLocation();
     const navigate = useNavigate();
 
-    // Grab both car and hotel values from route state
+    // Grab car, hotel, and flight values from route state
     const {
         model, type, location: carLocation, carId,
-        hotelName, roomType, location: hotelLocation, hotelId
+        hotelName, roomType, location: hotelLocation, hotelId,
+        flightNumber, departureCity, arrivalCity, flightId, companyId
     } = locationHook.state || {};
 
     const [rating, setRating] = useState(0);
@@ -57,8 +58,17 @@ const WriteReviewPage = () => {
                     description,
                     rating: formattedRating
                 });
+            } else if (flightId) {
+                // Submit flight review
+                await addDoc(collection(db, 'reviewed_flights'), {
+                    flightId,
+                    companyId,
+                    guestID,
+                    description,
+                    rating: formattedRating
+                });
             } else {
-                alert('No valid car or hotel ID provided.');
+                alert('No valid car, hotel, or flight ID provided.');
                 return;
             }
 
@@ -92,6 +102,15 @@ const WriteReviewPage = () => {
                             <p><strong>Hotel Name:</strong> {hotelName}</p>
                             <p><strong>Room Type:</strong> {roomType}</p>
                             <p><strong>Location:</strong> {hotelLocation}</p>
+                        </div>
+                    )}
+
+                    {/* Flight Info */}
+                    {flightNumber && departureCity && arrivalCity && (
+                        <div className={styles.carInfoBox}>
+                            <p><strong>Flight Number:</strong> {flightNumber}</p>
+                            <p><strong>From:</strong> {departureCity}</p>
+                            <p><strong>To:</strong> {arrivalCity}</p>
                         </div>
                     )}
 

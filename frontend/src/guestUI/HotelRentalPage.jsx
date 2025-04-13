@@ -95,7 +95,7 @@ const HotelRentalPage = () => {
 
     const handleViewReviewsClick = () => {
         if (!selectedHotel) return;
-        navigate(`/reviews/${selectedHotel.id}`);
+        navigate(`/view-hotel-reviews/${selectedHotel.id}`);
     };
 
     return (
