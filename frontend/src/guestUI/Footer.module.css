@@ -1,27 +1,38 @@
-/* Footer.module.css */
-
 .footer {
     font-family: 'Numans', sans-serif;
-    color: white;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    padding: 10px 0; /* Reduced padding */
     background-color: #e0846dcc;
     color: #2c2c2c;
     text-align: center;
+    width: 100%;
+    margin-top: auto; /* Pushes footer to bottom */
+    min-height: 60px; /* Fixed minimum height */
+}
+
+.footerContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px; /* Reduced gap between elements */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
 .footerLinks {
-    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px; /* Smaller gap between links */
+    margin-bottom: 8px; /* Reduced margin */
 }
 
 .footerLinks a {
     color: white;
     text-decoration: none;
-    margin: 0 15px;
-    font-size: 16px;
+    font-size: 14px; /* Slightly smaller font */
+    padding: 2px 5px; /* Smaller padding */
+    white-space: nowrap; /* Prevents text wrapping */
 }
 
 .footerLinks a:hover {
@@ -30,18 +41,18 @@
 
 .footerLogo {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 8px; /* Reduced gap between logo and text */
 }
 
 .footerLogo img {
-    width: 20px;
+    width: 16px; /* Smaller logo */
     height: auto;
-    margin-bottom: 10px;
 }
 
 .footerLogo span {
-    font-size: 15px;
+    font-size: 13px; /* Smaller text */
     font-weight: bold;
     color: white;
 }
@@ -49,25 +60,24 @@
 /* Responsive styling */
 @media (max-width: 768px) {
     .footer {
-        padding: 10px;
+        padding: 8px 0; /* Even smaller padding on mobile */
     }
 
-    .footerLogo img {
-        width: 60px;
-    }
-
-    .footerLogo span {
-        font-size: 20px;
+    .footerLinks {
+        gap: 8px;
+        margin-bottom: 6px;
     }
 
     .footerLinks a {
-        font-size: 14px;
-        margin: 0 10px;
+        font-size: 12px; /* Smaller on mobile */
+        margin: 0 5px; /* Less spacing */
+    }
+
+    .footerLogo img {
+        width: 14px; /* Smaller on mobile */
+    }
+
+    .footerLogo span {
+        font-size: 11px; /* Smaller on mobile */
     }
 }
-    padding: 15px 0;
-    width: 100vw; /* Ensures full width */
-    box-sizing: border-box; /* Prevents padding from shrinking width */
-    bottom: 0;
-}
-
