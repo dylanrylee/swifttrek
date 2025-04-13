@@ -21,7 +21,7 @@ const GuestProfilePage = () => {
     const navigate = useNavigate();
 
     const fetchPlaneBookings = async (userId) => {
-        const snapshot = await getDocs(query(collection(db, 'booked_planes'), where('guestID', '==', userId)));
+        const snapshot = await getDocs(query(collection(db, 'booked_flights'), where('guestID', '==', userId)));
         return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'plane' }));
     };
 
@@ -37,7 +37,7 @@ const GuestProfilePage = () => {
 
     const handleDelete = async (type, id) => {
         const collectionName = {
-            plane: 'booked_planes',
+            plane: 'booked_flights',
             hotel: 'booked_hotels',
             car: 'booked_cars'
         }[type];
@@ -94,16 +94,38 @@ const GuestProfilePage = () => {
                 {bookings.map(b => (
                     <li key={b.id}>
                         <div>
-                            {type === 'plane' && <strong>{b.planeName}</strong>}
-                            {type === 'hotel' && <strong>{b.hotelName}</strong>}
-                            {type === 'car' && <strong>{b.carName}</strong>}
-                            <br />
-                            {type === 'plane' && `${b.airline} from ${b.fromDate} to ${b.toDate} — $${b.price}`}
-                            {type === 'hotel' && ` ${b.hotelLocation} from ${b.fromDate} to ${b.toDate} — $${b.hotelPrice}`}
-                            {type === 'car' && `from ${b.fromDate} to ${b.toDate} — $${b.carPrice}`}
+                            {type === 'plane' && (
+                                <>
+                                    <strong>Flight Details:</strong><br />
+                                    <strong>From:</strong> {b.departureCity} at {b.departureTime}<br />
+                                    <strong>To:</strong> {b.arrivalCity} at {b.arrivalTime}<br />
+                                    <strong>Date:</strong> {b.availableDate}<br />
+                                    <strong>Class:</strong> {b.type}<br />
+                                    <strong>Price:</strong> ${b.ticketPrice}
+                                </>
+                            )}
+                            {type === 'hotel' && (
+                                <>
+                                    <strong>Hotel Details:</strong><br />
+                                    <strong>Hotel:</strong> {b.hotelName}<br />
+                                    <strong>Location:</strong> {b.hotelLocation}<br />
+                                    <strong>Check-in:</strong> {b.fromDate}<br />
+                                    <strong>Check-out:</strong> {b.toDate}<br />
+                                    <strong>Price:</strong> ${b.hotelPrice}
+                                </>
+                            )}
+                            {type === 'car' && (
+                                <>
+                                    <strong>Car Details:</strong><br />
+                                    <strong>Car:</strong> {b.carName}<br />
+                                    <strong>Pick-up:</strong> {b.fromDate}<br />
+                                    <strong>Return:</strong> {b.toDate}<br />
+                                    <strong>Price:</strong> ${b.carPrice}
+                                </>
+                            )}
                         </div>
                         <button onClick={() => handleDelete(type, b.id)} className={styles.deleteButton}>
-                            Delete
+                            Cancel Booking
                         </button>
                     </li>
                 ))}
@@ -120,7 +142,7 @@ const GuestProfilePage = () => {
                 <p><strong>Email:</strong> {email}</p>
                 <p><strong>Password:</strong> ******</p>
 
-                <h2>Plane Bookings</h2>
+                <h2>Flight Bookings</h2>
                 {renderBookings(planeBookings, 'plane')}
 
                 <h2>Hotel Bookings</h2>

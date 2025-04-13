@@ -53,15 +53,13 @@ const PaymentCheckout = () => {
     };
 
     const updatePlaneSeatCount = async (planeId) => {
-        const planeRef = doc(db, 'planes', planeId);
+        const planeRef = doc(db, 'flights', planeId);
         const planeSnap = await getDoc(planeRef);
-        const currentSeats = planeSnap.data()?.seats;
+        const currentSeats = planeSnap.data()?.availableSeats;
 
         if (currentSeats > 0) {
-            const newSeats = currentSeats - 1;
             await updateDoc(planeRef, {
-                seats: newSeats,
-                availability: newSeats === 0 ? 'Unavailable' : 'Available'
+                availableSeats: currentSeats - 1
             });
         }
     };
@@ -70,11 +68,11 @@ const PaymentCheckout = () => {
         if (selectedCar) {
             await addDoc(collection(db, 'booked_cars'), {
                 carName: selectedCar.model,
-                carPrice: selectedCar.price,
-                companyID: selectedCar.companyId,
+                carPrice: Number(selectedCar.price),
+                companyID: Number(selectedCar.companyId),
                 fromDate,
                 toDate,
-                guestID: currentUser?.uid
+                guestID: currentUser?.uid || ''
             });
         }
 
@@ -82,23 +80,25 @@ const PaymentCheckout = () => {
             await addDoc(collection(db, 'booked_hotels'), {
                 fromDate,
                 toDate,
-                guestID: currentUser?.uid,
+                guestID: currentUser?.uid || '',
                 hotelLocation,
                 hotelName,
-                hotelPrice: price,
-                companyID
+                hotelPrice: Number(price),
+                companyID: Number(companyID)
             });
         }
 
         if (selectedPlane) {
-            await addDoc(collection(db, 'booked_planes'), {
-                fromDate,
-                toDate,
-                guestID: currentUser?.uid,
-                planeName: selectedPlane.name,
-                airline: selectedPlane.airline,
-                price: selectedPlane.price,
-                companyID: selectedPlane.companyId
+            await addDoc(collection(db, 'booked_flights'), {
+                arrivalCity: selectedPlane.arrivalCity,
+                arrivalTime: selectedPlane.arrivalTime,
+                availableDate: fromDate,
+                companyID: selectedPlane.companyId,
+                departureCity: selectedPlane.departureCity,
+                departureTime: selectedPlane.departureTime,
+                guestID: currentUser?.uid || '',
+                ticketPrice: String(selectedPlane.price),
+                type: selectedPlane.airline
             });
         }
     };
@@ -179,11 +179,15 @@ const PaymentCheckout = () => {
                         {selectedPlane && (
                             <div className={styles.hotelInfoBox}>
                                 <h2 className={styles.subheading}>Flight Booking</h2>
-                                <p><strong>Airline:</strong> {selectedPlane.airline}</p>
-                                <p><strong>Plane:</strong> {selectedPlane.name}</p>
-                                <p><strong>Seats Left:</strong> {selectedPlane.seats}</p>
-                                <p><strong>Booked From:</strong> {formatDate(fromDate)}</p>
-                                <p><strong>Booked To:</strong> {formatDate(toDate)}</p>
+                                <p><strong>Flight Number:</strong> {selectedPlane.name}</p>
+                                <p><strong>Class:</strong> {selectedPlane.airline}</p>
+                                <p><strong>From:</strong> {selectedPlane.departureCity}</p>
+                                <p><strong>To:</strong> {selectedPlane.arrivalCity}</p>
+                                <p><strong>Departure:</strong> {selectedPlane.departureTime}</p>
+                                <p><strong>Arrival:</strong> {selectedPlane.arrivalTime}</p>
+                                <p><strong>Duration:</strong> {selectedPlane.duration}</p>
+                                <p><strong>Date:</strong> {formatDate(fromDate)}</p>
+                                <p><strong>Available Seats:</strong> {selectedPlane.seats}</p>
                                 <p><strong>Price:</strong> ${selectedPlane.price}</p>
                             </div>
                         )}

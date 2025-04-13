@@ -57,13 +57,21 @@ const PlaneBookingPage = () => {
         if (!selectedFlight) return;
         navigate('/payment-checkout', {
             state: {
-                flightNumber: selectedFlight.flightNumber,
-                departureCity: selectedFlight.departureCity,
-                arrivalCity: selectedFlight.arrivalCity,
-                ticketPrice: selectedFlight.ticketPrice,
-                availableSeats: selectedFlight.availableSeats,
-                flightId: selectedFlight.id,
-                companyId: selectedFlight.companyId,
+                selectedPlane: {
+                    id: selectedFlight.id,
+                    name: selectedFlight.flightNumber,
+                    airline: selectedFlight.type || 'Economy',
+                    seats: selectedFlight.availableSeats,
+                    price: selectedFlight.ticketPrice,
+                    companyId: selectedFlight.companyId,
+                    departureCity: selectedFlight.departureCity,
+                    arrivalCity: selectedFlight.arrivalCity,
+                    departureTime: selectedFlight.departureTime,
+                    arrivalTime: selectedFlight.arrivalTime,
+                    duration: selectedFlight.duration
+                },
+                fromDate: selectedFlight.availableDate,
+                toDate: selectedFlight.availableDate
             }
         });
     };
