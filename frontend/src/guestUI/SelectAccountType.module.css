@@ -73,15 +73,20 @@ h1 {
     margin-bottom: 10px; 
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
 }
-
-p {
+p{
+    font-size: 1.75rem;
+    color: black;
+    font-style: italic;
+    line-height: 1.5; 
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4); 
+}
+.tagline {
     font-size: 1.75rem;
     color: white;
     font-style: italic;
     line-height: 1.5; 
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4); 
 }
-
 
 
 .contentBox {
