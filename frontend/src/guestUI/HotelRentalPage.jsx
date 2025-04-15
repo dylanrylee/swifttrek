@@ -7,12 +7,14 @@ import Header from './Header';
 import Footer from './Footer';
 
 const HotelRentalPage = () => {
+
+    // State hooks for managing hotel data and UI interactions  
     const [hotels, setHotels] = useState([]);
     const [selectedHotel, setSelectedHotel] = useState(null);
     const [showDetails, setShowDetails] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const [minPrice, setMinPrice] = useState('');
-    const [maxPrice, setMaxPrice] = useState('');
+    const [minPrice, setMinPrice] = useState(''); // Minimum price filter
+    const [maxPrice, setMaxPrice] = useState(''); // Maximum price filter
     const [showBookingPopup, setShowBookingPopup] = useState(false); // Add state for booking popup
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
@@ -20,6 +22,7 @@ const HotelRentalPage = () => {
 
     const today = new Date().toISOString().split('T')[0]; // Set minimum date to today
 
+    // useEffect hook to fetch hotels from Firebase when the component mounts
     useEffect(() => {
         const fetchHotels = async () => {
             try {
@@ -36,23 +39,26 @@ const HotelRentalPage = () => {
         fetchHotels();
     }, []);
 
+    // Filter hotels based on the search query, price range, and availability
     const filteredHotels = hotels.filter((hotel) => {
         const query = searchQuery.toLowerCase();
         const matchesText =
             hotel.hotelName.toLowerCase().includes(query) ||
             hotel.location.toLowerCase().includes(query);
         const price = parseFloat(hotel.price);
-        const matchesMin = minPrice ? price >= parseFloat(minPrice) : true;
-        const matchesMax = maxPrice ? price <= parseFloat(maxPrice) : true;
+        const matchesMin = minPrice ? price >= parseFloat(minPrice) : true; // Check if hotel price matches the minimum price filter
+        const matchesMax = maxPrice ? price <= parseFloat(maxPrice) : true; // Check if hotel price matches the maximum price filter
         const isAvailable = hotel.availability === 'Available';
         return matchesText && matchesMin && matchesMax && isAvailable;
     });
 
+    // Handles the click on "Details" button for a hotel
     const handleDetailsClick = (hotel) => {
         setSelectedHotel(hotel);
         setShowDetails(true);
     };
 
+    // Close the details or booking popup
     const handleClosePopup = () => {
         setSelectedHotel(null);
         setShowDetails(false);
@@ -61,10 +67,12 @@ const HotelRentalPage = () => {
         setToDate('');
     };
 
+    // Show the booking popup when "Book" button is clicked
     const handleBookClick = () => {
         setShowBookingPopup(true);
     };
 
+    // Handle the confirmation of the booking and navigate to the payment page
     const handleConfirmBooking = () => {
         navigate('/payment-checkout', {
             state: {
@@ -81,18 +89,20 @@ const HotelRentalPage = () => {
         });
     };
     
+    // Navigate to the write review page
     const handleWriteReviewClick = () => {
-        if (!selectedHotel) return;
+        if (!selectedHotel) return; // If no hotel is selected, do nothing
         navigate('/write-review', {
             state: {
                 hotelId: selectedHotel.hotelId,
                 hotelName: selectedHotel.hotelName,
                 location: selectedHotel.location,
-                roomType: selectedHotel.roomType // make sure this key exists in Firestore
+                roomType: selectedHotel.roomType
             }
         });        
     };
 
+    // Navigate to the view reviews page for the selected hotel
     const handleViewReviewsClick = () => {
         if (!selectedHotel) return;
         navigate(`/view-hotel-reviews/${selectedHotel.id}`, {
@@ -113,6 +123,7 @@ const HotelRentalPage = () => {
                     <h1 className={styles.heading}>Hotel Rentals</h1>
 
                     <div className={styles.searchBarContainer}>
+                        {/* Search bar for hotel name or location */}
                         <input
                             type="text"
                             value={searchQuery}
@@ -121,6 +132,7 @@ const HotelRentalPage = () => {
                             className={styles.searchInput}
                         />
                         <div className={styles.priceInputs}>
+                            {/* Input fields for price range filter */}
                             <input
                                 type="number"
                                 placeholder="Min Price"
@@ -138,6 +150,7 @@ const HotelRentalPage = () => {
                         </div>
                     </div>
 
+                    {/* Table displaying filtered hotels */}
                     <div className={styles.tableContainer}>
                         <table className={styles.carTable}>
                             <thead>
@@ -163,6 +176,7 @@ const HotelRentalPage = () => {
                                                     />
                                                 )}
                                             </td>
+                                            {/* Display hotel details */}
                                             <td>{hotel.hotelName}</td>
                                             <td>{hotel.location}</td>
                                             <td>${hotel.price}</td>
@@ -179,6 +193,7 @@ const HotelRentalPage = () => {
                                     ))
                                 ) : (
                                     <tr>
+                                        {/* Display message if no hotels match search */}
                                         <td colSpan="6" style={{ textAlign: 'center' }}>
                                             No hotels match your search.
                                         </td>
@@ -188,6 +203,7 @@ const HotelRentalPage = () => {
                         </table>
                     </div>
 
+                    {/* Popup for hotel details */}
                     {showDetails && selectedHotel && (
                         <div className={styles.popup}>
                             <div className={styles.popupContent}>
@@ -203,6 +219,7 @@ const HotelRentalPage = () => {
                                 <p><strong>Price per Night:</strong> ${selectedHotel.price}</p>
                                 <p><strong>Availability:</strong> {selectedHotel.availability ?? 'N/A'}</p>
                                 
+                                {/* Buttons for booking, writing review, and viewing reviews */}
                                 <div className={styles.buttonContainer}>
                                     <button className={styles.bookButtonGreen} onClick={handleBookClick}>
                                         Book
