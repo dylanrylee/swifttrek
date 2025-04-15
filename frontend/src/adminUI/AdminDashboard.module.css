@@ -1,0 +1,198 @@
+/* AdminDashboard.module.css */
+
+/* Main Container */
+.dashboardContainer {
+    padding: 2rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: calc(100vh - 120px);
+    position: relative;
+  }
+  
+  /* Admin Top Bar */
+  .adminTopBar {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+  }
+  
+  .profileWrapper {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .profileButton {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #008080;
+    color: white;
+    border: none;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  
+  .profileButton:hover {
+    background-color: #006666;
+    transform: scale(1.05);
+  }
+  
+  /* Profile Dropdown */
+  .profileDropdown {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    width: 280px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+  }
+  
+  .profileDropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .dropdownHeader {
+    display: flex;
+    padding: 1rem;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .profileInitial {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #008080;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+  
+  .profileName {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .profileEmail {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 0.2rem;
+  }
+  
+  .dropdownDivider {
+    height: 1px;
+    background-color: #eee;
+    margin: 0.5rem 0;
+  }
+  
+  .dropdownItem {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    color: #333;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .dropdownItem:hover {
+    background-color: #f5f5f5;
+    color: #008080;
+  }
+  
+  /* Dashboard Header */
+  .dashboardHeader {
+    color: #008080;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-size: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(0, 128, 128, 0.2);
+    margin-top: 3rem; /* Provides space for the top bar */
+  }
+  
+  /* Actions Grid */
+  .actionsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  /* Action Button */
+  .actionButton {
+    background-color: #008080;
+    color: white;
+    border: none;
+    padding: 1.5rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    text-align: center;
+    line-height: 1.4;
+  }
+  
+  .actionButton:hover {
+    background-color: #006666;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .actionButton:active {
+    transform: translateY(0);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .actionsGrid {
+      grid-template-columns: 1fr;
+    }
+    
+    .actionButton {
+      min-height: 90px;
+      padding: 1.2rem;
+    }
+  
+    .adminTopBar {
+      top: 1rem;
+      right: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .dashboardContainer {
+      padding: 1.5rem 1rem;
+    }
+    
+    .dashboardHeader {
+      font-size: 1.7rem;
+      margin-bottom: 2rem;
+      margin-top: 2.5rem;
+    }
+  
+    .profileDropdown {
+      width: 240px;
+    }
+  }
+  

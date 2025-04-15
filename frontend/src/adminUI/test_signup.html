@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+        
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDtVetfy-n7pPCCccj_EIArrlbHQGEZ2TQ",
+            authDomain: "seng513-project.firebaseapp.com",
+            projectId: "seng513-project",
+            storageBucket: "seng513-project.firebasestorage.app",
+            messagingSenderId: "888422866543",
+            appId: "1:888422866543:web:57f170ae027e8abfdff79a",
+            measurementId: "G-G9WNFE7KBL"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Function to handle Sign-Up
+        window.signUp = async () => {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                alert("Account created: " + user.email);
+                // Redirect to sign-in or dashboard page after successful sign-up
+                window.location.href = "sign-in.html"; // Example redirection
+            } catch (error) {
+                console.error("Error signing up: ", error);
+                alert("Failed to sign up. " + error.message);
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Sign Up</h2>
+        <form onsubmit="event.preventDefault(); signUp();">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
