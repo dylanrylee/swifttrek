@@ -123,7 +123,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Function to fetch ALL flights with all fields
+    // Function to fetch all flights 
     const fetchBookedFlights = async () => {
       const flightsCollection = collection(db, "booked_flights");
       const querySnapshot = await getDocs(flightsCollection);
@@ -148,7 +148,7 @@
       });
     };
 
-    // Function to fetch ALL hotels with all fields
+    // Function to fetch all hotels
     const fetchBookedHotels = async () => {
       const hotelsCollection = collection(db, "booked_hotels");
       const querySnapshot = await getDocs(hotelsCollection);
@@ -173,7 +173,7 @@
       });
     };
 
-    // Function to fetch ALL car rentals with all fields
+    // Function to fetch all car rentals
     const fetchBookedCars = async () => {
       const carsCollection = collection(db, "booked_cars");
       const querySnapshot = await getDocs(carsCollection);
@@ -199,7 +199,7 @@
 
     // Initialize the page
     window.onload = () => {
-      // Fetch all listings with all fields
+      // Fetch all listings
       fetchBookedFlights();
       fetchBookedHotels();
       fetchBookedCars();
