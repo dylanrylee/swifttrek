@@ -10,6 +10,8 @@ import Header from './Header';
 import Footer from './Footer';
 
 const PaymentCheckout = () => {
+
+    // State variables for managing the form visibility and payment data    
     const [showDebitForm, setShowDebitForm] = useState(false);
     const [showCreditForm, setShowCreditForm] = useState(false);
     const [showPaypalForm, setShowPaypalForm] = useState(false);
@@ -19,10 +21,12 @@ const PaymentCheckout = () => {
     const [expiry, setExpiry] = useState('');
     const [cvv, setCvv] = useState('');
 
+    // Navigate and location hook to handle routing and location state
     const navigate = useNavigate();
     const location = useLocation();
-    const { currentUser } = getAuth();
+    const { currentUser } = getAuth(); // Get current user for authentication
 
+    // Destructuring location state for booking details (car, hotel, flight)
     const {
         selectedCar,
         fromDate,
@@ -36,12 +40,14 @@ const PaymentCheckout = () => {
         selectedPlane
     } = location.state || {};
 
+    // Function to format the date from YYYY-MM-DD to MM/DD/YYYY
     const formatDate = (dateStr) => {
         if (!dateStr) return '';
         const [year, month, day] = dateStr.split('-');
         return `${month}/${day}/${year}`;
     };
 
+    // Functions to update booking status in Firebase Firestore
     const markCarAsBooked = async (carId) => {
         const carRef = doc(db, 'cars', carId);
         await updateDoc(carRef, { availability: 'Booked' });
@@ -64,6 +70,7 @@ const PaymentCheckout = () => {
         }
     };
 
+    // Function to store booking details in Firestore
     const storeBookingData = async () => {
         if (selectedCar) {
             await addDoc(collection(db, 'booked_cars'), {
@@ -103,6 +110,7 @@ const PaymentCheckout = () => {
         }
     };
 
+    // Function to handle card payment confirmation
     const handleConfirm = async () => {
         if (
             cardNumber.length !== 19 ||
@@ -116,7 +124,7 @@ const PaymentCheckout = () => {
 
         try {
             if (selectedCar?.id) await markCarAsBooked(selectedCar.id);
-            if (hotelId) await markHotelAsBooked(hotelId);
+            if (hotelId?.id) await markHotelAsBooked(hotelId);
             if (selectedPlane?.id) await updatePlaneSeatCount(selectedPlane.id);
             await storeBookingData();
             setPaymentConfirmed(true);
@@ -125,10 +133,12 @@ const PaymentCheckout = () => {
         }
     };
 
+    // Function to handle PayPal payment confirmation
     const handlePaypalConfirm = async () => {
+        // Update availability and store booking data
         try {
             if (selectedCar?.id) await markCarAsBooked(selectedCar.id);
-            if (hotelId) await markHotelAsBooked(hotelId);
+            if (hotelId?.id) await markHotelAsBooked(hotelId);
             if (selectedPlane?.id) await updatePlaneSeatCount(selectedPlane.id);
             await storeBookingData();
             setPaymentConfirmed(true);
