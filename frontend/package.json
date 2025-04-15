@@ -7,48 +7,25 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
-<<<<<<< HEAD
     "firebase": "^11.6.0",
-=======
-    "axios": "^1.6.7",
-    "firebase": "^11.6.0",
-    "prop-types": "^15.8.1",
->>>>>>> adminUI
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.4.0",
-    "react-scripts": "^5.0.1",
-    "sass": "^1.72.0",
+    "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:admin": "BROWSER=none PORT=3001 react-scripts start",
     "build": "react-scripts build",
-    "build:admin": "INLINE_RUNTIME_CHUNK=false react-scripts build",
     "test": "react-scripts test",
-    "test:admin": "react-scripts test --watchAll=false",
-    "eject": "react-scripts eject",
-    "lint": "eslint src --ext .js,.jsx",
-    "prettier": "prettier --write src/**/*.{js,jsx,css,scss}"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ],
-    "rules": {
-      "react/jsx-filename-extension": [
-        1,
-        {
-          "extensions": [
-            ".jsx"
-          ]
-        }
-      ],
-      "react/react-in-jsx-scope": "off"
-    }
+    ]
   },
   "browserslist": {
     "production": [
@@ -61,19 +38,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "prettier": {
-    "singleQuote": true,
-    "jsxSingleQuote": false,
-    "trailingComma": "es5",
-    "printWidth": 100,
-    "tabWidth": 2,
-    "semi": true,
-    "jsxBracketSameLine": false
-  },
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "index.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  }
 }
