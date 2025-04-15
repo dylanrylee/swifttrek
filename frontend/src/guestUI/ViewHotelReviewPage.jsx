@@ -10,6 +10,8 @@ const ViewHotelReviewPage = () => {
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    // Get hotel details from router state
     const location = useLocation();
     const hotelId = location.state?.hotelId;
     const hotelName = location.state?.hotelName;
@@ -17,6 +19,7 @@ const ViewHotelReviewPage = () => {
     const hotelLocation = location.state?.location;
 
     useEffect(() => {
+        // Fetch reviews from Firestore where hotelId matches
         const fetchReviews = async () => {
             try {
                 setLoading(true);
@@ -42,6 +45,7 @@ const ViewHotelReviewPage = () => {
             }
         };
 
+        // Only fetch if hotelId exists
         if (hotelId) {
             fetchReviews();
         } else {
@@ -50,9 +54,9 @@ const ViewHotelReviewPage = () => {
         }
     }, [hotelId]);
 
+    // Helper function to render star ratings
     const renderStars = (rating) => {
         if (!rating) return null;
-
         const [ratingValue, maxRating] = rating.split('/').map(Number);
 
         return (
@@ -75,6 +79,7 @@ const ViewHotelReviewPage = () => {
             <div className={styles.content}>
                 <h1 className={styles.title}>Hotel Reviews</h1>
 
+                {/* Display hotel details if provided */}
                 {hotelName && (
                     <div className={styles.itemDetails}>
                         <h2>{hotelName}</h2>
@@ -83,6 +88,7 @@ const ViewHotelReviewPage = () => {
                     </div>
                 )}
 
+                {/* Conditional rendering for loading, error, no data, and reviews */}
                 {loading ? (
                     <div className={styles.loading}>Loading reviews...</div>
                 ) : error ? (

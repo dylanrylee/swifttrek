@@ -6,7 +6,7 @@
     width: 100%;
     overflow-x: hidden;
     background: url('../images/writereview-background.jpg') no-repeat center center;
-    background-size: cover;
+    background-size: cover; /* Ensures the background image covers the whole area */
 }
 
 /* Centers content */
@@ -16,19 +16,20 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 80px 20px;
+    padding: 80px 20px; /* Padding around content */
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 auto; /* Centers the content horizontally */
 }
 
+/* Review box styling */
 .reviewBox {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
     padding: 30px;
     border-radius: 12px;
     max-width: 500px;
-    width: 90%; /* Changed from fixed width to percentage */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin: 0 auto;
+    width: 90%; /* Responsive width */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow around the box */
+    margin: 0 auto; /* Centers the review box */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,7 +41,7 @@
     margin-bottom: 20px;
 }
 
-/* Input fields */
+/* Input and text area styles */
 .inputField, .textArea {
     width: 100%;
     padding: 10px;
@@ -53,10 +54,10 @@
 
 .textArea {
     height: 120px;
-    resize: none;
+    resize: none; /* Disables resizing of the text area */
 }
 
-/* Rating stars */
+/* Rating stars container */
 .ratingContainer {
     display: flex;
     gap: 5px;
@@ -64,13 +65,15 @@
     justify-content: center;
 }
 
+/* Star button styling */
 .starButton {
     background: none;
     border: none;
     font-size: 30px;
-    cursor: pointer;
+    cursor: pointer; /* Pointer cursor for clickability */
 }
 
+/* Star fill and empty colors */
 .filledStar {
     color: gold;
 }
@@ -79,7 +82,7 @@
     color: #534f4f;
 }
 
-/* Button container */
+/* Button container for cancel and submit */
 .buttonContainer {
     display: flex;
     gap: 15px;
@@ -87,6 +90,7 @@
     justify-content: center;
 }
 
+/* Button styling for cancel and submit */
 .cancelButton, .submitButton {
     padding: 12px 20px;
     border: none;
@@ -108,14 +112,14 @@
 }
 
 .submitButton:hover {
-    background: #45a049;
+    background: #45a049; /* Hover effect for submit button */
 }
 
 .cancelButton:hover {
-    background: #b3b3b3;
+    background: #b3b3b3; /* Hover effect for cancel button */
 }
 
-/* Character Counter styles */
+/* Character counter for text area */
 .charCounter {
     font-size: 14px;
     color: #555;
@@ -128,6 +132,7 @@
     color: red;
 }
 
+/* Box for additional car information */
 .carInfoBox {
     background-color: #f4f4f4;
     padding: 15px;

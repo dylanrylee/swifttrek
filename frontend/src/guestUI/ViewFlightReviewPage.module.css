@@ -1,8 +1,10 @@
+/* === Layout Containers === */
+
 .container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #f5f5f5;
+    background-color: #f5f5f5; /* Light background */
 }
 
 .content {
@@ -13,6 +15,8 @@
     width: 100%;
 }
 
+/* === Page Title === */
+
 .title {
     font-size: 2.5rem;
     color: #333;
@@ -21,13 +25,15 @@
     font-weight: 600;
 }
 
+/* === Flight Details Section === */
+
 .itemDetails {
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     padding: 1.8rem;
     margin-bottom: 2.5rem;
-    border-left: 5px solid #3f51b5;
+    border-left: 5px solid #3f51b5; /* Indigo accent */
 }
 
 .itemDetails h2 {
@@ -49,6 +55,8 @@
     font-weight: 600;
 }
 
+/* === Status Messages (Loading, Error, No Reviews) === */
+
 .loading, .error, .noReviews {
     text-align: center;
     padding: 2.5rem;
@@ -60,20 +68,24 @@
 }
 
 .error {
-    color: #d32f2f;
+    color: #d32f2f; /* Red for errors */
     border-left: 5px solid #d32f2f;
 }
 
 .noReviews {
     color: #666;
-    border-left: 5px solid #9e9e9e;
+    border-left: 5px solid #9e9e9e; /* Grey for neutral message */
 }
+
+/* === Review Cards Grid === */
 
 .reviewsContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 1.8rem;
 }
+
+/* === Individual Review Card === */
 
 .reviewCard {
     background-color: white;
@@ -89,6 +101,8 @@
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* === Review Header === */
+
 .reviewHeader {
     display: flex;
     justify-content: space-between;
@@ -97,6 +111,8 @@
     padding-bottom: 0.8rem;
     border-bottom: 1px solid #eee;
 }
+
+/* === Rating Section === */
 
 .ratingContainer {
     display: flex;
@@ -110,12 +126,14 @@
 
 .star {
     font-size: 1.4rem;
-    color: #ddd;
+    color: #ddd; /* Default unfilled star */
 }
 
 .star.filled {
-    color: #ffc107;
+    color: #ffc107; /* Yellow filled star */
 }
+
+/* === Review Body === */
 
 .reviewBody {
     margin-top: 1rem;
@@ -126,6 +144,8 @@
     line-height: 1.6;
     font-size: 1.05rem;
 }
+
+/* === Responsive Design === */
 
 @media (max-width: 768px) {
     .content {
@@ -147,4 +167,4 @@
     .itemDetails h2 {
         font-size: 1.5rem;
     }
-} 
+}

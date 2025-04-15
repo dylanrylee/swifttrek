@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { collection, getDocs, query, where, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import styles from './ViewFlightReviewPage.module.css';
 import Header from './Header';
@@ -11,20 +11,18 @@ const ViewFlightReviewPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [flightDetails, setFlightDetails] = useState(null);
-    const { companyId } = useParams();
+    const { companyId } = useParams(); // Get companyId from route params
 
     useEffect(() => {
+        // Fetch flight info based on companyId
         const fetchFlightDetails = async () => {
             try {
-                // Fetch flight details from the flights collection
                 const flightsQuery = query(
                     collection(db, 'flights'),
                     where('companyId', '==', companyId)
                 );
-                
                 const flightsSnapshot = await getDocs(flightsQuery);
                 if (!flightsSnapshot.empty) {
-                    // Get the first flight with this companyId
                     const flightData = flightsSnapshot.docs[0].data();
                     setFlightDetails({
                         flightNumber: flightData.flightNumber,
@@ -38,23 +36,19 @@ const ViewFlightReviewPage = () => {
             }
         };
 
+        // Fetch reviews from the reviewed_flights collection
         const fetchReviews = async () => {
             try {
                 setLoading(true);
-                console.log('Fetching reviews for company ID:', companyId);
-                
                 const reviewsQuery = query(
                     collection(db, 'reviewed_flights'),
                     where('companyId', '==', companyId)
                 );
-                
                 const querySnapshot = await getDocs(reviewsQuery);
                 const reviewsData = querySnapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data()
                 }));
-                
-                console.log('Found reviews:', reviewsData);
                 setReviews(reviewsData);
                 setError(null);
             } catch (err) {
@@ -65,6 +59,7 @@ const ViewFlightReviewPage = () => {
             }
         };
 
+        // Trigger data fetch if companyId is available
         if (companyId) {
             fetchFlightDetails();
             fetchReviews();
@@ -74,12 +69,12 @@ const ViewFlightReviewPage = () => {
         }
     }, [companyId]);
 
+    // Display star rating based on a "X/Y" format string
     const renderStars = (rating) => {
         if (!rating) return null;
-        
         const ratingValue = parseInt(rating.split('/')[0]);
         const maxRating = parseInt(rating.split('/')[1]);
-        
+
         return (
             <div className={styles.starsContainer}>
                 {[...Array(maxRating)].map((_, index) => (
@@ -99,7 +94,7 @@ const ViewFlightReviewPage = () => {
             <Header />
             <div className={styles.content}>
                 <h1 className={styles.title}>Flight Reviews</h1>
-                
+
                 {flightDetails && (
                     <div className={styles.itemDetails}>
                         <h2>{flightDetails.companyName}</h2>
@@ -108,7 +103,7 @@ const ViewFlightReviewPage = () => {
                         <p><strong>To:</strong> {flightDetails.arrivalCity}</p>
                     </div>
                 )}
-                
+
                 {loading ? (
                     <div className={styles.loading}>Loading reviews...</div>
                 ) : error ? (
@@ -139,4 +134,4 @@ const ViewFlightReviewPage = () => {
     );
 };
 
-export default ViewFlightReviewPage; 
+export default ViewFlightReviewPage;

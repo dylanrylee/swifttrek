@@ -11,17 +11,18 @@ const WriteReviewPage = () => {
     const locationHook = useLocation();
     const navigate = useNavigate();
 
-    // Grab car, hotel, and flight values from route state
+    // Destructure data passed through route state
     const {
         model, type, location: carLocation, carId,
         hotelName, roomType, location: hotelLocation, hotelId,
         flightNumber, departureCity, arrivalCity, flightId, companyId
     } = locationHook.state || {};
 
-    const [rating, setRating] = useState(0);
-    const [description, setDescription] = useState('');
+    const [rating, setRating] = useState(0); // Star rating from 1 to 5
+    const [description, setDescription] = useState(''); // Review text
     const maxCharacters = 200;
 
+    // Limit description input to 200 characters
     const handleDescriptionChange = (e) => {
         const input = e.target.value;
         if (input.length <= maxCharacters) {
@@ -29,6 +30,7 @@ const WriteReviewPage = () => {
         }
     };
 
+    // Handle review submission to Firestore
     const handleSubmit = async () => {
         const auth = getAuth();
         const currentUser = auth.currentUser;
@@ -42,8 +44,8 @@ const WriteReviewPage = () => {
         const formattedRating = `${rating}/5`;
 
         try {
+            // Determine type of review and save to appropriate collection
             if (carId) {
-                // Submit car review
                 await addDoc(collection(db, 'reviewed_cars'), {
                     carId,
                     guestID,
@@ -51,7 +53,6 @@ const WriteReviewPage = () => {
                     ratings: formattedRating
                 });
             } else if (hotelId) {
-                // Submit hotel review
                 await addDoc(collection(db, 'reviewed_hotels'), {
                     hotelId,
                     guestID,
@@ -59,7 +60,6 @@ const WriteReviewPage = () => {
                     rating: formattedRating
                 });
             } else if (flightId) {
-                // Submit flight review
                 await addDoc(collection(db, 'reviewed_flights'), {
                     flightId,
                     companyId,
@@ -73,7 +73,7 @@ const WriteReviewPage = () => {
             }
 
             alert('Review posted!');
-            navigate('/guest-home');
+            navigate('/guest-home'); // Redirect after submission
         } catch (error) {
             console.error('Error submitting review:', error);
             alert('Failed to submit review.');
@@ -87,7 +87,7 @@ const WriteReviewPage = () => {
                 <div className={styles.reviewBox}>
                     <h1 className={styles.heading}>Write a Review</h1>
 
-                    {/* Car Info */}
+                    {/* Car Info Display */}
                     {model && type && carLocation && (
                         <div className={styles.carInfoBox}>
                             <p><strong>Car Model:</strong> {model}</p>
@@ -96,7 +96,7 @@ const WriteReviewPage = () => {
                         </div>
                     )}
 
-                    {/* Hotel Info */}
+                    {/* Hotel Info Display */}
                     {hotelName && roomType && hotelLocation && (
                         <div className={styles.carInfoBox}>
                             <p><strong>Hotel Name:</strong> {hotelName}</p>
@@ -105,7 +105,7 @@ const WriteReviewPage = () => {
                         </div>
                     )}
 
-                    {/* Flight Info */}
+                    {/* Flight Info Display */}
                     {flightNumber && departureCity && arrivalCity && (
                         <div className={styles.carInfoBox}>
                             <p><strong>Flight Number:</strong> {flightNumber}</p>
@@ -114,7 +114,7 @@ const WriteReviewPage = () => {
                         </div>
                     )}
 
-                    {/* Rating Stars */}
+                    {/* Star Rating Input */}
                     <div className={styles.ratingContainer}>
                         {[1, 2, 3, 4, 5].map((star) => (
                             <button
@@ -127,7 +127,7 @@ const WriteReviewPage = () => {
                         ))}
                     </div>
 
-                    {/* Review Text */}
+                    {/* Description Input Area */}
                     <textarea
                         placeholder="Write your review here..."
                         value={description}
@@ -140,7 +140,7 @@ const WriteReviewPage = () => {
                         {maxCharacters - description.length} characters remaining
                     </div>
 
-                    {/* Buttons */}
+                    {/* Action Buttons */}
                     <div className={styles.buttonContainer}>
                         <button
                             className={styles.cancelButton}

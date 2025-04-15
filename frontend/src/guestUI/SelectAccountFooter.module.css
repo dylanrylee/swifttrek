@@ -1,43 +1,48 @@
+/* src/components/SelectAccountFooter.module.css */
+
 .footer {
     font-family: 'Numans', sans-serif;
-    padding: 10px 0; 
+    padding: 10px 0;
     color: #2c2c2c;
     text-align: center;
     width: 100%;
-    margin-top: auto; 
-    min-height: 60px; 
+    margin-top: auto;
+    min-height: 60px;
 }
 
 .footerContent {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 8px; 
+    gap: 8px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 15px;
 }
 
+/* Link container */
 .footerLinks {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 10px; 
-    margin-bottom: 8px; 
+    gap: 10px;
+    margin-bottom: 8px;
 }
 
+/* Footer links */
 .footerLinks a {
     color: white;
     text-decoration: none;
-    font-size: 20px; 
-    padding: 2px 5px; 
-    white-space: nowrap; 
+    font-size: 20px;
+    padding: 2px 5px;
+    white-space: nowrap;
 }
 
 .footerLinks a:hover {
     text-decoration: underline;
 }
 
+/* Logo + brand styling */
 .footerLogo {
     display: flex;
     align-items: center;
@@ -46,20 +51,20 @@
 }
 
 .footerLogo img {
-    width: 16px; 
+    width: 16px;
     height: auto;
 }
 
 .footerLogo span {
-    font-size: 20px; 
+    font-size: 20px;
     font-weight: bold;
     color: white;
 }
 
-/* Responsive styling */
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .footer {
-        padding: 8px 0; 
+        padding: 8px 0;
     }
 
     .footerLinks {
@@ -68,15 +73,15 @@
     }
 
     .footerLinks a {
-        font-size: 12px; 
-        margin: 0 5px; 
+        font-size: 12px;
+        margin: 0 5px;
     }
 
     .footerLogo img {
-        width: 14px; 
+        width: 14px;
     }
 
     .footerLogo span {
-        font-size: 11px; 
+        font-size: 11px;
     }
 }

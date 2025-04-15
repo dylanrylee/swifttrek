@@ -7,12 +7,13 @@ import Header from './Header';
 import Footer from './Footer';
 
 const ViewCarReviewPage = () => {
+    // State variables for loading, error, reviews, and car details
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [carDetails, setCarDetails] = useState(null);
     
-    // Access the passed state from the navigate function
+    // Access the state passed via navigation (e.g., car ID and details)
     const location = useLocation();
     const { carId, model, type, location: carLocation } = location.state || {};
 
@@ -20,8 +21,8 @@ const ViewCarReviewPage = () => {
         const fetchReviews = async () => {
             try {
                 setLoading(true);
-                console.log('Fetching reviews for car ID:', carId);
                 
+                // Query Firestore for reviews of the specific car
                 const reviewsQuery = query(
                     collection(db, 'reviewed_cars'),
                     where('carId', '==', carId)
@@ -33,7 +34,6 @@ const ViewCarReviewPage = () => {
                     ...doc.data()
                 }));
                 
-                console.log('Found reviews:', reviewsData);
                 setReviews(reviewsData);
                 setError(null);
             } catch (err) {
@@ -52,6 +52,7 @@ const ViewCarReviewPage = () => {
         }
     }, [carId]);
 
+    // Utility to render stars based on rating like "4/5"
     const renderStars = (rating) => {
         if (!rating) return null;
         
@@ -77,7 +78,8 @@ const ViewCarReviewPage = () => {
             <Header />
             <div className={styles.content}>
                 <h1 className={styles.title}>Car Reviews</h1>
-                
+
+                {/* Car detail section (if passed) */}
                 {carDetails && (
                     <div className={styles.itemDetails}>
                         <h2>{model}</h2>
@@ -86,6 +88,7 @@ const ViewCarReviewPage = () => {
                     </div>
                 )}
                 
+                {/* Handle loading, errors, or empty state */}
                 {loading ? (
                     <div className={styles.loading}>Loading reviews...</div>
                 ) : error ? (
@@ -93,6 +96,7 @@ const ViewCarReviewPage = () => {
                 ) : reviews.length === 0 ? (
                     <div className={styles.noReviews}>No reviews available for this car.</div>
                 ) : (
+                    // Render review cards
                     <div className={styles.reviewsContainer}>
                         {reviews.map(review => (
                             <div key={review.id} className={styles.reviewCard}>

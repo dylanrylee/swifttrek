@@ -1,32 +1,36 @@
 /* src/components/Modal.module.css */
 
+/* Fullscreen overlay for dimmed background */
 .modalOverlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Dim background */
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Ensure the modal is above other content */
+    z-index: 1000;
 }
 
+/* Modal container styling */
 .modalContent {
-    background: rgba(255, 255, 255, 0.9); /* Similar background to loginBox */
-    padding: 30px; /* Same padding as loginBox */
-    border-radius: 12px; /* Same border radius */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Same shadow effect */
-    width: 350px; /* Same width as loginBox */
-    text-align: center; /* Centered text */
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    text-align: center;
 }
 
+/* Label inside modal */
 .modalContent label {
     margin-top: 10px;
     font-weight: bold;
 }
 
+/* Input fields inside modal */
 .modalContent input {
     padding: 10px;
     margin: 5px 0;
@@ -35,19 +39,21 @@
     border-radius: 6px;
 }
 
+/* Buttons inside modal */
 .modalContent button {
     padding: 10px 20px;
     margin-top: 15px;
-    background-color: #E8AA9B; 
+    background-color: #E8AA9B;
     color: #2c2c2c;
     border: none;
-    border-radius: 6px; 
-    cursor: pointer; 
-    font-size: 16px; 
-    transition: background-color 0.3s; 
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
     width: 100%;
 }
 
+/* Hover effect for modal buttons */
 .modalContent button:hover {
-    background-color: #DCD5DC; 
+    background-color: #DCD5DC;
 }
