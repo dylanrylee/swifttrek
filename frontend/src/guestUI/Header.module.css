@@ -3,6 +3,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    background: linear-gradient(to right, rgba(155, 77, 97, 0.788), #d1a4a4d3);
     color: #2c2c2c;
     width: 100vw;
     box-sizing: border-box;
