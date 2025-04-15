@@ -1,6 +1,7 @@
 html, body {
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevents horizontal scrolling — good for mobile UX */
     margin: 0;
+    margin: 0; 
     padding: 0;
     width: 100%;
     height: 100%;
@@ -8,38 +9,35 @@ html, body {
 
 .container {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Stack children vertically */
     height: 100vh;
     max-width: 100vw;
-    overflow: hidden;
+    overflow: hidden; /* Helps prevent unexpected scrollbars */
 }
 
 .mainContent {
-    flex-grow: 1;
+    flex-grow: 1; /* Takes up all the remaining space between header and footer */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-start; /* Align content to the top */
     width: 100%;
     height: 100%; /* Make it fill remaining space */
 
     background-image: url('../images/guest-frontpage.png');
-    background-size: cover;       /* Scale the image to cover the entire area */
+    background-size: cover;       /* Make sure image covers the area nicely */
     background-position: center;  /* Center the image */
-    background-repeat: no-repeat; /* Prevent tiling */
+    background-repeat: no-repeat; /* Don't tile the image */
 }
-
-
-/* Removed .welcomePhoto and its media queries */
 
 .buttonContainer {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Makes layout responsive */
     gap: 15px;
     width: 100%;
     max-width: 800px;
-    margin-top: 5vh;
+    margin-top: 5vh; /* Adds a bit of top spacing */
     padding: 10px;
 }
 
@@ -52,17 +50,18 @@ html, body {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: clamp(14px, 2vw, 18px);
-    transition: background-color 0.3s;
+    font-size: clamp(14px, 2vw, 18px); /* Responsive font size */
+    transition: background-color 0.3s; /* Smooth hover effect */
 }
 
 .actionButton:hover {
-    background-color: #a58080;
+    background-color: #a58080; /* Slightly darker pink for hover feedback */
 }
 
+/* Responsiveness for 600px screens, or smaller */
 @media (max-width: 600px) {
     .buttonContainer {
-        flex-direction: column;
+        flex-direction: column; /* Stack vertically on smaller screens */
         align-items: center;
     }
 
