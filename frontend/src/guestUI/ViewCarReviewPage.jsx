@@ -10,6 +10,7 @@ const ViewCarReviewPage = () => {
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [carDetails, setCarDetails] = useState(null);
     
     // Access the passed state from the navigate function
     const location = useLocation();
@@ -77,8 +78,7 @@ const ViewCarReviewPage = () => {
             <div className={styles.content}>
                 <h1 className={styles.title}>Car Reviews</h1>
                 
-                {/* Display car details */}
-                {model && (
+                {carDetails && (
                     <div className={styles.itemDetails}>
                         <h2>{model}</h2>
                         <p><strong>Type:</strong> {type}</p>

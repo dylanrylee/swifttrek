@@ -14,9 +14,16 @@ const SelectAccountType = () => {
             <img src="https://static.vecteezy.com/system/resources/previews/041/041/333/non_2x/travel-app-logo-icon-brand-identity-sign-symbol-vector.jpg" alt="SwiftTrek Logo" className={styles.logo} />
             <div className={styles.textContent}>
                 <h1>Welcome to SwiftTrek</h1>
-                <div className={styles.tagline}>Your Swift Escape Starts Here...</div>
-            </div>
-</div>
+                <div style={{
+                    fontSize: '1.75rem',
+                    color: 'white',
+                    fontStyle: 'italic',
+                    lineHeight: 1.5,
+                    textShadow: '1px 1px 4px rgba(0, 0, 0, 0.4)'
+                    }}>
+                    Your Swift Escape Starts Here...
+                    </div>
+            </div></div>
             {/* hideTabs={true} to mske navigation tabs invisble*/}
             <Header hideTabs={true} />
             <main className={styles.mainContent}>

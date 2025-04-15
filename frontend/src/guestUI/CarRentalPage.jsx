@@ -94,7 +94,7 @@ const CarRentalPage = () => {
         if (!selectedCar) return;
         navigate(`/view-car-reviews/${selectedCar.id}`, {
             state: {
-                carId: selectedCar.carId,
+                carId: selectedCar.id,
                 model: selectedCar.model,
                 type: selectedCar.type,
                 location: selectedCar.location
