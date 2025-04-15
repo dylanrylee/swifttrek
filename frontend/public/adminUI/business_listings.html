@@ -191,7 +191,7 @@
       }
     }
 
-    // Function to fetch ALL flights with all fields
+    // Function to fetch all flights
     const fetchBookedFlights = async () => {
       const flightsCollection = collection(db, "flights");
       const querySnapshot = await getDocs(flightsCollection);
@@ -229,7 +229,7 @@
       });
     };
 
-    // Function to fetch ALL hotels with all fields
+    // Function to fetch all hotels
     const fetchBookedHotels = async () => {
       const hotelsCollection = collection(db, "hotels");
       const querySnapshot = await getDocs(hotelsCollection);
@@ -264,7 +264,7 @@
       });
     };
 
-    // Function to fetch ALL car rentals with all fields
+    // Function to fetch all car rentals
     const fetchBookedCars = async () => {
       const carsCollection = collection(db, "cars");
       const querySnapshot = await getDocs(carsCollection);
@@ -298,7 +298,7 @@
       });
     };
 
-    // Make remove functions available globally
+    //remove functions 
     window.removeFlight = removeFlight;
     window.removeHotel = removeHotel;
     window.removeCar = removeCar;
