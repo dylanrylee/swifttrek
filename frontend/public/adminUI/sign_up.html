@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Metadata and mobile responsiveness -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Sign-Up</title>
+
+  <!-- Embedded CSS for layout and styling -->
   <style>
-  
+    /* Fullscreen flexbox layout for center alignment */
     .loginContainer {
       display: flex;
       flex-direction: column;
@@ -16,6 +19,7 @@
       padding: 1rem;
     }
 
+    /* Styling for the form box */
     .loginBox {
       background-color: #ffffff;
       padding: 2.5rem;
@@ -28,16 +32,19 @@
       transition: transform 0.3s ease;
     }
 
+    /* Animate form on hover */
     .loginBox:hover {
       transform: translateY(-5px);
     }
 
+    /* Form heading */
     .loginBox h2 {
       font-size: 2rem;
       margin-bottom: 1.5rem;
       color: #008080;
     }
 
+    /* Grouping form elements */
     .formGroup {
       display: flex;
       flex-direction: column;
@@ -45,12 +52,14 @@
       margin-bottom: 1.5rem;
     }
 
+    /* Label styling */
     .formGroup label {
       text-align: left;
       font-weight: 500;
       color: #555;
     }
 
+    /* Input fields */
     .formGroup input {
       padding: 0.75rem;
       font-size: 1rem;
@@ -59,12 +68,14 @@
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
+    /* Highlight input on focus */
     .formGroup input:focus {
       border-color: #008080;
       box-shadow: 0 0 0 2px rgba(0, 128, 128, 0.15);
       outline: none;
     }
 
+    /* Sign-up button styling */
     .loginButton {
       background-color: #008080;
       color: #fff;
@@ -84,6 +95,7 @@
       transform: translateY(-2px);
     }
 
+    /* Responsive design: reduce padding on small screens */
     @media (max-width: 768px) {
       .loginBox {
         padding: 1.8rem;
@@ -91,12 +103,14 @@
     }
   </style>
 
-  <!-- Firebase SDKs (ES Module imports) -->
+  <!-- Firebase SDKs & Sign-Up Logic -->
   <script type="module">
+    // Import Firebase modules from CDN
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-analytics.js";
     import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 
+    // Your Firebase project configuration
     const firebaseConfig = {
       apiKey: "AIzaSyCnkAHKbdygTDGRIqTzLhD511luEjNgcyQ",
       authDomain: "seng513admin.firebaseapp.com",
@@ -107,24 +121,33 @@
       measurementId: "G-N4XBXQ2R03"
     };
 
+    // Initialize Firebase app
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const auth = getAuth(app);
 
+    // Attach event listener once the DOM is ready
     document.addEventListener("DOMContentLoaded", () => {
       const form = document.getElementById("adminSignUpForm");
 
+      // Handle form submission
       form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Prevent default form reload
+
+        // Get input values
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
 
         try {
+          // Create user using Firebase Auth
           const userCredential = await createUserWithEmailAndPassword(auth, email, password);
           const user = userCredential.user;
+
+          // Notify user and redirect
           alert("Sign-up successful!\nWelcome " + user.email);
           window.location.href = "dashboard.html";
         } catch (error) {
+          // Handle errors
           alert("Sign-up failed:\n" + error.message);
         }
       });
@@ -132,9 +155,12 @@
   </script>
 </head>
 <body>
+  <!-- Main Layout Container -->
   <div class="loginContainer">
     <div class="loginBox">
       <h2>Admin Sign-Up</h2>
+
+      <!-- Sign-Up Form -->
       <form id="adminSignUpForm">
         <div class="formGroup">
           <label for="email">Email</label>
@@ -144,6 +170,8 @@
           <label for="password">Password</label>
           <input id="password" type="password" required />
         </div>
+
+        <!-- Submit Button -->
         <button type="submit" class="loginButton">Sign Up</button>
       </form>
     </div>

@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Metadata -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Dashboard</title>
+
+  <!-- Embedded Styles -->
   <style>
+    /* General page layout */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       background-color: #f9f9f9;
     }
 
+    /* Main container for the dashboard content */
     .dashboardContainer {
       padding: 2rem 1.5rem;
       max-width: 1200px;
@@ -19,12 +24,14 @@
       position: relative;
     }
 
+    /* Top bar for profile button (upper right) */
     .adminTopBar {
       position: absolute;
       top: 1.5rem;
       right: 1.5rem;
     }
 
+    /* Profile dropdown toggle button */
     .profileWrapper {
       position: relative;
       display: inline-block;
@@ -51,6 +58,7 @@
       transform: scale(1.05);
     }
 
+    /* Profile dropdown menu */
     .profileDropdown {
       position: absolute;
       right: 0;
@@ -72,6 +80,7 @@
       transform: translateY(0);
     }
 
+    /* Inside dropdown: header, divider, items */
     .dropdownHeader {
       display: flex;
       padding: 1rem;
@@ -122,6 +131,7 @@
       color: #008080;
     }
 
+    /* Main title/header */
     .dashboardHeader {
       color: #008080;
       text-align: center;
@@ -132,6 +142,7 @@
       margin-top: 3rem;
     }
 
+    /* Grid layout for action buttons */
     .actionsGrid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -139,6 +150,7 @@
       margin-top: 1rem;
     }
 
+    /* Individual dashboard buttons */
     .actionButton {
       background-color: #008080;
       color: white;
@@ -168,6 +180,7 @@
       transform: translateY(0);
     }
 
+    /* Responsive tweaks */
     @media (max-width: 768px) {
       .actionsGrid {
         grid-template-columns: 1fr;
@@ -203,7 +216,7 @@
 </head>
 <body>
   <div class="dashboardContainer">
-    <!-- Top Bar -->
+    <!-- Profile Top Bar -->
     <div class="adminTopBar">
       <div class="profileWrapper">
         <button class="profileButton" onclick="toggleDropdown()">A</button>
@@ -217,26 +230,28 @@
           </div>
           <div class="dropdownDivider"></div>
           <div class="dropdownItem" onclick="window.location.href='sign_up.html'">Add Other Admin Users</div>
-          
           <div class="dropdownDivider"></div>
           <div class="dropdownItem" onclick="window.location.href='login_admin.html'">Log Out</div>
         </div>
       </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- Dashboard Header -->
     <h1 class="dashboardHeader">Admin Dashboard</h1>
+
+    <!-- Action Buttons -->
     <div class="actionsGrid">
-        <button class="actionButton" onclick="window.location.href='business_listings.html'">Manage Business Listings</button>
-        <button class="actionButton" onclick="window.location.href='customer_bookings.html'">Manage Customer Bookings</button>   
+      <button class="actionButton" onclick="window.location.href='business_listings.html'">Manage Business Listings</button>
+      <button class="actionButton" onclick="window.location.href='customer_bookings.html'">Manage Customer Bookings</button>   
     </div>
   </div>
 
-  <!-- Firebase SDK -->
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 
   <script>
+    // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyDtVetfy-n7pPCCccj_EIArrlbHQGEZ2TQ",
       authDomain: "seng513-project.firebaseapp.com",
@@ -262,28 +277,23 @@
       });
     }
 
-    // Check if user is authenticated
+    // Check auth status and display admin info
     firebase.auth().onAuthStateChanged(function(user) {
       if (!user) {
         window.location.href = "/admin-login.html"; // Redirect if not logged in
       } else {
-        // Set profile name/email
         document.getElementById("adminName").innerText = user.displayName || "Admin";
         document.getElementById("adminEmail").innerText = user.email;
       }
     });
 
-    // Toggle Profile Dropdown
+    // Toggle profile dropdown menu
     function toggleDropdown() {
       const dropdown = document.getElementById('profileDropdown');
       dropdown.classList.toggle('show');
     }
 
-    // Navigate to different admin pages
-    function navigateTo(page) {
-      window.location.href = "/admin/" + page + ".html";
-    }
-
+    // Close dropdown if clicking outside of it
     document.addEventListener('click', function (event) {
       const dropdown = document.getElementById('profileDropdown');
       const button = document.querySelector('.profileButton');
@@ -291,6 +301,11 @@
         dropdown.classList.remove('show');
       }
     });
+
+    // Navigation utility (not used directly here)
+    function navigateTo(page) {
+      window.location.href = "/admin/" + page + ".html";
+    }
   </script>
 </body>
 </html>
