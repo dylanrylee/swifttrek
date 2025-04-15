@@ -5,7 +5,7 @@
     width: 100%;
     overflow-x: hidden;
     background: url('../images/plane-background.jpg') no-repeat center center;
-    background-size: cover;
+    background-size: cover; /* Make background image cover full container */
 }
 
 .content {
@@ -14,11 +14,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 60px 20px;
+    padding: 60px 20px; /* Some breathing room around the content */
 }
 
 .whiteBox {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.9); /* Slight transparency over background image */
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -28,12 +28,12 @@
     text-align: center;
     overflow: hidden;
     box-sizing: border-box;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease; /* Allows for smoother transition */
 }
 
 .tableContainer {
     width: 100%;
-    overflow-x: auto;
+    overflow-x: auto; /* Horizontal scroll for smaller screens */
     margin-top: 20px;
 }
 
@@ -41,14 +41,14 @@
     width: 100%;
     border-collapse: collapse;
     margin: 0 auto;
-    font-size: clamp(12px, 2vw, 16px);
+    font-size: clamp(12px, 2vw, 16px); /* Responsive font sizing */
 }
 
 .flightTable th, .flightTable td {
     padding: 12px;
     border: 1px solid #ddd;
     text-align: center;
-    white-space: nowrap;
+    white-space: nowrap; /* Prevents columns from breaking into multiple lines */
 }
 
 .flightTable th {
@@ -62,14 +62,13 @@
     border-radius: 4px;
 }
 
-/* Popup for details */
 .popup {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -220,7 +219,7 @@
     margin-top: 5px;
 }
 
-/* Responsive Changes */
+/* Responsiveness for 768px screens or smaller */
 @media (max-width: 768px) {
     .reviewsSection {
         padding: 15px;
@@ -240,9 +239,17 @@
     }
 }
 
+
+/* Responsiveness for 480px screens or smaller */
 @media (max-width: 480px) {
     .content {
         padding: 30px 10px;
+    }
+
+    .searchInput,
+    .priceInput {
+        max-width: 90%;
+        font-size: 15px;
     }
 
     .popupContent {
@@ -281,14 +288,6 @@
     border: 1px solid #ccc;
     border-radius: 6px;
     box-sizing: border-box;
-}
-
-@media (max-width: 480px) {
-    .searchInput,
-    .priceInput {
-        max-width: 90%;
-        font-size: 15px;
-    }
 }
 
 /* Review section inside the popup */
