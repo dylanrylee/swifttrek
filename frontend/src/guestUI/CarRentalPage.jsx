@@ -1,47 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebase';
-import styles from './CarRentalPage.module.css';
+import { db } from '../firebase'; // Firebase configuration
+import styles from './CarRentalPage.module.css'; 
 import Header from './Header';
 import Footer from './Footer';
 
 const CarRentalPage = () => {
-    const [cars, setCars] = useState([]);
+    const [cars, setCars] = useState([]); // All cars are getting fetched from the firestore
     const [selectedCar, setSelectedCar] = useState(null);
     const [showDetails, setShowDetails] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [showRentPopup, setShowRentPopup] = useState(false);
-    const [fromDate, setFromDate] = useState('');
-    const [toDate, setToDate] = useState('');
-    const navigate = useNavigate();
+    const [fromDate, setFromDate] = useState(''); // This is for the rental start date
+    const [toDate, setToDate] = useState(''); // This is for the rental end date
+    const navigate = useNavigate(); // We need this for navigating between the pages
 
+    // Get the current date 
     const today = new Date().toISOString().split('T')[0];
 
     useEffect(() => {
         const fetchCars = async () => {
             try {
+                // get all the documents from the cars collection from firebase
                 const querySnapshot = await getDocs(collection(db, 'cars'));
                 const carList = querySnapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data()
                 }));
-                setCars(carList);
+                setCars(carList); // save the cars to state
             } catch (error) {
                 console.error('Error fetching cars:', error);
             }
         };
 
-        fetchCars();
+        fetchCars(); // this is a initial fetch call
     }, []);
 
+    // show the details popup when you select a car
     const handleDetailsClick = (car) => {
         setSelectedCar(car);
         setShowDetails(true);
     };
 
+    // close all of the popups 
     const handleClosePopup = () => {
         setSelectedCar(null);
         setShowDetails(false);
@@ -50,23 +54,25 @@ const CarRentalPage = () => {
         setToDate('');
     };
 
+    // open the rent date selection popup
     const handleRentClick = () => {
         setShowRentPopup(true);
     };
 
+    // navigate to payment checkout, including the necessary info for that page
     const handleConfirmRental = () => {
         navigate('/payment-checkout', {
             state: {
                 selectedCar,
                 fromDate,
                 toDate,
-                pricePerDay: selectedCar.price // Add the price per day here
+                pricePerDay: selectedCar.price
             }
         });
     };
     
 
-    // Updated Write Review click handler: passes carId along with other car details.
+    // navigate to write review, passing necessary info for that page
     const handleWriteReviewClick = () => {
         if (!selectedCar) return;
     
@@ -80,6 +86,7 @@ const CarRentalPage = () => {
         });
     };
 
+    // this filters the cars by the matched text, price, and their availability
     const filteredCars = cars.filter((car) => {
         const matchesText = `${car.model} ${car.type} ${car.location}`.toLowerCase().includes(searchQuery.toLowerCase());
         const price = parseFloat(car.price);
@@ -90,6 +97,7 @@ const CarRentalPage = () => {
         return matchesText && matchesMin && matchesMax && isAvailable;
     });
 
+    // this navigates to view reviews for the car you have selected
     const handleViewReviewsClick = () => {
         if (!selectedCar) return;
         navigate(`/view-car-reviews/${selectedCar.id}`, {
@@ -104,12 +112,13 @@ const CarRentalPage = () => {
 
     return (
         <div className={styles.container}>
-            <Header hideTabs={false} />
+            <Header hideTabs={false} /> {/* This sets the hideTabs as false, so you can see the header */}
             <div className={styles.content}>
                 <div className={styles.whiteBox}>
                     <h1 className={styles.heading}>Car Rental</h1>
 
                     <div className={styles.searchBarContainer}>
+                        {/* This shows the search my model, type, or location */}
                         <input
                             type="text"
                             placeholder="Search by model, type, or location"
@@ -118,6 +127,7 @@ const CarRentalPage = () => {
                             className={styles.searchInput}
                         />
                         <div className={styles.priceInputs}>
+                            {/* This shows to search for your preferred minimum price */}
                             <input
                                 type="number"
                                 placeholder="Min Price"
@@ -125,6 +135,7 @@ const CarRentalPage = () => {
                                 onChange={(e) => setMinPrice(e.target.value)}
                                 className={styles.priceInput}
                             />
+                            {/* This shows to search for your preferred maximum price */}
                             <input
                                 type="number"
                                 placeholder="Max Price"
@@ -136,13 +147,14 @@ const CarRentalPage = () => {
                     </div>
 
                     <div className={styles.tableContainer}>
+                        {/* Displays car details */}
                         <table className={styles.carTable}>
                             <thead>
                                 <tr>
                                     <th>Image</th>
                                     <th>Model</th>
                                     <th>Type</th>
-                                    <th>Location</th> {/* Added Location header */}
+                                    <th>Location</th>
                                     <th>Price/Day</th>
                                     <th>Availability</th>
                                     <th>Action</th>
@@ -162,7 +174,7 @@ const CarRentalPage = () => {
                                         </td>
                                         <td>{car.model}</td>
                                         <td>{car.type}</td>
-                                        <td>{car.location}</td> {/* Display car location */}
+                                        <td>{car.location}</td>
                                         <td>${car.price}</td>
                                         <td>{car.availability}</td>
                                         <td>
@@ -179,7 +191,7 @@ const CarRentalPage = () => {
                         </table>
                     </div>
 
-
+                    {/* This pops up a modal to show the details of the car, showing the rent buttons, and the view and write reviews as well */}
                     {showDetails && selectedCar && (
                         <div className={styles.popup}>
                             <div className={styles.popupContent}>
@@ -215,6 +227,7 @@ const CarRentalPage = () => {
                         </div>
                     )}
 
+                    {/* This shows the modal for if you do want to rent */}
                     {showRentPopup && (
                         <div className={styles.popup}>
                             <div className={styles.popupContent}>
@@ -259,6 +272,7 @@ const CarRentalPage = () => {
                     )}
                 </div>
             </div>
+            {/* This displays the footer */}
             <Footer />
         </div>
     );
