@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Metadata and mobile responsiveness -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Manage Customer Listings</title>
-
-  <!-- Bootstrap CSS & FontAwesome for icons -->
+  <title>Manage Business Listings</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
-
-  <!-- Custom styling -->
+  <!-- css sheet -->
   <style>
-    .navbar { background-color: #006666; }
-    .btn-info { background-color: #006666; border-color: #006666; }
-    .booked-flights, .booked-hotels, .booked-cars { color: #006666; }
+    .navbar { background-color: #008080; }
+    .btn-info { background-color: #008080; border-color: #008080; }
+    .booked-flights, .booked-hotels, .booked-cars { color: #008080; }
     .table-responsive { overflow-x: auto; }
     .table img { max-width: 80px; max-height: 60px; object-fit: cover; }
     .remove-btn { margin: 0 2px; }
@@ -22,18 +18,16 @@
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!--Navbar items-->
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
       <a class="navbar-brand" href="#">
-        <i class="fas fa-users me-2"></i> Manage Customer Listings
+        <i class="fas fa-calendar-check me-2"></i> Manage Business Listings
       </a>
-      <!-- Collapsible nav for mobile -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <!-- Nav item to return to dashboard -->
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
             <a class="nav-link" href="dashboard.html"><i class="fas fa-home me-2"></i>Home</a>
@@ -43,13 +37,12 @@
     </div>
   </nav>
 
-  <!-- Main Content Container -->
+  <!-- Bookings Display -->
   <div class="container mt-5">
 
-    <!-- Section: Flights -->
+    <!-- Flights Section -->
     <div class="mb-5">
-      <h3 class="booked-flights"><i class="fas fa-plane me-2"></i>Customer Flight Bookings</h3>
-      <!-- Search box -->
+      <h3 class="booked-flights"><i class="fas fa-plane me-2"></i>Flights Listings</h3>
       <input type="text" class="form-control mb-2 search-input" placeholder="Search flights..." onkeyup="searchTable('flightTable', this.value)">
       <div class="table-responsive">
         <table class="table table-striped" id="flightTable">
@@ -74,9 +67,9 @@
       </div>
     </div>
 
-    <!-- Section: Hotels -->
+    <!-- Hotels Section -->
     <div class="mb-5">
-      <h3 class="booked-hotels"><i class="fas fa-hotel me-2"></i>Customer Hotel Bookings</h3>
+      <h3 class="booked-hotels"><i class="fas fa-hotel me-2"></i>Hotels Listings</h3>
       <input type="text" class="form-control mb-2 search-input" placeholder="Search hotels..." onkeyup="searchTable('hotelTable', this.value)">
       <div class="table-responsive">
         <table class="table table-striped" id="hotelTable">
@@ -98,9 +91,9 @@
       </div>
     </div>
 
-    <!-- Section: Cars -->
+    <!-- Car Rentals Section -->
     <div class="mb-5">
-      <h3 class="booked-cars"><i class="fas fa-car me-2"></i>Customer Car Rentals</h3>
+      <h3 class="booked-cars"><i class="fas fa-car me-2"></i>Car Rental Listings</h3>
       <input type="text" class="form-control mb-2 search-input" placeholder="Search cars..." onkeyup="searchTable('carTable', this.value)">
       <div class="table-responsive">
         <table class="table table-striped" id="carTable">
@@ -123,22 +116,22 @@
 
   </div>
 
-  <!-- Go Back Button -->
+  <!-- Back Button -->
   <div class="text-center mt-4">
     <button onclick="window.history.back();" class="btn btn-info mb-3">
       <i class="fas fa-arrow-left"></i> Go Back
     </button>
   </div>
 
-  <!-- Bootstrap Bundle JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap & Firebase Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
-  <!-- Firebase Firestore Integration -->
+  <!-- Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
-    // Firebase config from your project
     const firebaseConfig = {
       apiKey: "AIzaSyDtVetfy-n7pPCCccj_EIArrlbHQGEZ2TQ",
       authDomain: "seng513-project.firebaseapp.com",
@@ -149,48 +142,112 @@
       measurementId: "G-G9WNFE7KBL"
     };
 
-    // Initialize Firebase app and database
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Generic function to load data from a Firestore collection and insert into a table
-    const fetchData = async (collectionName, tableId, fields, colSpan) => {
-      const snapshot = await getDocs(collection(db, collectionName));
-      const tbody = document.querySelector(`#${tableId} tbody`);
-      tbody.innerHTML = "";
+    // Function to fetch ALL flights with all fields
+    const fetchBookedFlights = async () => {
+      const flightsCollection = collection(db, "flights");
+      const querySnapshot = await getDocs(flightsCollection);
+      const tableBody = document.querySelector("#flightTable tbody");
+      tableBody.innerHTML = "";
 
-      if (snapshot.empty) {
-        tbody.innerHTML = `<tr><td colspan="${colSpan}">No records found.</td></tr>`;
+      if (querySnapshot.empty) {
+        tableBody.innerHTML = `<tr><td colspan="12">No flight bookings found.</td></tr>`;
         return;
       }
 
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        const row = document.createElement("tr");
-
-        // Create each row's columns
-        row.innerHTML = fields.map(field => {
-          if (field === "imageUrl") {
-            return `<td><img src="${data[field] || 'https://via.placeholder.com/80x60?text=No+Image'}" class="img-thumbnail"></td>`;
-          }
-          return `<td>${data[field] !== undefined ? data[field] : "N/A"}</td>`;
-        }).join("");
-
-        tbody.appendChild(row);
+      querySnapshot.forEach((flightDoc) => {
+        const flight = flightDoc.data();
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><img src="${flight.imageUrl || 'https://via.placeholder.com/80x60?text=No+Image'}" alt="Flight Image" class="img-thumbnail"></td>
+          <td>${flight.companyId || "N/A"}</td>
+          <td>${flight.flightNumber || "N/A"}</td>
+          <td>${flight.type || "N/A"}</td>
+          <td>${flight.departureCity || "N/A"}</td>
+          <td>${flight.departureTime || "N/A"}</td>
+          <td>${flight.arrivalCity || "N/A"}</td>
+          <td>${flight.arrivalTime || "N/A"}</td>
+          <td>${flight.duration || "N/A"}</td>
+          <td>${flight.availableSeats || "N/A"}</td>
+          <td>$${flight.ticketPrice || "N/A"}</td>
+          <td>${flight.availableDate || "N/A"}</td>
+        `;
+        tableBody.appendChild(row);
       });
     };
 
-    // Fetch all 3 types of data on page load
+    // Function to fetch ALL hotels with all fields
+    const fetchBookedHotels = async () => {
+      const hotelsCollection = collection(db, "hotels");
+      const querySnapshot = await getDocs(hotelsCollection);
+      const tableBody = document.querySelector("#hotelTable tbody");
+      tableBody.innerHTML = "";
+
+      if (querySnapshot.empty) {
+        tableBody.innerHTML = `<tr><td colspan="9">No hotel bookings found.</td></tr>`;
+        return;
+      }
+
+      querySnapshot.forEach((hotelDoc) => {
+        const hotel = hotelDoc.data();
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><img src="${hotel.imageUrl || 'https://via.placeholder.com/80x60?text=No+Image'}" alt="Hotel Image" class="img-thumbnail"></td>
+          <td>${hotel.companyId || "N/A"}</td>
+          <td>${hotel.hotelId}</td>
+          <td>${hotel.hotelName || "N/A"}</td>
+          <td>${hotel.location || "N/A"}</td>
+          <td>${hotel.roomNumber || "N/A"}</td>
+          <td>${hotel.roomType || "N/A"}</td>
+          <td>$${hotel.price || "N/A"}</td>
+          <td>${hotel.availability || "N/A"}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    };
+
+    // Function to fetch ALL car rentals with all fields
+    const fetchBookedCars = async () => {
+      const carsCollection = collection(db, "cars");
+      const querySnapshot = await getDocs(carsCollection);
+      const tableBody = document.querySelector("#carTable tbody");
+      tableBody.innerHTML = "";
+
+      if (querySnapshot.empty) {
+        tableBody.innerHTML = `<tr><td colspan="8">No car rental bookings found.</td></tr>`;
+        return;
+      }
+
+      querySnapshot.forEach((carDoc) => {
+        const car = carDoc.data();
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><img src="${car.imageUrl || 'https://via.placeholder.com/80x60?text=No+Image'}" alt="Car Image" class="img-thumbnail"></td>
+          <td>${car.companyId || "N/A"}</td>
+          <td>${car.carId}</td>
+          <td>${car.model || "N/A"}</td>
+          <td>${car.type || "N/A"}</td>
+          <td>$${car.price || "N/A"}</td>
+          <td>${car.location || "N/A"}</td>
+          <td>${car.availability || "N/A"}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    };
+
+    // Initialize the page
     window.onload = () => {
-      fetchData("flights", "flightTable", ["imageUrl", "companyId", "flightNumber", "type", "departureCity", "departureTime", "arrivalCity", "arrivalTime", "duration", "availableSeats", "ticketPrice", "availableDate"], 12);
-      fetchData("hotels", "hotelTable", ["imageUrl", "companyId", "hotelId", "hotelName", "location", "roomNumber", "roomType", "price", "availability"], 9);
-      fetchData("cars", "carTable", ["imageUrl", "companyId", "carId", "model", "type", "price", "location", "availability"], 8);
+      // Fetch all listings with all fields
+      fetchBookedFlights();
+      fetchBookedHotels();
+      fetchBookedCars();
     };
   </script>
 
-  <!-- Search filtering logic -->
+  <!-- Search Logic -->
   <script>
-    // Filters rows in the table by user input
     function searchTable(tableId, query) {
       const filter = query.toUpperCase();
       const table = document.getElementById(tableId);
@@ -209,5 +266,6 @@
       }
     }
   </script>
+
 </body>
 </html>
