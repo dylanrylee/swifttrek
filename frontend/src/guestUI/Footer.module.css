@@ -1,29 +1,27 @@
 .footer {
     font-family: 'Numans', sans-serif;
-    padding: 10px 0; 
-    color: #2c2c2c;
     text-align: center;
     background-color: rgba(155, 77, 97, 0.788);
     width: 100%;
-    margin-top: auto; 
+    margin-top: auto; /* This is a sticky-footer effect */
     min-height: 60px; 
     padding: 20px;
 }
 
 .footerContent {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Makes the content as columns */
     justify-content: center;
-    gap: 8px; 
+    gap: 8px;  /* This leaves gaps between the contents in the footer */
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 0 15px; /* This adds horizontal spacing for the wider screens */
 }
 
 .footerLinks {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Allows links to wrap on small screens */
     gap: 10px; 
     margin-bottom: 8px; 
 }
@@ -33,7 +31,7 @@
     text-decoration: none;
     font-size: 20px; 
     padding: 2px 5px; 
-    white-space: nowrap; 
+    white-space: nowrap;  /* Prevents text wrapping */
 }
 
 .footerLinks a:hover {
@@ -48,17 +46,17 @@
 }
 
 .footerLogo img {
-    width: 16px; 
+    width: 16px; /* Keeps logo icon relatively small */
     height: auto;
 }
 
 .footerLogo span {
     font-size: 20px; 
     font-weight: bold;
-    color: white;
+    color: white; 
 }
 
-/* Responsive styling */
+/* This is for responsive styling for screens that are 768px or less */
 @media (max-width: 768px) {
     .footer {
         padding: 8px 0; 
