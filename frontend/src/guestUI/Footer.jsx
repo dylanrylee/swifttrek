@@ -1,10 +1,12 @@
 import React from 'react';
 import styles from './Footer.module.css';
 
+// This is the function for our footer throughout our Guest UI
 const Footer = () => {
     return (
         <footer className={styles.footer}>
            
+            {/* This shows the the details within the footer */}
             <div className={styles.footerLinks}>
                 <a href='/businessUI/aboutus.html' className="nav-link text-white">About Us</a>
                 <a href="mailto:swifttrek@gmail.com" className="nav-link text-white">Contact Us</a>
