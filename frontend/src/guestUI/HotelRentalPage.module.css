@@ -1,19 +1,19 @@
 .container {
     display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    flex-direction: column; /* Stacks content vertically */
+    min-height: 100vh; /* Makes sure the container takes up at least the full height of the screen */
     width: 100%;
     overflow-x: hidden;
     background: url('../images/hotels-background.jpeg') no-repeat center center;
-    background-size: cover;
+    background-size: cover; /* Background image covers the entire container */
 }
 
 .content {
-    flex-grow: 1;
+    flex-grow: 1; /* Allows the content area to grow and take available space */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: center; /* Centers items horizontally */
+    justify-content: center; /* Centers items vertically */
     padding: 60px 20px;
 }
 
@@ -24,22 +24,22 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     max-width: 1000px;
     width: 90%;
-    margin: auto;
+    margin: auto; /* Centers the box */
     text-align: center;
-    overflow: hidden;
+    overflow: hidden; /* Prevents content overflow */
     box-sizing: border-box;
     transition: all 0.3s ease;
 }
 
 .tableContainer {
     width: 100%;
-    overflow-x: auto;
+    overflow-x: auto; /* Allows horizontal scrolling if table exceeds screen width */
     margin-top: 20px;
 }
 
 .carTable {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: collapse; /* Merges table borders for a clean look */
     margin: 0 auto;
     font-size: clamp(12px, 2vw, 16px);
 }
@@ -47,8 +47,8 @@
 .carTable th, .carTable td {
     padding: 12px;
     border: 1px solid #ddd;
-    text-align: center;
-    white-space: nowrap;
+    text-align: center; /* Centers content in cells */
+    white-space: nowrap; /* Prevents text from wrapping */
 }
 
 .carTable th {
@@ -64,15 +64,15 @@
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
-    align-items: center;
-    overflow-y: auto;
+    align-items: center; /* Centers popup content vertically */
+    overflow-y: auto; /* Enables scrolling if content overflows */
     padding: 20px;
 }
 
 .popupContent {
-    max-width: 500px;  /* Limit the width of the popup */
-    max-height: 80vh;  /* Limit the height of the popup */
-    overflow: auto;    /* Allow scrolling if content exceeds max height */
+    max-width: 500px; 
+    max-height: 80vh;  /* Prevents overflow by limiting height */
+    overflow: auto;    /* Enables scroll if content overflows */
     padding: 20px;
     background-color: white;
     border-radius: 10px;
@@ -80,9 +80,9 @@
 }
 
 .popupContent img {
-    max-width: 100%;   /* Ensure the image does not overflow horizontally */
-    max-height: 300px; /* Limit the height to avoid overflow */
-    object-fit: contain; /* Maintain aspect ratio without cropping */
+    max-width: 100%;   /* Prevents images from overflowing horizontally */
+    max-height: 300px; /* Limits height of images */
+    object-fit: contain; /* Maintains aspect ratio */
     border-radius: 5px;
     margin-bottom: 15px; /* Optional: add some space below the image */
 }
@@ -90,7 +90,7 @@
 
 .buttonContainer {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Allows wrapping of buttons on smaller screens */
     gap: 15px;
     margin-top: 20px;
     justify-content: center;
@@ -98,10 +98,10 @@
 
 .detailsButton, .rentButton, .cancelButton, .writeReviewButton,
 .confirmButton, .cancelButton1 {
-    padding: 10px 20px;
+    padding: 10px 20px; /* Adds padding inside buttons */
     font-size: clamp(14px, 1.5vw, 16px);
     border: none;
-    border-radius: 5px;
+    border-radius: 5px; /* Rounded corners */
     cursor: pointer;
     transition: 0.3s;
 }
@@ -178,10 +178,10 @@
     max-width: 500px;
     height: auto;
     border-radius: 12px;
-    margin-bottom: 1rem;
+    margin-bottom: 1rem; /* Space below images */
 }
 
-/* Enhanced Responsive Design */
+/* Responsiveness for 768px screens or smaller */
 @media (max-width: 768px) {
     .whiteBox {
         padding: 20px;
@@ -198,7 +198,7 @@
     }
 
     .popupContent {
-        padding: 20px;
+        padding: 20px; /* Adjusts padding inside popups */
     }
 
     .carTable {
@@ -206,7 +206,7 @@
     }
 
     .buttonContainer {
-        flex-direction: column;
+        flex-direction: column; /* Stacks buttons vertically on small screens */
         align-items: stretch;
     }
 
@@ -224,17 +224,18 @@
     max-width: 400px;
     padding: 10px;
     font-size: 16px;
-    text-align: center;
-    border: 1px solid #ccc;
+    text-align: center; /* Centers text inside inputs */
+    border: 1px solid #ccc; /* Light border around inputs */
     border-radius: 6px;
     box-sizing: border-box;
 }
 
+/* Responsiveness for 480px screens or smaller */
 @media (max-width: 480px) {
     .searchInput,
     .priceInput {
-        max-width: 90%;
-        font-size: 15px;
+        max-width: 90%; /* Makes inputs a bit wider on mobile */
+        font-size: 15px; /* Slightly smaller font size */
     }
 }
 
@@ -246,7 +247,7 @@
 }
 
 .yellowButton {
-    background-color: #FFD700; /* Yellow */
+    background-color: #FFD700; 
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -255,11 +256,11 @@
 }
 
 .yellowButton:hover {
-    background-color: #FFCC00; /* Lighter yellow */
+    background-color: #FFCC00;
 }
 
 .bookButtonGreen {
-    background-color: #28a745; /* Green */
+    background-color: #28a745;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -269,5 +270,5 @@
 }
 
 .bookButtonGreen:hover {
-    background-color: #218838; /* Darker green */
+    background-color: #218838; 
 }
