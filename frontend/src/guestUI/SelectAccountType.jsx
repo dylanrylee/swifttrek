@@ -1,8 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './SelectAccountType.module.css';
-import Header from './Header';
-import Footer from './Footer';
+import SelectAccountFooter from './SelectAccountFooter';
 
 const SelectAccountType = () => {
     const navigate = useNavigate();
@@ -24,11 +23,9 @@ const SelectAccountType = () => {
                     Your Swift Escape Starts Here...
                     </div>
             </div></div>
-            {/* hideTabs={true} to mske navigation tabs invisble*/}
-            <Header hideTabs={true} />
             <main className={styles.mainContent}>
                 <div className={styles.contentBox}> 
-                    <h2>Select Account Type</h2>
+                    <h2 className={styles.selectAccountTypeHeader}>Select Account Type</h2>
                     <div className={styles.buttonContainer}>
                         <button className={styles.guestaccountButton} onClick={() => navigate('/guest-login')}>
                             Guest
@@ -39,7 +36,7 @@ const SelectAccountType = () => {
                     </div>
                 </div>
             </main>
-            <Footer className={styles.footer} />
+            <SelectAccountFooter className={styles.footer} />
         </div>
     );
 };
