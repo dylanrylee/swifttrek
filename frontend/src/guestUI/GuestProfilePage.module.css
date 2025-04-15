@@ -1,11 +1,11 @@
 html, body {
-    overflow-x: hidden;
+    overflow-x: hidden; /* Disable horizontal scrolling */
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f2f4f8;
+    background-color: #f2f4f8; /* Background color for the page */
     color: #333;
 }
 
@@ -13,19 +13,19 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh;
-    max-width: 100vw;
-    overflow: hidden;
+    min-height: 100vh; /* Full screen height */
+    max-width: 100vw; /* Full screen width */
+    overflow: hidden; /* Prevent overflow */
 }
 
 .content {
-    flex-grow: 1;
+    flex-grow: 1; /* Allows the content to grow */
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 30px 20px;
-    width: 100%;
-    overflow-y: auto;
+    width: 100%; /* Full width */
+    overflow-y: auto; /* Allows vertical scrolling */
 }
 
 h1, h2 {
@@ -38,22 +38,21 @@ h1, h2 {
 p {
     font-size: clamp(14px, 2vw, 18px);
     margin: 10px 0;
-    text-align: center;
-}
+    text-align: center; /* Center-align text */}
 
 .bookingList {
-    list-style: none;
-    padding: 0;
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
     margin-top: 20px;
-    width: 100%;
-    max-width: 700px;
+    width: 100%; /* Full width */
+    max-width: 700px; /* Max width for large screens */
 }
 
 .bookingList li {
     background-color: #ffffff;
-    margin-bottom: 16px;
+    margin-bottom: 16px; /* Space between items */
     padding: 20px;
-    border-radius: 12px;
+    border-radius: 12px; /* Rounded corners */
     font-size: clamp(14px, 1.8vw, 16px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     display: flex;
@@ -64,8 +63,8 @@ p {
 }
 
 .bookingList li:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px); /* Slight upward movement */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
 }
 
 .deleteButton {
@@ -76,7 +75,7 @@ p {
     border-radius: 8px;
     cursor: pointer;
     font-size: 14px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease; /* Smooth color transition */
     margin-top: 12px;
 }
 
@@ -98,25 +97,13 @@ p {
     border-radius: 8px;
     font-size: clamp(14px, 2vw, 18px);
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition on hover */
 }
 
 .logoutButton:hover {
     background-color: #d28a7d;
     color: white;
 }
-
-@media (max-width: 600px) {
-    .bookingList li {
-        font-size: 14px;
-        padding: 16px;
-    }
-
-    .deleteButton {
-        width: 100%;
-    }
-}
-
 
 .passwordSection {
     background: white;
@@ -172,16 +159,16 @@ p {
 }
 
 .reviewList {
-    list-style: none;
+    list-style: none; /* Remove bullet points */
     padding: 0;
     margin: 20px 0;
-    width: 100%;
-    max-width: 700px;
+    width: 100%; /* Full width */
+    max-width: 700px; /* Max width */
 }
 
 .reviewItem {
     background-color: #ffffff;
-    margin-bottom: 16px;
+    margin-bottom: 16px; /* Space between reviews */
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -191,7 +178,7 @@ p {
 }
 
 .reviewContent {
-    flex-grow: 1;
+    flex-grow: 1; /* Allows review content to grow */
 }
 
 .rating {
@@ -206,6 +193,8 @@ p {
     margin: 0;
 }
 
+
+/* Responsive styling for 600px or less, screens */
 @media (max-width: 600px) {
     .passwordSection {
         padding: 15px;
@@ -222,6 +211,15 @@ p {
     .changePasswordButton {
         font-size: 14px;
     }
+
+    .bookingList li {
+        font-size: 14px;
+        padding: 16px;
+    }
+
+    .deleteButton {
+        width: 100%;
+    }
 }
 
 .itemDetails {
@@ -234,7 +232,7 @@ p {
 
 .itemDetails strong {
     color: #2c3e50;
-    margin-right: 5px;
+    margin-right: 5px; /* Space between label and value */
 }
 
 .itemDetails br {
