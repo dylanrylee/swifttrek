@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { collection, getDocs, query, where, doc, getDoc } from 'firebase/firestore';
+import { useLocation } from 'react-router-dom';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import styles from './ViewCarReviewPage.module.css';
 import Header from './Header';
@@ -10,27 +10,12 @@ const ViewCarReviewPage = () => {
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [carDetails, setCarDetails] = useState(null);
-    const { carId } = useParams();
+    
+    // Access the passed state from the navigate function
+    const location = useLocation();
+    const { carId, model, type, location: carLocation } = location.state || {};
 
     useEffect(() => {
-        const fetchCarDetails = async () => {
-            try {
-                // Fetch car details from the cars collection
-                const carDoc = await getDoc(doc(db, 'cars', carId));
-                if (carDoc.exists()) {
-                    const carData = carDoc.data();
-                    setCarDetails({
-                        model: carData.model,
-                        type: carData.type,
-                        location: carData.location
-                    });
-                }
-            } catch (err) {
-                console.error('Error fetching car details:', err);
-            }
-        };
-
         const fetchReviews = async () => {
             try {
                 setLoading(true);
@@ -59,7 +44,6 @@ const ViewCarReviewPage = () => {
         };
 
         if (carId) {
-            fetchCarDetails();
             fetchReviews();
         } else {
             setError('No car ID provided');
@@ -93,11 +77,12 @@ const ViewCarReviewPage = () => {
             <div className={styles.content}>
                 <h1 className={styles.title}>Car Reviews</h1>
                 
-                {carDetails && (
+                {/* Display car details */}
+                {model && (
                     <div className={styles.itemDetails}>
-                        <h2>{carDetails.model}</h2>
-                        <p><strong>Type:</strong> {carDetails.type}</p>
-                        <p><strong>Location:</strong> {carDetails.location}</p>
+                        <h2>{model}</h2>
+                        <p><strong>Type:</strong> {type}</p>
+                        <p><strong>Location:</strong> {carLocation}</p>
                     </div>
                 )}
                 
@@ -131,4 +116,4 @@ const ViewCarReviewPage = () => {
     );
 };
 
-export default ViewCarReviewPage; 
+export default ViewCarReviewPage;

@@ -72,7 +72,7 @@ const HotelRentalPage = () => {
                 roomNumber: selectedHotel.roomNumber,
                 price: selectedHotel.price,
                 availability: selectedHotel.availability,
-                hotelId: selectedHotel.id, 
+                hotelId: selectedHotel.hotelId, 
                 fromDate,
                 toDate,
                 hotelLocation: selectedHotel.location,
@@ -85,7 +85,7 @@ const HotelRentalPage = () => {
         if (!selectedHotel) return;
         navigate('/write-review', {
             state: {
-                hotelId: selectedHotel.id,
+                hotelId: selectedHotel.hotelId,
                 hotelName: selectedHotel.hotelName,
                 location: selectedHotel.location,
                 roomType: selectedHotel.roomType // make sure this key exists in Firestore
@@ -95,7 +95,14 @@ const HotelRentalPage = () => {
 
     const handleViewReviewsClick = () => {
         if (!selectedHotel) return;
-        navigate(`/view-hotel-reviews/${selectedHotel.id}`);
+        navigate(`/view-hotel-reviews/${selectedHotel.id}`, {
+            state: {
+                hotelId: selectedHotel.hotelId,
+                hotelName: selectedHotel.hotelName,
+                location: selectedHotel.location,
+                roomType: selectedHotel.roomType,
+            }
+        });
     };
 
     return (

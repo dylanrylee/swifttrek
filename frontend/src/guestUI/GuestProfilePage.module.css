@@ -116,3 +116,127 @@ p {
         width: 100%;
     }
 }
+
+
+.passwordSection {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    width: 100%;
+    max-width: 700px;
+    box-sizing: border-box;
+}
+
+.passwordForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.passwordInput {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.changePasswordButton {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.changePasswordButton:hover {
+    background-color: #0056b3;
+}
+
+.error {
+    color: #dc3545;
+    margin-top: 10px;
+}
+
+.success {
+    color: #28a745;
+    margin-top: 10px;
+}
+
+.reviewList {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    width: 100%;
+    max-width: 700px;
+}
+
+.reviewItem {
+    background-color: #ffffff;
+    margin-bottom: 16px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.reviewContent {
+    flex-grow: 1;
+}
+
+.rating {
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.reviewText {
+    color: #444;
+    line-height: 1.6;
+    margin: 0;
+}
+
+@media (max-width: 600px) {
+    .passwordSection {
+        padding: 15px;
+    }
+
+    .reviewItem {
+        padding: 15px;
+    }
+
+    .passwordInput {
+        font-size: 14px;
+    }
+
+    .changePasswordButton {
+        font-size: 14px;
+    }
+}
+
+.itemDetails {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #e9ecef;
+}
+
+.itemDetails strong {
+    color: #2c3e50;
+    margin-right: 5px;
+}
+
+.itemDetails br {
+    margin-bottom: 5px;
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { collection, getDocs, query, where, doc, getDoc } from 'firebase/firestore';
+import { useLocation } from 'react-router-dom';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import styles from './ViewHotelReviewPage.module.css';
 import Header from './Header';
@@ -10,44 +10,28 @@ const ViewHotelReviewPage = () => {
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [hotelDetails, setHotelDetails] = useState(null);
-    const { hotelId } = useParams();
+    const location = useLocation();
+    const hotelId = location.state?.hotelId;
+    const hotelName = location.state?.hotelName;
+    const roomType = location.state?.roomType;
+    const hotelLocation = location.state?.location;
 
     useEffect(() => {
-        const fetchHotelDetails = async () => {
-            try {
-                // Fetch hotel details from the hotels collection
-                const hotelDoc = await getDoc(doc(db, 'hotels', hotelId));
-                if (hotelDoc.exists()) {
-                    const hotelData = hotelDoc.data();
-                    setHotelDetails({
-                        hotelName: hotelData.hotelName,
-                        location: hotelData.location,
-                        roomType: hotelData.roomType
-                    });
-                }
-            } catch (err) {
-                console.error('Error fetching hotel details:', err);
-            }
-        };
-
         const fetchReviews = async () => {
             try {
                 setLoading(true);
-                console.log('Fetching reviews for hotel ID:', hotelId);
-                
+
                 const reviewsQuery = query(
                     collection(db, 'reviewed_hotels'),
                     where('hotelId', '==', hotelId)
                 );
-                
+
                 const querySnapshot = await getDocs(reviewsQuery);
                 const reviewsData = querySnapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data()
                 }));
-                
-                console.log('Found reviews:', reviewsData);
+
                 setReviews(reviewsData);
                 setError(null);
             } catch (err) {
@@ -59,7 +43,6 @@ const ViewHotelReviewPage = () => {
         };
 
         if (hotelId) {
-            fetchHotelDetails();
             fetchReviews();
         } else {
             setError('No hotel ID provided');
@@ -69,15 +52,14 @@ const ViewHotelReviewPage = () => {
 
     const renderStars = (rating) => {
         if (!rating) return null;
-        
-        const ratingValue = parseInt(rating.split('/')[0]);
-        const maxRating = parseInt(rating.split('/')[1]);
-        
+
+        const [ratingValue, maxRating] = rating.split('/').map(Number);
+
         return (
             <div className={styles.starsContainer}>
                 {[...Array(maxRating)].map((_, index) => (
-                    <span 
-                        key={index} 
+                    <span
+                        key={index}
                         className={`${styles.star} ${index < ratingValue ? styles.filled : ''}`}
                     >
                         ★
@@ -92,15 +74,15 @@ const ViewHotelReviewPage = () => {
             <Header />
             <div className={styles.content}>
                 <h1 className={styles.title}>Hotel Reviews</h1>
-                
-                {hotelDetails && (
+
+                {hotelName && (
                     <div className={styles.itemDetails}>
-                        <h2>{hotelDetails.hotelName}</h2>
-                        <p><strong>Location:</strong> {hotelDetails.location}</p>
-                        <p><strong>Room Type:</strong> {hotelDetails.roomType}</p>
+                        <h2>{hotelName}</h2>
+                        <p><strong>Location:</strong> {hotelLocation}</p>
+                        <p><strong>Room Type:</strong> {roomType}</p>
                     </div>
                 )}
-                
+
                 {loading ? (
                     <div className={styles.loading}>Loading reviews...</div>
                 ) : error ? (
@@ -131,4 +113,4 @@ const ViewHotelReviewPage = () => {
     );
 };
 
-export default ViewHotelReviewPage; 
+export default ViewHotelReviewPage;
