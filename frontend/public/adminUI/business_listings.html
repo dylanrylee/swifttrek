@@ -14,6 +14,7 @@
     .table-responsive { overflow-x: auto; }
     .table img { max-width: 80px; max-height: 60px; object-fit: cover; }
     .remove-btn { margin: 0 2px; }
+    .action-col { width: 100px; }
   </style>
 </head>
 <body>
@@ -60,6 +61,7 @@
               <th>Available Seats</th>
               <th>Ticket Price</th>
               <th>Available Date</th>
+              <th class="action-col">Actions</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -84,6 +86,7 @@
               <th>Room Type</th>
               <th>Price</th>
               <th>Availability</th>
+              <th class="action-col">Actions</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -107,6 +110,7 @@
               <th>Price</th>
               <th>Location</th>
               <th>Availability</th>
+              <th class="action-col">Actions</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -130,7 +134,7 @@
   <!-- Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDtVetfy-n7pPCCccj_EIArrlbHQGEZ2TQ",
@@ -145,6 +149,48 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    // Function to remove a flight listing
+    async function removeFlight(flightId) {
+      if (confirm('Are you sure you want to delete this flight listing?')) {
+        try {
+          await deleteDoc(doc(db, "flights", flightId));
+          fetchBookedFlights();
+          alert('Flight listing deleted successfully!');
+        } catch (error) {
+          console.error("Error removing flight: ", error);
+          alert('Error deleting flight listing');
+        }
+      }
+    }
+
+    // Function to remove a hotel listing
+    async function removeHotel(hotelId) {
+      if (confirm('Are you sure you want to delete this hotel listing?')) {
+        try {
+          await deleteDoc(doc(db, "hotels", hotelId));
+          fetchBookedHotels();
+          alert('Hotel listing deleted successfully!');
+        } catch (error) {
+          console.error("Error removing hotel: ", error);
+          alert('Error deleting hotel listing');
+        }
+      }
+    }
+
+    // Function to remove a car listing
+    async function removeCar(carId) {
+      if (confirm('Are you sure you want to delete this car listing?')) {
+        try {
+          await deleteDoc(doc(db, "cars", carId));
+          fetchBookedCars();
+          alert('Car listing deleted successfully!');
+        } catch (error) {
+          console.error("Error removing car: ", error);
+          alert('Error deleting car listing');
+        }
+      }
+    }
+
     // Function to fetch ALL flights with all fields
     const fetchBookedFlights = async () => {
       const flightsCollection = collection(db, "flights");
@@ -153,7 +199,7 @@
       tableBody.innerHTML = "";
 
       if (querySnapshot.empty) {
-        tableBody.innerHTML = `<tr><td colspan="12">No flight bookings found.</td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="13">No flight bookings found.</td></tr>`;
         return;
       }
 
@@ -173,6 +219,11 @@
           <td>${flight.availableSeats || "N/A"}</td>
           <td>$${flight.ticketPrice || "N/A"}</td>
           <td>${flight.availableDate || "N/A"}</td>
+          <td>
+            <button onclick="removeFlight('${flightDoc.id}')" class="btn btn-danger btn-sm remove-btn" title="Remove Listing">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
         `;
         tableBody.appendChild(row);
       });
@@ -186,7 +237,7 @@
       tableBody.innerHTML = "";
 
       if (querySnapshot.empty) {
-        tableBody.innerHTML = `<tr><td colspan="9">No hotel bookings found.</td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="10">No hotel bookings found.</td></tr>`;
         return;
       }
 
@@ -203,6 +254,11 @@
           <td>${hotel.roomType || "N/A"}</td>
           <td>$${hotel.price || "N/A"}</td>
           <td>${hotel.availability || "N/A"}</td>
+          <td>
+            <button onclick="removeHotel('${hotelDoc.id}')" class="btn btn-danger btn-sm remove-btn" title="Remove Listing">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
         `;
         tableBody.appendChild(row);
       });
@@ -216,7 +272,7 @@
       tableBody.innerHTML = "";
 
       if (querySnapshot.empty) {
-        tableBody.innerHTML = `<tr><td colspan="8">No car rental bookings found.</td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="9">No car rental bookings found.</td></tr>`;
         return;
       }
 
@@ -232,10 +288,20 @@
           <td>$${car.price || "N/A"}</td>
           <td>${car.location || "N/A"}</td>
           <td>${car.availability || "N/A"}</td>
+          <td>
+            <button onclick="removeCar('${carDoc.id}')" class="btn btn-danger btn-sm remove-btn" title="Remove Listing">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
         `;
         tableBody.appendChild(row);
       });
     };
+
+    // Make remove functions available globally
+    window.removeFlight = removeFlight;
+    window.removeHotel = removeHotel;
+    window.removeCar = removeCar;
 
     // Initialize the page
     window.onload = () => {
