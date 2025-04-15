@@ -137,7 +137,7 @@
     const fetchBookedFlights = async () => {
       if (!currentUserCompanyId) return;
       
-      const flightsCollection = collection(db, "flights");
+      const flightsCollection = collection(db, "booked_flights");
       const q = query(flightsCollection, where("companyId", "==", currentUserCompanyId));
       const querySnapshot = await getDocs(q);
       const tableBody = document.querySelector("#flightTable tbody");
@@ -166,7 +166,7 @@
       if (!currentUserCompanyId) return;
       
       const hotelsCollection = collection(db, "hotels");
-      const q = query(hotelsCollection, where("companyId", "==", currentUserCompanyId));
+      const q = query(hotelsCollection, where("companyId", "==", currentUserCompanyId), where("availability", "==", "Booked"));
       const querySnapshot = await getDocs(q);
       const tableBody = document.querySelector("#hotelTable tbody");
       tableBody.innerHTML = "";
@@ -193,7 +193,7 @@
       if (!currentUserCompanyId) return;
       
       const carsCollection = collection(db, "cars");
-      const q = query(carsCollection, where("companyId", "==", currentUserCompanyId));
+      const q = query(carsCollection, where("companyId", "==", currentUserCompanyId),  where("availability", "==", "Booked"));
       const querySnapshot = await getDocs(q);
       const tableBody = document.querySelector("#carTable tbody");
       tableBody.innerHTML = "";
