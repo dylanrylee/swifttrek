@@ -58,7 +58,19 @@
     text-decoration: underline;
 }
 
-.backButton, .enterButton {
+.backButton {
+    padding: 10px 20px;
+    margin-top: 15px;
+    background-color: #C58B88; 
+    color: #2c2c2c;
+    border: none;
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-size: 16px; 
+    transition: background-color 0.3s; 
+    width: 100%;
+}
+.enterButton {
     padding: 10px 20px;
     margin-top: 15px;
     background-color: #E8AA9B; 
@@ -70,7 +82,6 @@
     transition: background-color 0.3s; 
     width: 100%;
 }
-
 .backButton:hover, .enterButton:hover {
     background-color: #DCD5DC; 
 }

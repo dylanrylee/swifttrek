@@ -8,7 +8,15 @@ const SelectAccountType = () => {
     const navigate = useNavigate();
 
     return (
+        
         <div className={styles.container}>
+            <div className={styles.welcomeText}>
+            <img src="https://static.vecteezy.com/system/resources/previews/041/041/333/non_2x/travel-app-logo-icon-brand-identity-sign-symbol-vector.jpg" alt="SwiftTrek Logo" className={styles.logo} />
+            <div className={styles.textContent}>
+                <h1>Welcome to SwiftTrek</h1>
+                <p>Your Swift Escape Starts Here...</p>
+            </div>
+</div>
             {/* hideTabs={true} to mske navigation tabs invisble*/}
             <Header hideTabs={true} />
             <main className={styles.mainContent}>

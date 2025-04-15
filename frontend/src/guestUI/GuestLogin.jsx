@@ -45,7 +45,7 @@ const GuestLogin = () => {
         <div className={styles.container}>
             <main className={styles.mainContent}>
                 <div className={styles.loginBox}>
-                    <h2>Welcome to Travel Planner</h2>
+                    <h2>Welcome to SwiftTrek</h2>
                     <div className={styles.loginContainer}>
                         {error && <p className={styles.error}>{error}</p>}
                         <label htmlFor="username">Login:</label>

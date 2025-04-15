@@ -1,19 +1,18 @@
 .footer {
     font-family: 'Numans', sans-serif;
-    padding: 10px 0; /* Reduced padding */
-    background-color: #e0846dcc;
+    padding: 10px 0; 
     color: #2c2c2c;
     text-align: center;
     width: 100%;
-    margin-top: auto; /* Pushes footer to bottom */
-    min-height: 60px; /* Fixed minimum height */
+    margin-top: auto; 
+    min-height: 60px; 
 }
 
 .footerContent {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 8px; /* Reduced gap between elements */
+    gap: 8px; 
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 15px;
@@ -23,16 +22,16 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 10px; /* Smaller gap between links */
-    margin-bottom: 8px; /* Reduced margin */
+    gap: 10px; 
+    margin-bottom: 8px; 
 }
 
 .footerLinks a {
     color: white;
     text-decoration: none;
-    font-size: 14px; /* Slightly smaller font */
-    padding: 2px 5px; /* Smaller padding */
-    white-space: nowrap; /* Prevents text wrapping */
+    font-size: 20px; 
+    padding: 2px 5px; 
+    white-space: nowrap; 
 }
 
 .footerLinks a:hover {
@@ -43,16 +42,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px; /* Reduced gap between logo and text */
+    gap: 8px;
 }
 
 .footerLogo img {
-    width: 16px; /* Smaller logo */
+    width: 16px; 
     height: auto;
 }
 
 .footerLogo span {
-    font-size: 13px; /* Smaller text */
+    font-size: 20px; 
     font-weight: bold;
     color: white;
 }
@@ -60,7 +59,7 @@
 /* Responsive styling */
 @media (max-width: 768px) {
     .footer {
-        padding: 8px 0; /* Even smaller padding on mobile */
+        padding: 8px 0; 
     }
 
     .footerLinks {
@@ -69,15 +68,15 @@
     }
 
     .footerLinks a {
-        font-size: 12px; /* Smaller on mobile */
-        margin: 0 5px; /* Less spacing */
+        font-size: 12px; 
+        margin: 0 5px; 
     }
 
     .footerLogo img {
-        width: 14px; /* Smaller on mobile */
+        width: 14px; 
     }
 
     .footerLogo span {
-        font-size: 11px; /* Smaller on mobile */
+        font-size: 11px; 
     }
 }
