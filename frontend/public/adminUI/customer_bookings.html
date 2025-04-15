@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +18,7 @@
 </head>
 <body>
 
-  <!-- Navbar -->
+ 
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
       <a class="navbar-brand" href="#">
@@ -47,6 +48,7 @@
         <table class="table table-striped" id="flightTable">
           <thead>
             <tr>
+              
               <th>Company ID</th>
               <th>Flight Number</th>
               <th>Type</th>
@@ -74,6 +76,7 @@
         <table class="table table-striped" id="hotelTable">
           <thead>
             <tr>
+             
               <th>Company ID</th>
               <th>Hotel Name</th>
               <th>Location</th>
@@ -142,33 +145,105 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const fetchData = async (collectionName, tableId, fields, colSpan) => {
-      const snapshot = await getDocs(collection(db, collectionName));
-      const tbody = document.querySelector(`#${tableId} tbody`);
-      tbody.innerHTML = "";
+    // Function to fetch ALL flights with all fields
+    const fetchBookedFlights = async () => {
+      const flightsCollection = collection(db, "booked_flights");
+      const querySnapshot = await getDocs(flightsCollection);
+      const tableBody = document.querySelector("#flightTable tbody");
+      tableBody.innerHTML = "";
 
-      if (snapshot.empty) {
-        tbody.innerHTML = `<tr><td colspan="${colSpan}">No records found.</td></tr>`;
+      if (querySnapshot.empty) {
+        tableBody.innerHTML = `<tr><td colspan="12">No flight bookings found.</td></tr>`;
         return;
       }
 
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        const row = document.createElement("tr");
-        row.innerHTML = fields.map(field => {
-          if (field === "imageUrl") {
-            return `<td><img src="${data[field] || 'https://via.placeholder.com/80x60?text=No+Image'}" class="img-thumbnail"></td>`;
-          }
-          return `<td>${data[field] !== undefined ? data[field] : "N/A"}</td>`;
-        }).join("");
-        tbody.appendChild(row);
+      querySnapshot.forEach((flightDoc) => {
+        const flight = flightDoc.data();
+        const row = document.createElement('tr');
+        row.innerHTML = `
+         
+          <td>${flight.companyId || "N/A"}</td>
+          <td>${flight.flightNumber || "N/A"}</td>
+          <td>${flight.type || "N/A"}</td>
+          <td>${flight.departureCity || "N/A"}</td>
+          <td>${flight.departureTime || "N/A"}</td>
+          <td>${flight.arrivalCity || "N/A"}</td>
+          <td>${flight.arrivalTime || "N/A"}</td>
+          <td>${flight.duration || "N/A"}</td>
+          <td>${flight.availableSeats || "N/A"}</td>
+          <td>$${flight.ticketPrice || "N/A"}</td>
+          <td>${flight.availableDate || "N/A"}</td>
+          <td>${flight.guestID || "N/A"}</td>
+        `;
+        tableBody.appendChild(row);
       });
     };
 
+    // Function to fetch ALL hotels with all fields
+    const fetchBookedHotels = async () => {
+      const hotelsCollection = collection(db, "booked_hotels");
+      const querySnapshot = await getDocs(hotelsCollection);
+      const tableBody = document.querySelector("#hotelTable tbody");
+      tableBody.innerHTML = "";
+
+      if (querySnapshot.empty) {
+        tableBody.innerHTML = `<tr><td colspan="9">No hotel bookings found.</td></tr>`;
+        return;
+      }
+
+      querySnapshot.forEach((hotelDoc) => {
+        const hotel = hotelDoc.data();
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${hotel.companyId || "N/A"}</td>
+          <td>${hotel.hotelName || "N/A"}</td>
+          <td>${hotel.hotelLocation || "N/A"}</td>
+          <td>${hotel.roomNumber || "N/A"}</td>
+          <td>${hotel.roomType || "N/A"}</td>
+          <td>$${hotel.price || "N/A"}</td>
+          <td>${hotel.availability || "N/A"}</td>
+          <td>${hotel.guestID || "N/A"}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    };
+
+    // Function to fetch ALL car rentals with all fields
+    const fetchBookedCars = async () => {
+      const carsCollection = collection(db, "booked_cars");
+      const querySnapshot = await getDocs(carsCollection);
+      const tableBody = document.querySelector("#carTable tbody");
+      tableBody.innerHTML = "";
+
+      if (querySnapshot.empty) {
+        tableBody.innerHTML = `<tr><td colspan="8">No car rental bookings found.</td></tr>`;
+        return;
+      }
+
+      querySnapshot.forEach((carDoc) => {
+        const car = carDoc.data();
+        const row = document.createElement('tr');
+        row.innerHTML = `
+        
+          <td>${car.companyId || "N/A"}</td>
+         
+          <td>${car.model || "N/A"}</td>
+          <td>${car.type || "N/A"}</td>
+          <td>$${car.price || "N/A"}</td>
+          <td>${car.location || "N/A"}</td>
+          <td>${car.availability || "N/A"}</td>
+          <td>${car.guestID || "N/A"}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    };
+
+    // Initialize the page
     window.onload = () => {
-      fetchData("flights", "flightTable", ["companyId", "flightNumber", "type", "departureCity", "departureTime", "arrivalCity", "arrivalTime", "duration", "availableSeats", "ticketPrice", "availableDate", "guestID"], 12);
-      fetchData("hotels", "hotelTable", ["companyId", "hotelName", "hotelLocation", "roomNumber", "roomType", "price", "availability", "guestID"], 8);
-      fetchData("cars", "carTable", ["companyId", "model", "type", "price", "location", "availability", "guestID"], 7);
+      // Fetch all listings with all fields
+      fetchBookedFlights();
+      fetchBookedHotels();
+      fetchBookedCars();
     };
   </script>
 
@@ -192,5 +267,6 @@
       }
     }
   </script>
+
 </body>
 </html>
