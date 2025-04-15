@@ -2,12 +2,13 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background: url('../images/guestlogin-background.jpg') no-repeat center center;
+    background: url('../images/guestlogin-background.jpg') no-repeat center center; /* background image not repeating */
     background-size: cover;
     align-items: center;
     justify-content: center;
 }
 
+/* Main content area is centered both vertically and horizontally */
 .mainContent {
     display: flex;
     align-items: center;
@@ -18,25 +19,28 @@
 }
 
 .loginBox {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.9); /* white with slight transparency */
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
-    width: 350px;
+    width: 350px; /* pretty standard width for a login form */
 }
 
+/* Contains all login form fields */
 .loginContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+/* Labels for the input fields */
 .loginContainer label {
     margin-top: 10px;
     font-weight: bold;
 }
 
+/* Input fields styling */
 .loginContainer input {
     padding: 10px;
     margin: 5px 0;
@@ -45,13 +49,14 @@
     border-radius: 6px;
 }
 
+/* Register section with spacing */
 .register {
     margin-top: 15px;
 }
 
 .register a {
     text-decoration: none;
-    color: #E8AA9B; 
+    color: #E8AA9B;  /* light pink tone for the link */
 }
 
 .register a:hover {
@@ -68,8 +73,13 @@
     cursor: pointer; 
     font-size: 16px; 
     transition: background-color 0.3s; 
-    width: 100%;
+    width: 100%; /* stretch to match input fields */
 }
+
+/* 
+   "Enter" button for form submission.
+   Same size and shape as backButton but lighter color
+*/
 .enterButton {
     padding: 10px 20px;
     margin-top: 15px;
@@ -82,16 +92,29 @@
     transition: background-color 0.3s; 
     width: 100%;
 }
+
+/* 
+   Hover effect for both buttons to give feedback and improve UX.
+   Color is lighter on hover to signal interactivity.
+*/
 .backButton:hover, .enterButton:hover {
     background-color: #DCD5DC; 
 }
 
+/* 
+   Keeps them spaced nicely side by side using flex and a gap.
+*/
 .buttonContainer {
     display: flex;
     gap: 15px;
     justify-content: center;
 }
 
+
+/* 
+   These are the big square-ish action buttons — kind of like tiles.
+   Great for visual navigation with both an image and a label.
+*/
 .actionButton {
     display: flex;
     flex-direction: column;
@@ -117,6 +140,11 @@
     background-color: #DCD5DC;
 }
 
+
+/* 
+   Image inside the button (like a small icon or visual cue).
+   Positioned at the top and scaled down to fit the button nicely.
+*/
 .buttonImage {
     width: 100%; 
     height: 70%; 
@@ -125,6 +153,11 @@
     top: 10px; 
 }
 
+/* 
+   Text label inside the action button.
+   Positioned at the bottom, and uses a translucent background
+   so it stands out against the image.
+*/
 .buttonText {
     position: absolute;
     bottom: 10px; 
