@@ -7,6 +7,7 @@ import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
 
 const PlaneBookingPage = () => {
+    // State to store all flight data from Firebase
     const [flights, setFlights] = useState([]);
     const [selectedFlight, setSelectedFlight] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
@@ -15,6 +16,7 @@ const PlaneBookingPage = () => {
     const [maxPrice, setMaxPrice] = useState('');
     const navigate = useNavigate();
 
+    // Fetch flights from Firebase when the component mounts
     useEffect(() => {
         const fetchFlights = async () => {
             try {
@@ -31,13 +33,19 @@ const PlaneBookingPage = () => {
         fetchFlights();
     }, []);
 
+    // Filter flights based on search input and price range
     const filteredFlights = flights.filter((flight) => {
         const query = searchQuery.toLowerCase();
+        // Check if flight number or departure city matches search
         const matchesSearch = flight.flightNumber?.toLowerCase().includes(query) ||
                               flight.departureCity?.toLowerCase().includes(query);
         const price = parseFloat(flight.ticketPrice);
+
+        // Filter by min/max price if provided
         const matchesMinPrice = minPrice === '' || price >= parseFloat(minPrice);
         const matchesMaxPrice = maxPrice === '' || price <= parseFloat(maxPrice);
+        
+        // Only include flights with available seats
         const hasAvailableSeats = typeof flight.availableSeats === 'number' && flight.availableSeats > 0;
 
         return matchesSearch && matchesMinPrice && matchesMaxPrice && hasAvailableSeats;
@@ -48,11 +56,13 @@ const PlaneBookingPage = () => {
         setShowPopup(true);
     };
 
+    // Close the popup
     const handleClosePopup = () => {
         setShowPopup(false);
         setSelectedFlight(null);
     };
 
+    // Navigate to checkout page with selected flight info
     const handleBookClick = () => {
         if (!selectedFlight) return;
         navigate('/payment-checkout', {
@@ -76,6 +86,7 @@ const PlaneBookingPage = () => {
         });
     };
 
+    // Navigate to the "Write Review" page
     const handleWriteReviewClick = () => {
         if (!selectedFlight) return;
         navigate('/write-review', {
@@ -89,6 +100,7 @@ const PlaneBookingPage = () => {
         });
     };
 
+    // Navigate to view reviews for the selected flight's airline
     const handleViewReviewsClick = () => {
         if (!selectedFlight) return;
         navigate(`/view-flight-reviews/${selectedFlight.companyId}`);
