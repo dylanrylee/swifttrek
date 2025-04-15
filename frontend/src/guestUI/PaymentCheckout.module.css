@@ -1,9 +1,9 @@
 .container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; 
+    min-height: 100vh; /* Makes sure the container takes the full viewport height */
     width: 100%;
-    overflow-x: hidden; 
+    overflow-x: hidden; /* Prevents horizontal scroll */
 }
 
 .content {
@@ -15,14 +15,14 @@
     padding-top: 80px;
     padding-bottom: 40px; 
     width: 100%;
-    max-width: 1200px; /* Prevents stretching */
-    margin: 0 auto;
+    max-width: 1200px; /* Limits content width for better readability */
+    margin: 0 auto; /* Centers the content horizontally */
 }
 
 .buttonContainer {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 15px; /* Space between buttons */
     margin-top: 20px;
 }
 
@@ -74,6 +74,7 @@
     width: 90%;
 }
 
+/* Make side-by-side inputs fit within the row */
 .row .inputField {
     width: 48%;
 }
@@ -85,7 +86,7 @@
     padding: 15px 0;
     width: 100%;
     box-sizing: border-box;
-    margin-top: auto; /* Pushes footer to bottom */
+    margin-top: auto; /* Ensures footer stays at the bottom */
 }
 
 .confirmButton {
@@ -104,6 +105,7 @@
     background-color: #d89489;
 }
 
+/* Screen that displays upon successful confirmation */
 .confirmationScreen {
     display: flex;
     flex-direction: column;
@@ -119,7 +121,7 @@
     color: #28a745;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 10px; /* Space between text and icon */
 }
 
 .checkmark {
@@ -127,6 +129,7 @@
     font-size: 2rem;
 }
 
+/* Responsive tweak for very small screens */
 @media (max-width: 330px) {
     .checkmark {
         margin-right: 30px;
