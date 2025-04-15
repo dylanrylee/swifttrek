@@ -8,7 +8,6 @@ import {
     where,
     deleteDoc,
     doc,
-    getDoc
 } from 'firebase/firestore';
 import { updatePassword as updateAuthPassword } from 'firebase/auth';
 import styles from './GuestProfilePage.module.css';
@@ -27,12 +26,6 @@ const GuestProfilePage = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [passwordSuccess, setPasswordSuccess] = useState('');
-    const [activeTab, setActiveTab] = useState('profile');
-    const [profileData, setProfileData] = useState({
-        firstName: '',
-        lastName: '',
-        email: ''
-    });
     const navigate = useNavigate();
 
     const fetchPlaneBookings = async (userId) => {
@@ -220,10 +213,6 @@ const GuestProfilePage = () => {
         }
     };
 
-    const handleProfileUpdate = (e) => {
-        e.preventDefault();
-    };
-
     useEffect(() => {
         const fetchData = async () => {
             const currentUser = auth.currentUser;
@@ -272,19 +261,19 @@ const GuestProfilePage = () => {
                                 <>
                                     <strong>Hotel Details:</strong><br />
                                     <strong>Hotel:</strong> {b.hotelName}<br />
-                                    <strong>Location:</strong> {b.hotelLocation}<br />
+                                    <strong>Location:</strong> {b.location}<br />
                                     <strong>Check-in:</strong> {b.fromDate}<br />
                                     <strong>Check-out:</strong> {b.toDate}<br />
-                                    <strong>Price:</strong> ${b.hotelPrice}
+                                    <strong>Price:</strong> ${b.price}
                                 </>
                             )}
                             {type === 'car' && (
                                 <>
                                     <strong>Car Details:</strong><br />
-                                    <strong>Car:</strong> {b.carName}<br />
+                                    <strong>Car:</strong> {b.model}<br />
                                     <strong>Pick-up:</strong> {b.fromDate}<br />
                                     <strong>Return:</strong> {b.toDate}<br />
-                                    <strong>Price:</strong> ${b.carPrice}
+                                    <strong>Price:</strong> ${b.price}
                                 </>
                             )}
                         </div>
@@ -346,96 +335,6 @@ const GuestProfilePage = () => {
                 ))}
             </ul>
         );
-    };
-
-    const renderContent = () => {
-        switch (activeTab) {
-            case 'profile':
-                return (
-                    <div className={styles.profileSection}>
-                        <h2>Profile Information</h2>
-                        <form onSubmit={handleProfileUpdate} className={styles.profileForm}>
-                            <div className={styles.formGroup}>
-                                <label>First Name</label>
-                                <input
-                                    type="text"
-                                    value={profileData.firstName}
-                                    onChange={(e) => setProfileData({ ...profileData, firstName: e.target.value })}
-                                    className={styles.input}
-                                />
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label>Last Name</label>
-                                <input
-                                    type="text"
-                                    value={profileData.lastName}
-                                    onChange={(e) => setProfileData({ ...profileData, lastName: e.target.value })}
-                                    className={styles.input}
-                                />
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label>Email</label>
-                                <input
-                                    type="email"
-                                    value={profileData.email}
-                                    onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
-                                    className={styles.input}
-                                />
-                            </div>
-                            <button type="submit" className={styles.updateButton}>Update Profile</button>
-                        </form>
-                    </div>
-                );
-            case 'password':
-                return (
-                    <div className={styles.passwordSection}>
-                        <h2>Change Password</h2>
-                        <form onSubmit={handlePasswordChange} className={styles.passwordForm}>
-                            <input
-                                type="password"
-                                placeholder="New Password"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                                className={styles.passwordInput}
-                            />
-                            <input
-                                type="password"
-                                placeholder="Confirm New Password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                className={styles.passwordInput}
-                            />
-                            <button type="submit" className={styles.changePasswordButton}>
-                                Change Password
-                            </button>
-                            {passwordError && <div className={styles.error}>{passwordError}</div>}
-                            {passwordSuccess && <div className={styles.success}>{passwordSuccess}</div>}
-                        </form>
-                    </div>
-                );
-            case 'bookings':
-                return (
-                    <div className={styles.bookingsSection}>
-                        <h2>My Bookings</h2>
-                        <div className={styles.bookingsContainer}>
-                            <div className={styles.bookingType}>
-                                <h3>Flight Bookings</h3>
-                                {renderBookings(planeBookings, 'plane')}
-                            </div>
-                            <div className={styles.bookingType}>
-                                <h3>Hotel Bookings</h3>
-                                {renderBookings(hotelBookings, 'hotel')}
-                            </div>
-                            <div className={styles.bookingType}>
-                                <h3>Car Bookings</h3>
-                                {renderBookings(carBookings, 'car')}
-                            </div>
-                        </div>
-                    </div>
-                );
-            default:
-                return null;
-        }
     };
 
     return (
