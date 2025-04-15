@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // react router dom
 import { AuthProvider } from "./AuthContext"; // import Auth Context
 
+// Importing all of the pages we will use
 const SelectAccountType = lazy(() => import("./guestUI/SelectAccountType"));
 const GuestLogin = lazy(() => import("./guestUI/GuestLogin"));
 const GuestHomePage = lazy(() => import("./guestUI/GuestHomePage"));
@@ -15,8 +16,10 @@ const ViewFlightReviewPage = lazy(() => import("./guestUI/ViewFlightReviewPage")
 const ViewHotelReviewPage = lazy(() => import("./guestUI/ViewHotelReviewPage"));
 const ViewCarReviewPage = lazy(() => import("./guestUI/ViewCarReviewPage"));
 
+// This is the main structure of our application
 const App = () => {
     return (
+        // AuthProvider is here to transfer the auth context throughout the pages
         <AuthProvider>
             <Router>
                 <Suspense fallback={<div>Loading...</div>}>
