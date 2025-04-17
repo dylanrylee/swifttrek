@@ -19,7 +19,7 @@
       padding: 1rem;
     }
 
-    /* Styling for the form box */
+    /* Implementing styling for the form box */
     .loginBox {
       background-color: #ffffff;
       padding: 2.5rem;
@@ -32,7 +32,7 @@
       transition: transform 0.3s ease;
     }
 
-    /* Animate form on hover */
+    /* Hover animation */
     .loginBox:hover {
       transform: translateY(-5px);
     }
@@ -75,7 +75,7 @@
       outline: none;
     }
 
-    /* Sign-up button styling */
+    /* Sign-up button style */
     .loginButton {
       background-color: #008080;
       color: #fff;
@@ -95,7 +95,7 @@
       transform: translateY(-2px);
     }
 
-    /* Responsive design: reduce padding on small screens */
+    /* Responsive design */
     @media (max-width: 768px) {
       .loginBox {
         padding: 1.8rem;
@@ -132,7 +132,7 @@
 
       // Handle form submission
       form.addEventListener("submit", async (e) => {
-        e.preventDefault(); // Prevent default form reload
+        e.preventDefault(); 
 
         // Get input values
         const email = document.getElementById("email").value;
