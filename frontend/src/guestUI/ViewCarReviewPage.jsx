@@ -7,13 +7,10 @@ import Header from './Header';
 import Footer from './Footer';
 
 const ViewCarReviewPage = () => {
-    // State variables for loading, error, reviews, and car details
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [carDetails, setCarDetails] = useState(null);
     
-    // Access the state passed via navigation (e.g., car ID and details)
     const location = useLocation();
     const { carId, model, type, location: carLocation } = location.state || {};
 
@@ -22,17 +19,24 @@ const ViewCarReviewPage = () => {
             try {
                 setLoading(true);
                 
-                // Query Firestore for reviews of the specific car
+                console.log('Querying reviews for carId:', carId);
+                
                 const reviewsQuery = query(
                     collection(db, 'reviewed_cars'),
-                    where('carId', '==', carId)
+                    where('carId', '==', carId)  // Remove Number() conversion
                 );
                 
                 const querySnapshot = await getDocs(reviewsQuery);
-                const reviewsData = querySnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
+                const reviewsData = querySnapshot.docs.map(doc => {
+                    const data = doc.data();
+                    console.log('Review document:', data);
+                    return {
+                        id: doc.id,
+                        ...data
+                    };
+                });
+
+                console.log('All matching reviews:', reviewsData);
                 
                 setReviews(reviewsData);
                 setError(null);
@@ -44,7 +48,7 @@ const ViewCarReviewPage = () => {
             }
         };
 
-        if (carId) {
+        if (carId !== undefined) {
             fetchReviews();
         } else {
             setError('No car ID provided');
@@ -52,7 +56,6 @@ const ViewCarReviewPage = () => {
         }
     }, [carId]);
 
-    // Utility to render stars based on rating like "4/5"
     const renderStars = (rating) => {
         if (!rating) return null;
         
@@ -79,8 +82,7 @@ const ViewCarReviewPage = () => {
             <div className={styles.content}>
                 <h1 className={styles.title}>Car Reviews</h1>
 
-                {/* Car detail section (if passed) */}
-                {carDetails && (
+                {model && (
                     <div className={styles.itemDetails}>
                         <h2>{model}</h2>
                         <p><strong>Type:</strong> {type}</p>
@@ -88,7 +90,6 @@ const ViewCarReviewPage = () => {
                     </div>
                 )}
                 
-                {/* Handle loading, errors, or empty state */}
                 {loading ? (
                     <div className={styles.loading}>Loading reviews...</div>
                 ) : error ? (
@@ -96,7 +97,6 @@ const ViewCarReviewPage = () => {
                 ) : reviews.length === 0 ? (
                     <div className={styles.noReviews}>No reviews available for this car.</div>
                 ) : (
-                    // Render review cards
                     <div className={styles.reviewsContainer}>
                         {reviews.map(review => (
                             <div key={review.id} className={styles.reviewCard}>

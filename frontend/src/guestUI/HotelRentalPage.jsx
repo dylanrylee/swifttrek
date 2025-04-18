@@ -80,7 +80,7 @@ const HotelRentalPage = () => {
                 roomNumber: selectedHotel.roomNumber,
                 price: selectedHotel.price,
                 availability: selectedHotel.availability,
-                hotelId: selectedHotel.hotelId, 
+                hotelId: selectedHotel.id,
                 fromDate,
                 toDate,
                 hotelLocation: selectedHotel.location,

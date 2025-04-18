@@ -100,9 +100,9 @@ const CarRentalPage = () => {
     // this navigates to view reviews for the car you have selected
     const handleViewReviewsClick = () => {
         if (!selectedCar) return;
-        navigate(`/view-car-reviews/${selectedCar.id}`, {
+        navigate(`/view-car-reviews/${selectedCar.carId}`, {
             state: {
-                carId: selectedCar.id,
+                carId: selectedCar.carId,
                 model: selectedCar.model,
                 type: selectedCar.type,
                 location: selectedCar.location

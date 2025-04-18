@@ -124,7 +124,7 @@ const PaymentCheckout = () => {
 
         try {
             if (selectedCar?.id) await markCarAsBooked(selectedCar.id);
-            if (hotelId?.id) await markHotelAsBooked(hotelId);
+            if (hotelId) await markHotelAsBooked(hotelId);
             if (selectedPlane?.id) await updatePlaneSeatCount(selectedPlane.id);
             await storeBookingData();
             setPaymentConfirmed(true);
@@ -138,7 +138,7 @@ const PaymentCheckout = () => {
         // Update availability and store booking data
         try {
             if (selectedCar?.id) await markCarAsBooked(selectedCar.id);
-            if (hotelId?.id) await markHotelAsBooked(hotelId);
+            if (hotelId) await markHotelAsBooked(hotelId);
             if (selectedPlane?.id) await updatePlaneSeatCount(selectedPlane.id);
             await storeBookingData();
             setPaymentConfirmed(true);
