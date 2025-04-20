@@ -27,8 +27,8 @@ password : devils13
 
 #Sample login for admin :
 
-email : 
-password :
+email : zawad@gmail.com
+password : zawadadmin
 
 
 #Sample Login for Guest :
