@@ -32,5 +32,5 @@ password : zawadadmin
 
 
 #Sample Login for Guest :
-email :
-password :
+email : peepee@gmail.com
+password : peepee3
