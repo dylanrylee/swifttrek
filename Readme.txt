@@ -17,7 +17,7 @@ $ docker run -p <host port>:80 my-react-app
 
 #Open a browser and go to this website:
 
-http://localhost:host port
+$ http://localhost:host port
 
 
 #Sample Login For Business :
