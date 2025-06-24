@@ -1,6 +1,5 @@
-# Project Name : Swift Trek 
-## Group 17
-
+# Swift Trek 
+## Contributors: Zawad, Kanika, Dylan, Keenan, Tanvir
 Course: SENG 513
 
 ### How to run:
